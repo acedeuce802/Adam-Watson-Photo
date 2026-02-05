@@ -118,6 +118,25 @@
             width: 100%;
             height: 200px;
             object-fit: cover;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3em;
+            font-weight: bold;
+        }
+        
+        .photo-placeholder {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3em;
+            font-weight: bold;
         }
         
         .photo-info {
@@ -218,16 +237,10 @@
     </footer>
 
     <script>
-        // CONFIGURATION - REPLACE THESE VALUES
-        const FLICKR_ALBUM_ID = 'YOUR_ALBUM_ID_HERE';  // Get this from your Flickr album URL
-        const FLICKR_USER_ID = 'YOUR_USER_ID_HERE';     // Your Flickr user ID
-        
         // Photo data - will be populated from your CSV
-        // Format: { raceNumber: 'XXXX', filename: 'IMG_1234.jpg', flickrUrl: 'https://...', photoId: '...' }
         let photoData = [];
         
         // Load photo data (this will be generated from your CSV)
-        // For now, example data:
         photoData = [
             {
                 raceNumber: '4280',
@@ -344,30 +357,12 @@
         const gallery = document.getElementById('gallery');
         const resultsInfo = document.getElementById('resultsInfo');
         
-        // Cache for thumbnail URLs
-        const thumbnailCache = {};
-        
-        // Fetch Flickr thumbnail using oEmbed API (no API key needed!)
-        async function getFlickrThumbnail(photoId, flickrUrl) {
-            if (thumbnailCache[photoId]) {
-                return thumbnailCache[photoId];
-            }
-            
-            try {
-                // Use Flickr's oEmbed API - works without authentication
-                const oembedUrl = `https://www.flickr.com/services/oembed?format=json&url=${encodeURIComponent(flickrUrl)}`;
-                const response = await fetch(oembedUrl);
-                const data = await response.json();
-                
-                // Get thumbnail URL from oEmbed response
-                const thumbnailUrl = data.url || data.thumbnail_url || '';
-                thumbnailCache[photoId] = thumbnailUrl;
-                return thumbnailUrl;
-            } catch (error) {
-                console.error('Error fetching thumbnail:', error);
-                // Fallback: use a placeholder
-                return 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="250" height="200"%3E%3Crect fill="%23ddd" width="250" height="200"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" fill="%23999" font-size="20"%3ENo Image%3C/text%3E%3C/svg%3E';
-            }
+        // Generate Flickr thumbnail URL from photo page URL
+        function getFlickrThumbnailUrl(flickrUrl, photoId) {
+            // For now, we'll use the Flickr page URL and add /in/photostream for embedding
+            // When API key is available, this can be improved
+            // As a workaround, we'll create an iframe that shows the photo
+            return flickrUrl;
         }
         
         // Search functionality
@@ -388,7 +383,7 @@
             displayResults(results, searchTerm);
         }
         
-        async function displayResults(results, searchTerm) {
+        function displayResults(results, searchTerm) {
             gallery.innerHTML = '';
             
             if (results.length === 0) {
@@ -404,14 +399,13 @@
             
             resultsInfo.innerHTML = `Found ${results.length} photo${results.length > 1 ? 's' : ''} for race number "${searchTerm}"`;
             
-            // Show loading placeholders first
             results.forEach(photo => {
                 const card = document.createElement('div');
                 card.className = 'photo-card';
                 card.onclick = () => window.open(photo.flickrUrl, '_blank');
                 
                 card.innerHTML = `
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='200'%3E%3Crect fill='%23f0f0f0' width='250' height='200'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' fill='%23999' font-size='16'%3ELoading...%3C/text%3E%3C/svg%3E" alt="Loading...">
+                    <div class="photo-placeholder">#${photo.raceNumber}</div>
                     <div class="photo-info">
                         <div class="race-number">#${photo.raceNumber}</div>
                         <div class="filename">${photo.filename}</div>
@@ -420,18 +414,6 @@
                 
                 gallery.appendChild(card);
             });
-            
-            // Load thumbnails asynchronously
-            for (let i = 0; i < results.length; i++) {
-                const photo = results[i];
-                const thumbnailUrl = await getFlickrThumbnail(photo.photoId, photo.flickrUrl);
-                
-                // Update the image
-                const card = gallery.children[i];
-                const img = card.querySelector('img');
-                img.src = thumbnailUrl;
-                img.alt = `Race #${photo.raceNumber}`;
-            }
         }
         
         // Event listeners
