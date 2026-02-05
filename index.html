@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 Iceman Race Photos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+        
+        .search-box {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .search-input-group {
+            display: flex;
+            gap: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        #searchInput {
+            flex: 1;
+            padding: 15px 20px;
+            font-size: 18px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            transition: border-color 0.3s;
+        }
+        
+        #searchInput:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        #searchBtn {
+            padding: 15px 30px;
+            font-size: 18px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        #searchBtn:hover {
+            background: #5568d3;
+        }
+        
+        .results-info {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            color: white;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .photo-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .photo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .photo-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .photo-info {
+            padding: 15px;
+        }
+        
+        .race-number {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+        
+        .filename {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .no-results {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            color: #666;
+        }
+        
+        .loading {
+            text-align: center;
+            color: white;
+            font-size: 1.2em;
+            padding: 40px;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+        }
+        
+        .instructions {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .instructions h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .instructions ul {
+            margin-left: 20px;
+            color: #666;
+        }
+        
+        .instructions li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚴 2025 Iceman Race Photos</h1>
+            <p class="subtitle">Find your photos by race number</p>
+        </header>
+        
+        <div class="instructions">
+            <h3>How to find your photos:</h3>
+            <ul>
+                <li>Enter your race number (e.g., 4280) in the search box below</li>
+                <li>Click on any photo to view full size on Flickr</li>
+                <li>Download or share directly from Flickr</li>
+            </ul>
+        </div>
+        
+        <div class="search-box">
+            <div class="search-input-group">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="Enter your race number..."
+                    autocomplete="off"
+                >
+                <button id="searchBtn">Search</button>
+            </div>
+        </div>
+        
+        <div id="resultsInfo" class="results-info"></div>
+        <div id="gallery" class="gallery"></div>
+    </div>
+    
+    <footer>
+        <p>2025 Iceman Cometh Challenge | Questions? Contact: [your email]</p>
+    </footer>
+
+    <script>
+        // CONFIGURATION - REPLACE THESE VALUES
+        const FLICKR_ALBUM_ID = 'YOUR_ALBUM_ID_HERE';  // Get this from your Flickr album URL
+        const FLICKR_USER_ID = 'YOUR_USER_ID_HERE';     // Your Flickr user ID
+        
+        // Photo data - will be populated from your CSV
+        // Format: { raceNumber: 'XXXX', filename: 'IMG_1234.jpg', flickrUrl: 'https://...', photoId: '...' }
+        let photoData = [];
+        
+        // Load photo data (this will be generated from your CSV)
+        // For now, example data:
+        photoData = [
+            {
+                raceNumber: '4280',
+                filename: '_75A3831.jpg',
+                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079246263/in/album-72177720331872329/',
+                photoId: 'album-72177720331872329'
+            },
+            {
+                raceNumber: '6069',
+                filename: '_75A3833.jpg',
+                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079303714/in/album-72177720331872329/',
+                photoId: 'album-72177720331872329'
+            },
+            {
+                raceNumber: '3638',
+                filename: '_75A3838.jpg',
+                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55078148957/in/album-72177720331872329/',
+                photoId: 'album-72177720331872329'
+            },
+            {
+                raceNumber: '4668',
+                filename: '_75A3841.jpg',
+                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079246223/in/album-72177720331872329/',
+                photoId: 'album-72177720331872329'
+            },
+            {
+                raceNumber: '4423',
+                filename: '_75A3844.jpg',
+                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079047311/in/album-72177720331872329/',
+                photoId: 'album-72177720331872329'
+            },
+            {
+                raceNumber: '4329',
+                filename: '_75A3847.jpg',
+                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079047261/in/album-72177720331872329/',
+                photoId: 'album-72177720331872329'
+            },
+            {
+                raceNumber: '112',
+                filename: '_75A3853.jpg',
+                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079047111/in/album-72177720331872329/',
+                photoId: 'album-72177720331872329'
+            },
+            {
+                raceNumber: '112',
+                filename: '_75A3858.jpg',
+                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079046981/in/album-72177720331872329/',
+                photoId: 'album-72177720331872329'
+            },
+            {
+                raceNumber: '112',
+                filename: '_75A3860.jpg',
+                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079047041/in/album-72177720331872329/',
+                photoId: 'album-72177720331872329'
+            },
+            {
+                raceNumber: '112',
+                filename: '_75A3862.jpg',
+                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079407595/in/album-72177720331872329/',
+                photoId: 'album-72177720331872329'
+            },
+            {
+                raceNumber: '112',
+                filename: '_75A3863.jpg',
+                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079046881/in/album-72177720331872329/',
+                photoId: 'album-72177720331872329'
+            },
+            {
+                raceNumber: '112',
+                filename: '_75A3864.jpg',
+                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079303269/in/album-72177720331872329/',
+                photoId: 'album-72177720331872329'
+            },
+            {
+                raceNumber: '112',
+                filename: '_75A3865.jpg',
+                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079245783/in/album-72177720331872329/',
+                photoId: 'album-72177720331872329'
+            },
+            {
+                raceNumber: '84',
+                filename: '_75A3866.jpg',
+                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079046846/in/album-72177720331872329/',
+                photoId: 'album-72177720331872329'
+            },
+            {
+                raceNumber: '84',
+                filename: '_75A3867.jpg',
+                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079407120/in/album-72177720331872329/',
+                photoId: 'album-72177720331872329'
+            },
+            {
+                raceNumber: '73',
+                filename: '_75A3874.jpg',
+                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079407155/in/album-72177720331872329/',
+                photoId: 'album-72177720331872329'
+            },
+            {
+                raceNumber: '73',
+                filename: '_75A3875.jpg',
+                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079407145/in/album-72177720331872329/',
+                photoId: 'album-72177720331872329'
+            },
+            {
+                raceNumber: '73',
+                filename: '_75A3876.jpg',
+                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55078148402/in/album-72177720331872329/',
+                photoId: 'album-72177720331872329'
+            },
+        ];
+        
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const gallery = document.getElementById('gallery');
+        const resultsInfo = document.getElementById('resultsInfo');
+        
+        // Cache for thumbnail URLs
+        const thumbnailCache = {};
+        
+        // Fetch Flickr thumbnail using oEmbed API (no API key needed!)
+        async function getFlickrThumbnail(photoId, flickrUrl) {
+            if (thumbnailCache[photoId]) {
+                return thumbnailCache[photoId];
+            }
+            
+            try {
+                // Use Flickr's oEmbed API - works without authentication
+                const oembedUrl = `https://www.flickr.com/services/oembed?format=json&url=${encodeURIComponent(flickrUrl)}`;
+                const response = await fetch(oembedUrl);
+                const data = await response.json();
+                
+                // Get thumbnail URL from oEmbed response
+                const thumbnailUrl = data.url || data.thumbnail_url || '';
+                thumbnailCache[photoId] = thumbnailUrl;
+                return thumbnailUrl;
+            } catch (error) {
+                console.error('Error fetching thumbnail:', error);
+                // Fallback: use a placeholder
+                return 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="250" height="200"%3E%3Crect fill="%23ddd" width="250" height="200"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" fill="%23999" font-size="20"%3ENo Image%3C/text%3E%3C/svg%3E';
+            }
+        }
+        
+        // Search functionality
+        function searchPhotos() {
+            const searchTerm = searchInput.value.trim();
+            
+            if (!searchTerm) {
+                gallery.innerHTML = '';
+                resultsInfo.innerHTML = '';
+                return;
+            }
+            
+            // Filter photos by race number
+            const results = photoData.filter(photo => 
+                photo.raceNumber.includes(searchTerm)
+            );
+            
+            displayResults(results, searchTerm);
+        }
+        
+        async function displayResults(results, searchTerm) {
+            gallery.innerHTML = '';
+            
+            if (results.length === 0) {
+                resultsInfo.innerHTML = `No photos found for race number "${searchTerm}"`;
+                gallery.innerHTML = `
+                    <div class="no-results">
+                        <h3>No photos found</h3>
+                        <p>Please check your race number and try again.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            resultsInfo.innerHTML = `Found ${results.length} photo${results.length > 1 ? 's' : ''} for race number "${searchTerm}"`;
+            
+            // Show loading placeholders first
+            results.forEach(photo => {
+                const card = document.createElement('div');
+                card.className = 'photo-card';
+                card.onclick = () => window.open(photo.flickrUrl, '_blank');
+                
+                card.innerHTML = `
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='200'%3E%3Crect fill='%23f0f0f0' width='250' height='200'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' fill='%23999' font-size='16'%3ELoading...%3C/text%3E%3C/svg%3E" alt="Loading...">
+                    <div class="photo-info">
+                        <div class="race-number">#${photo.raceNumber}</div>
+                        <div class="filename">${photo.filename}</div>
+                    </div>
+                `;
+                
+                gallery.appendChild(card);
+            });
+            
+            // Load thumbnails asynchronously
+            for (let i = 0; i < results.length; i++) {
+                const photo = results[i];
+                const thumbnailUrl = await getFlickrThumbnail(photo.photoId, photo.flickrUrl);
+                
+                // Update the image
+                const card = gallery.children[i];
+                const img = card.querySelector('img');
+                img.src = thumbnailUrl;
+                img.alt = `Race #${photo.raceNumber}`;
+            }
+        }
+        
+        // Event listeners
+        searchBtn.addEventListener('click', searchPhotos);
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchPhotos();
+            }
+        });
+        
+        // Auto-focus search input
+        searchInput.focus();
+    </script>
+</body>
+</html>
