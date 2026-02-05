@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Race Photography - Find Your Photos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+        }
+        
+        .intro {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .races-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .race-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .race-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+        
+        .race-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            color: white;
+            text-align: center;
+        }
+        
+        .race-name {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .race-date {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .race-info {
+            padding: 25px;
+        }
+        
+        .race-details {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .race-stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            padding: 15px 0;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            color: #999;
+            margin-top: 5px;
+        }
+        
+        .view-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: #667eea;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .view-button:hover {
+            background: #5568d3;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+        
+        .status-available {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-coming-soon {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+        }
+        
+        footer a {
+            color: white;
+            text-decoration: underline;
+        }
+        
+        .contact-info {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .contact-info h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .contact-info p {
+            color: #666;
+            margin: 10px 0;
+        }
+        
+        .contact-info a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📸 Adam Watson Photo</h1>
+            <p class="subtitle">Professional race photography • Find your photos by race number</p>
+        </header>
+        
+        <div class="intro">
+            <h2 style="margin-bottom: 15px; color: #333;">Welcome!</h2>
+            <p>Browse our collection of race photography. Each gallery is searchable by race number, making it easy to find your photos. Click on any race below to search for your photos.</p>
+        </div>
+        
+        <div class="races-grid">
+            <!-- Race Card Template - Duplicate and modify for each race -->
+            
+            <!-- Example Race 1 -->
+            <div class="race-card" onclick="window.location.href='2025-iceman-pro.html'">
+                <div class="race-header">
+                    <div class="race-name">Iceman Cometh</div>
+                    <div class="race-date">November 2025</div>
+                </div>
+                <div class="race-info">
+                    <div class="race-details">
+                        Pro Category • Traverse City, MI
+                    </div>
+                    <div class="race-stats">
+                        <div class="stat">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">Photos</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">200</div>
+                            <div class="stat-label">Racers</div>
+                        </div>
+                    </div>
+                    <div class="status-badge status-available">✓ Photos Available</div>
+                </div>
+                <a href="2025-iceman-pro.html" class="view-button">Search Photos</a>
+            </div>
+            
+            <!-- Example Race 2 -->
+            <div class="race-card" onclick="window.location.href='#'">
+                <div class="race-header">
+                    <div class="race-name">[Race Name]</div>
+                    <div class="race-date">[Date]</div>
+                </div>
+                <div class="race-info">
+                    <div class="race-details">
+                        [Category] • [Location]
+                    </div>
+                    <div class="race-stats">
+                        <div class="stat">
+                            <div class="stat-number">XXX</div>
+                            <div class="stat-label">Photos</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">XXX</div>
+                            <div class="stat-label">Racers</div>
+                        </div>
+                    </div>
+                    <div class="status-badge status-coming-soon">Coming Soon</div>
+                </div>
+                <a href="#" class="view-button">Search Photos</a>
+            </div>
+            
+            <!-- Example Race 3 -->
+            <div class="race-card" onclick="window.location.href='#'">
+                <div class="race-header">
+                    <div class="race-name">[Race Name]</div>
+                    <div class="race-date">[Date]</div>
+                </div>
+                <div class="race-info">
+                    <div class="race-details">
+                        [Category] • [Location]
+                    </div>
+                    <div class="race-stats">
+                        <div class="stat">
+                            <div class="stat-number">XXX</div>
+                            <div class="stat-label">Photos</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">XXX</div>
+                            <div class="stat-label">Racers</div>
+                        </div>
+                    </div>
+                    <div class="status-badge status-coming-soon">Coming Soon</div>
+                </div>
+                <a href="#" class="view-button">Search Photos</a>
+            </div>
+            
+        </div>
+        
+        <div class="contact-info">
+            <h3>Questions or Need Help?</h3>
+            <p>Can't find your photos? Have questions about purchasing?</p>
+            <p>Email: <a href="mailto:email@adamwatsonphoto.com">your@email.com</a></p>
+            <p>Phone: <a href="tel:+17346492867">(734) 649-2867</a></p>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2026 Adam Watson Photo | Professional Race Photography</p>
+        <p><a href="mailto:your@email.com">Contact</a> | <a href="#">About</a></p>
+    </footer>
+</body>
+</html>

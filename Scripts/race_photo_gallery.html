@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 Iceman Race Photos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+        
+        .search-box {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .search-input-group {
+            display: flex;
+            gap: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        #searchInput {
+            flex: 1;
+            padding: 15px 20px;
+            font-size: 18px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            transition: border-color 0.3s;
+        }
+        
+        #searchInput:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        #searchBtn {
+            padding: 15px 30px;
+            font-size: 18px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        #searchBtn:hover {
+            background: #5568d3;
+        }
+        
+        .results-info {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            color: white;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .photo-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .photo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .photo-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3em;
+            font-weight: bold;
+        }
+        
+        .photo-placeholder {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3em;
+            font-weight: bold;
+        }
+        
+        .photo-info {
+            padding: 15px;
+        }
+        
+        .race-number {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+        
+        .filename {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .no-results {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            color: #666;
+        }
+        
+        .loading {
+            text-align: center;
+            color: white;
+            font-size: 1.2em;
+            padding: 40px;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+        }
+        
+        .instructions {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .instructions h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .instructions ul {
+            margin-left: 20px;
+            color: #666;
+        }
+        
+        .instructions li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚴 2025 Iceman Race Photos</h1>
+            <p class="subtitle">Find your photos by race number</p>
+        </header>
+        
+        <div class="instructions">
+            <h3>How to find your photos:</h3>
+            <ul>
+                <li>Scroll through all photos below</li>
+                <li>Or search by race number to filter (e.g., 4280)</li>
+                <li>Click any photo to view full size on Flickr</li>
+                <li>Download or share directly from Flickr</li>
+            </ul>
+        </div>
+        
+        <div class="search-box">
+            <p style="margin-bottom: 15px; color: #666;">Browse all photos below, or search by race number to filter:</p>
+            <div class="search-input-group">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="Search by race number (optional)..."
+                    autocomplete="off"
+                >
+                <button id="searchBtn">Filter</button>
+                <button id="clearBtn" style="background: #999;">Show All</button>
+            </div>
+        </div>
+        
+        <div id="resultsInfo" class="results-info"></div>
+        <div id="gallery" class="gallery"></div>
+    </div>
+    
+    <footer>
+        <p>2025 Iceman Cometh Challenge | Questions? Contact: [your email]</p>
+    </footer>
+
+    <script>
+        // Photo data - will be populated from your CSV
+        let photoData = [];
+        
+        // Load photo data (this will be generated from your CSV)
+        photoData = [
+            // This section will be auto-generated - see setup instructions below
+        ];
+        
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const gallery = document.getElementById('gallery');
+        const resultsInfo = document.getElementById('resultsInfo');
+        
+        // Show all photos on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            if (photoData.length > 0) {
+                displayResults(photoData, null);
+            }
+        });
+        
+        // Search/filter functionality
+        function searchPhotos() {
+            const searchTerm = searchInput.value.trim();
+            
+            if (!searchTerm) {
+                // If empty search, show all
+                displayResults(photoData, null);
+                return;
+            }
+            
+            // Filter photos by race number
+            const results = photoData.filter(photo => 
+                photo.raceNumber.includes(searchTerm)
+            );
+            
+            displayResults(results, searchTerm);
+        }
+        
+        // Clear search and show all
+        function clearSearch() {
+            searchInput.value = '';
+            displayResults(photoData, null);
+        }
+        
+        function displayResults(results, searchTerm) {
+            gallery.innerHTML = '';
+            
+            if (results.length === 0) {
+                resultsInfo.innerHTML = searchTerm 
+                    ? `No photos found for race number "${searchTerm}"`
+                    : 'No photos available yet';
+                gallery.innerHTML = `
+                    <div class="no-results">
+                        <h3>No photos found</h3>
+                        <p>${searchTerm ? 'Try a different race number' : 'Photos will be added soon'}</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Update results info
+            if (searchTerm) {
+                resultsInfo.innerHTML = `Showing ${results.length} photo${results.length > 1 ? 's' : ''} for race number "${searchTerm}"`;
+            } else {
+                resultsInfo.innerHTML = `Showing all ${results.length} photos • Use search to filter by race number`;
+            }
+            
+            results.forEach(photo => {
+                const card = document.createElement('div');
+                card.className = 'photo-card';
+                card.onclick = () => window.open(photo.flickrUrl, '_blank');
+                
+                // Check if we have thumbnail URL (from API version)
+                if (photo.thumbnailUrl) {
+                    card.innerHTML = `
+                        <img src="${photo.thumbnailUrl}" alt="Race #${photo.raceNumber}" loading="lazy">
+                        <div class="photo-info">
+                            <div class="race-number">#${photo.raceNumber}</div>
+                            <div class="filename">${photo.filename}</div>
+                        </div>
+                    `;
+                } else {
+                    // Fallback for manual CSV version (no API yet)
+                    card.innerHTML = `
+                        <div class="photo-placeholder">#${photo.raceNumber}</div>
+                        <div class="photo-info">
+                            <div class="race-number">#${photo.raceNumber}</div>
+                            <div class="filename">${photo.filename}</div>
+                        </div>
+                    `;
+                }
+                
+                gallery.appendChild(card);
+            });
+        }
+        
+        // Event listeners
+        searchBtn.addEventListener('click', searchPhotos);
+        clearBtn.addEventListener('click', clearSearch);
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchPhotos();
+            }
+        });
+        
+        // Live filtering as user types (optional - can remove if too much)
+        searchInput.addEventListener('input', () => {
+            if (searchInput.value.trim() === '') {
+                displayResults(photoData, null);
+            }
+        });
+    </script>
+</body>
+</html>
