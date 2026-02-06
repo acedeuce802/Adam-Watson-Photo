@@ -57,19 +57,22 @@
         }
         
         .instagram-link {
+            color: #888;
+            transition: color 0.3s, opacity 0.3s;
             display: inline-flex;
             align-items: center;
             gap: 5px;
-            color: #888;
-            transition: color 0.3s;
+            text-decoration: none;
+            border: none;
+            outline: none;
         }
         
         .instagram-link:hover {
+            opacity: 0.7;
         }
         
-        .instagram-link:hover .instagram-icon {
-            filter: brightness(1);
-            opacity: 0.7;
+        .instagram-link:focus {
+            outline: none;
         }
         
         .instagram-icon {
@@ -77,8 +80,12 @@
             height: 24px;
             filter: brightness(0.6);
             transition: filter 0.3s;
-            font-size: 1.2em;
-            color: #fff;
+            display: block;
+            border: none;
+        }
+        
+        .instagram-link:hover .instagram-icon {
+            filter: brightness(1);
         }
         
         /* Breadcrumb */

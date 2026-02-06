@@ -62,10 +62,17 @@
             display: inline-flex;
             align-items: center;
             gap: 5px;
+            text-decoration: none;
+            border: none;
+            outline: none;
         }
         
         .instagram-link:hover {
             opacity: 0.7;
+        }
+        
+        .instagram-link:focus {
+            outline: none;
         }
         
         .instagram-icon {
@@ -73,6 +80,8 @@
             height: 24px;
             filter: brightness(0.6);
             transition: filter 0.3s;
+            display: block;
+            border: none;
         }
         
         .instagram-link:hover .instagram-icon {
