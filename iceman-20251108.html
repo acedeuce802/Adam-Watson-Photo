@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iceman Cometh Photos | Adam Watson Photo</title>
-<style>
+    <style>
         * {
             margin: 0;
             padding: 0;
@@ -12,7 +12,7 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: #1a1a1a;
             color: #e0e0e0;
             line-height: 1.6;
@@ -57,82 +57,141 @@
         
         .instagram-link {
             color: #888;
-            transition: color 0.3s, opacity 0.3s;
+            transition: opacity 0.3s;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
-            text-decoration: none;
-            border: none;
-            outline: none;
-        }
-        
-        .instagram-link:hover {
-            opacity: 0.7;
-        }
-        
-        .instagram-link:focus {
-            outline: none;
         }
         
         .instagram-icon {
             width: 24px;
             height: 24px;
             filter: brightness(0.6);
-            transition: filter 0.3s;
-            display: block;
-            border: none;
         }
         
-        .instagram-link:hover .instagram-icon {
-            filter: brightness(1);
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 30px auto 0;
+            padding: 0 20px;
         }
         
-        .placeholder {
-            max-width: 800px;
-            margin: 100px auto;
-            padding: 60px 40px;
+        .breadcrumb a {
+            color: #888;
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            color: #fff;
+        }
+        
+        .breadcrumb span {
+            color: #555;
+            margin: 0 10px;
+        }
+        
+        .gallery-section {
+            max-width: 1200px;
+            margin: 50px auto 80px;
+            padding: 0 20px;
+        }
+        
+        .gallery-header {
             text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .gallery-header h1 {
+            font-size: 3em;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+        
+        .gallery-header p {
+            font-size: 1.2em;
+            color: #999;
+        }
+        
+        .search-box {
+            max-width: 500px;
+            margin: 0 auto 50px;
+            text-align: center;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1.2em;
+            background: #0f0f0f;
+            border: 2px solid #333;
+            border-radius: 8px;
+            color: #fff;
+            text-align: center;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: #555;
+        }
+        
+        .search-box label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            color: #aaa;
+        }
+        
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .photo-card {
             background: #0f0f0f;
             border-radius: 8px;
+            overflow: hidden;
             border: 1px solid #222;
+            transition: transform 0.3s;
         }
         
-        .placeholder h1 {
-            font-size: 2.5em;
-            font-weight: 300;
-            color: #ffffff;
-            margin-bottom: 20px;
+        .photo-card:hover {
+            transform: translateY(-5px);
+            border-color: #444;
         }
         
-        .placeholder p {
-            font-size: 1.2em;
-            color: #888;
-            line-height: 1.8;
-            margin-bottom: 15px;
+        .photo-card iframe {
+            width: 100%;
+            height: 250px;
+            border: none;
+            display: block;
         }
         
-        .back-link {
+        .photo-info {
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .race-number-badge {
             display: inline-block;
-            margin-top: 30px;
-            padding: 12px 30px;
+            padding: 8px 16px;
             background: #2a2a2a;
-            color: #fff;
-            text-decoration: none;
             border-radius: 5px;
-            transition: background 0.3s;
+            font-size: 1.1em;
+            color: #fff;
         }
         
-        .back-link:hover {
-            background: #333;
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+            font-size: 1.2em;
         }
         
         footer {
             background: #0a0a0a;
             padding: 40px 20px;
             border-top: 1px solid #222;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
         }
         
         .footer-nav {
@@ -148,11 +207,6 @@
         .footer-nav a {
             color: #888;
             text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-nav a:hover {
-            color: #fff;
         }
         
         .copyright {
@@ -174,16 +228,31 @@
         </div>
     </nav>
 
-    <div class="placeholder">
-        <h1>Iceman Cometh</h1>
-        <p>Traverse City, MI</p>
-        <p>November 8, 2025</p>
-        <p style="margin-top: 40px; color: #666;">
-            Photos coming soon!<br>
-            This page will be replaced with the full race gallery.
-        </p>
-        <a href="albums.html" class="back-link">← Back to Albums</a>
+    <div class="breadcrumb">
+        <a href="albums.html">Albums</a>
+        <span>›</span>
+        <span>Iceman Cometh</span>
     </div>
+
+    <section class="gallery-section">
+        <div class="gallery-header">
+            <h1>Iceman Cometh</h1>
+            <p>Traverse City, MI • 2025-11-08</p>
+        </div>
+        
+        <div class="search-box">
+            <label for="raceNumberSearch">Search by Race Number:</label>
+            <input type="text" id="raceNumberSearch" placeholder="Enter race number..." />
+        </div>
+        
+        <div id="photoGallery" class="photo-grid">
+            <!-- Photos will be inserted here by JavaScript -->
+        </div>
+        
+        <div id="noResults" class="no-results" style="display: none;">
+            No photos found for that race number.
+        </div>
+    </section>
 
     <footer>
         <ul class="footer-nav">
@@ -194,5 +263,254 @@
         </ul>
         <p class="copyright">&copy; 2025 Adam Watson Photo. All rights reserved.</p>
     </footer>
+
+    <script>
+        // Photo data
+        const photosByRaceNumber = {
+            "4280": [
+                        {
+                                    "number": "1",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/3hmw61j4o0",
+                                    "race_number": "4280"
+                        }
+            ],
+            "6069": [
+                        {
+                                    "number": "2",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/11935TxXE9",
+                                    "race_number": "6069"
+                        }
+            ],
+            "3638": [
+                        {
+                                    "number": "3",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/086cw710ih",
+                                    "race_number": "3638"
+                        }
+            ],
+            "4668": [
+                        {
+                                    "number": "4",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/4u1A1SZ201",
+                                    "race_number": "4668"
+                        }
+            ],
+            "4423": [
+                        {
+                                    "number": "5",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/30i6FKjv6z",
+                                    "race_number": "4423"
+                        }
+            ],
+            "4329": [
+                        {
+                                    "number": "6",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/773Xd4c9g6",
+                                    "race_number": "4329"
+                        }
+            ],
+            "112": [
+                        {
+                                    "number": "7",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/348706zyut",
+                                    "race_number": "112"
+                        },
+                        {
+                                    "number": "8",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/Q279akh10D",
+                                    "race_number": "112"
+                        },
+                        {
+                                    "number": "9",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/Qrd9Rnb87G",
+                                    "race_number": "112"
+                        },
+                        {
+                                    "number": "10",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/L1ER78SW11",
+                                    "race_number": "112"
+                        },
+                        {
+                                    "number": "11",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/09414292Xs",
+                                    "race_number": "112"
+                        },
+                        {
+                                    "number": "12",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/U7Y56QdJE8",
+                                    "race_number": "112"
+                        },
+                        {
+                                    "number": "13",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/iw7Q7D1tG0",
+                                    "race_number": "112"
+                        }
+            ],
+            "84": [
+                        {
+                                    "number": "14",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/L0Von4872W",
+                                    "race_number": "84"
+                        },
+                        {
+                                    "number": "15",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/qr53P9Wv8T",
+                                    "race_number": "84"
+                        }
+            ],
+            "73": [
+                        {
+                                    "number": "16",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/e7K275Y0N1",
+                                    "race_number": "73"
+                        },
+                        {
+                                    "number": "17",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/03Ze372Tt7",
+                                    "race_number": "73"
+                        },
+                        {
+                                    "number": "18",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/96sofge5U7",
+                                    "race_number": "73"
+                        }
+            ]
+};
+        
+        // All photos (for showing all initially)
+        const allPhotos = [
+            {
+                        "number": "1",
+                        "url": "https://www.flickr.com/gp/acedeuce802/3hmw61j4o0",
+                        "race_number": "4280"
+            },
+            {
+                        "number": "2",
+                        "url": "https://www.flickr.com/gp/acedeuce802/11935TxXE9",
+                        "race_number": "6069"
+            },
+            {
+                        "number": "3",
+                        "url": "https://www.flickr.com/gp/acedeuce802/086cw710ih",
+                        "race_number": "3638"
+            },
+            {
+                        "number": "4",
+                        "url": "https://www.flickr.com/gp/acedeuce802/4u1A1SZ201",
+                        "race_number": "4668"
+            },
+            {
+                        "number": "5",
+                        "url": "https://www.flickr.com/gp/acedeuce802/30i6FKjv6z",
+                        "race_number": "4423"
+            },
+            {
+                        "number": "6",
+                        "url": "https://www.flickr.com/gp/acedeuce802/773Xd4c9g6",
+                        "race_number": "4329"
+            },
+            {
+                        "number": "7",
+                        "url": "https://www.flickr.com/gp/acedeuce802/348706zyut",
+                        "race_number": "112"
+            },
+            {
+                        "number": "8",
+                        "url": "https://www.flickr.com/gp/acedeuce802/Q279akh10D",
+                        "race_number": "112"
+            },
+            {
+                        "number": "9",
+                        "url": "https://www.flickr.com/gp/acedeuce802/Qrd9Rnb87G",
+                        "race_number": "112"
+            },
+            {
+                        "number": "10",
+                        "url": "https://www.flickr.com/gp/acedeuce802/L1ER78SW11",
+                        "race_number": "112"
+            },
+            {
+                        "number": "11",
+                        "url": "https://www.flickr.com/gp/acedeuce802/09414292Xs",
+                        "race_number": "112"
+            },
+            {
+                        "number": "12",
+                        "url": "https://www.flickr.com/gp/acedeuce802/U7Y56QdJE8",
+                        "race_number": "112"
+            },
+            {
+                        "number": "13",
+                        "url": "https://www.flickr.com/gp/acedeuce802/iw7Q7D1tG0",
+                        "race_number": "112"
+            },
+            {
+                        "number": "14",
+                        "url": "https://www.flickr.com/gp/acedeuce802/L0Von4872W",
+                        "race_number": "84"
+            },
+            {
+                        "number": "15",
+                        "url": "https://www.flickr.com/gp/acedeuce802/qr53P9Wv8T",
+                        "race_number": "84"
+            },
+            {
+                        "number": "16",
+                        "url": "https://www.flickr.com/gp/acedeuce802/e7K275Y0N1",
+                        "race_number": "73"
+            },
+            {
+                        "number": "17",
+                        "url": "https://www.flickr.com/gp/acedeuce802/03Ze372Tt7",
+                        "race_number": "73"
+            },
+            {
+                        "number": "18",
+                        "url": "https://www.flickr.com/gp/acedeuce802/96sofge5U7",
+                        "race_number": "73"
+            }
+];
+        
+        const searchInput = document.getElementById('raceNumberSearch');
+        const gallery = document.getElementById('photoGallery');
+        const noResults = document.getElementById('noResults');
+        
+        function displayPhotos(photos) {
+            if (photos.length === 0) {
+                gallery.innerHTML = '';
+                noResults.style.display = 'block';
+                return;
+            }
+            
+            noResults.style.display = 'none';
+            
+            gallery.innerHTML = photos.map(photo => `
+                <div class="photo-card">
+                    <iframe src="${photo.url}/player/" frameborder="0" allowfullscreen></iframe>
+                    <div class="photo-info">
+                        <span class="race-number-badge">#${photo.race_number}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Search functionality
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.trim();
+            
+            if (!searchTerm) {
+                // Show all photos
+                displayPhotos(allPhotos);
+                return;
+            }
+            
+            // Find matching photos
+            const matches = photosByRaceNumber[searchTerm] || [];
+            displayPhotos(matches);
+        });
+        
+        // Show all photos initially
+        displayPhotos(allPhotos);
+    </script>
 </body>
 </html>
