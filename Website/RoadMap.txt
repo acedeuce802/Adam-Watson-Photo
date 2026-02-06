@@ -1,0 +1,19 @@
+- Home page
+  - Nav buttons at top to all pages + link to instagram (https://www.instagram.com/adamwatson.photo/)
+  - Adam Watson Photo
+  - Picture carousel with all my portfolio pictures, will upload to github
+  - Contact me section with paragraph including: don't hesitate to drop me a message, let's chat about your needs (email only no phone, email@adamwatsonphoto.com)
+  - Nav buttons at bottom to all pages + link to instagram
+- About Me
+  - Nav buttons at top to all pages + link to instagram
+  - Picture of me
+  - Paragraph about myself
+    -I grew up in Ann Arbor, MI and now reside in Southfield, MI.  I got my Mechanical Engineering degree from Kettering University.  My first passion was automotive, and going to races and car meets is what initially sparked my interest in photography.  I found it interesting to combine the technical aspect of cameras with the artsy side, and capturing action shots is always my favorite.  As I begun to ride bikes, my passion started to shift.  I've raced in more events than I can count, mountain bike, gravel races, and road races.  Eventually I started bringing my camera to races and taking pictures after I'd finish, and now documenting the races is just as important to me as racing in them.
+  - Nav buttons at bottom to all pages + link to instagram
+-Albums
+  - Nav buttons at top to all pages + link to instagram
+  - Existing format with cards for each race
+  - Main album page will have links to the race name, but no mention of year
+  - After clicking on the race, all dates show up (ie: click on Iceman -> next page has links to 2024, 2025, 2026, etc)
+  - Nav buttons at bottom to all pages + link to instagram
+  

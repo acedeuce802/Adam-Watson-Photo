@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Race Photography - Find Your Photos</title>
+    <title>Adam Watson Photo | Professional Race Photography</title>
     <style>
         * {
             margin: 0;
@@ -13,301 +13,398 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            line-height: 1.6;
         }
         
+        /* Navigation */
+        nav {
+            background: #0a0a0a;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1.1em;
+        }
+        
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+        
+        .instagram-link {
+            color: #888;
+            transition: color 0.3s, opacity 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .instagram-link:hover {
+            opacity: 0.7;
+        }
+        
+        .instagram-icon {
+            width: 24px;
+            height: 24px;
+            filter: brightness(0.6);
+            transition: filter 0.3s;
+        }
+        
+        .instagram-link:hover .instagram-icon {
+            filter: brightness(1);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(to bottom, #0a0a0a, #1a1a1a);
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 4em;
+            font-weight: 300;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        
+        .hero p {
+            font-size: 1.3em;
+            color: #999;
+            font-weight: 300;
+        }
+        
+        /* Container */
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 20px;
         }
         
-        header {
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-bottom: 40px;
+        /* Portfolio Carousel Section */
+        .portfolio-section {
+            padding: 80px 20px;
+            background: #1a1a1a;
+        }
+        
+        .section-title {
             text-align: center;
-        }
-        
-        h1 {
-            color: #333;
-            margin-bottom: 10px;
             font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 50px;
+            color: #ffffff;
+            letter-spacing: 2px;
         }
         
-        .subtitle {
-            color: #666;
-            font-size: 1.2em;
-        }
-        
-        .intro {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-            color: #666;
-            line-height: 1.6;
-        }
-        
-        .races-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-        
-        .race-card {
-            background: white;
-            border-radius: 10px;
+        .carousel-container {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         }
         
-        .race-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
-        }
-        
-        .race-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 30px;
-            color: white;
-            text-align: center;
-        }
-        
-        .race-name {
-            font-size: 1.8em;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        
-        .race-date {
-            font-size: 1.1em;
-            opacity: 0.9;
-        }
-        
-        .race-info {
-            padding: 25px;
-        }
-        
-        .race-details {
-            color: #666;
-            margin-bottom: 15px;
-            line-height: 1.6;
-        }
-        
-        .race-stats {
+        .carousel {
             display: flex;
-            justify-content: space-around;
-            margin: 20px 0;
-            padding: 15px 0;
-            border-top: 1px solid #eee;
-            border-bottom: 1px solid #eee;
+            transition: transform 0.5s ease;
         }
         
-        .stat {
-            text-align: center;
+        .carousel-item {
+            min-width: 100%;
+            height: 600px;
         }
         
-        .stat-number {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #667eea;
-        }
-        
-        .stat-label {
-            font-size: 0.9em;
-            color: #999;
-            margin-top: 5px;
-        }
-        
-        .view-button {
-            display: block;
+        .carousel-item img {
             width: 100%;
-            padding: 15px;
-            background: #667eea;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
             color: white;
-            text-align: center;
-            text-decoration: none;
-            font-size: 1.1em;
-            font-weight: bold;
             border: none;
+            padding: 20px 15px;
+            cursor: pointer;
+            font-size: 1.5em;
+            transition: background 0.3s;
+            z-index: 10;
+        }
+        
+        .carousel-btn:hover {
+            background: rgba(0,0,0,0.8);
+        }
+        
+        .carousel-btn.prev {
+            left: 0;
+        }
+        
+        .carousel-btn.next {
+            right: 0;
+        }
+        
+        .carousel-indicators {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #444;
+            margin: 0 5px;
             cursor: pointer;
             transition: background 0.3s;
         }
         
-        .view-button:hover {
-            background: #5568d3;
+        .indicator.active {
+            background: #fff;
         }
         
-        .status-badge {
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            margin-top: 10px;
+        /* Contact Section */
+        .contact-section {
+            padding: 80px 20px;
+            background: #0f0f0f;
         }
         
-        .status-available {
-            background: #d4edda;
-            color: #155724;
-        }
-        
-        .status-coming-soon {
-            background: #fff3cd;
-            color: #856404;
-        }
-        
-        footer {
+        .contact-content {
+            max-width: 700px;
+            margin: 0 auto;
             text-align: center;
-            color: white;
-            margin-top: 40px;
-            padding: 20px;
         }
         
-        footer a {
-            color: white;
-            text-decoration: underline;
-        }
-        
-        .contact-info {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        .contact-content h2 {
+            font-size: 2.5em;
+            font-weight: 300;
             margin-bottom: 30px;
-            text-align: center;
+            color: #ffffff;
+            letter-spacing: 2px;
         }
         
-        .contact-info h3 {
-            color: #333;
-            margin-bottom: 15px;
+        .contact-content p {
+            font-size: 1.2em;
+            color: #999;
+            margin-bottom: 30px;
+            line-height: 1.8;
         }
         
-        .contact-info p {
-            color: #666;
-            margin: 10px 0;
-        }
-        
-        .contact-info a {
-            color: #667eea;
+        .contact-email {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #2a2a2a;
+            color: #ffffff;
             text-decoration: none;
+            font-size: 1.2em;
+            border-radius: 5px;
+            transition: background 0.3s;
+            border: 1px solid #444;
         }
         
-        .contact-info a:hover {
-            text-decoration: underline;
+        .contact-email:hover {
+            background: #333;
+            border-color: #666;
+        }
+        
+        /* Footer */
+        footer {
+            background: #0a0a0a;
+            padding: 40px 20px;
+            border-top: 1px solid #222;
+        }
+        
+        .footer-nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        
+        .footer-nav a {
+            color: #888;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-nav a:hover {
+            color: #fff;
+        }
+        
+        .copyright {
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 15px;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            
+            .carousel-item {
+                height: 400px;
+            }
+            
+            .section-title {
+                font-size: 2em;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>📸 Adam Watson Photo</h1>
-            <p class="subtitle">Professional race photography • Find your photos by race number</p>
-        </header>
-        
-        <div class="intro">
-            <h2 style="margin-bottom: 15px; color: #333;">Welcome!</h2>
-            <p>Browse our collection of race photography. Each gallery is searchable by race number, making it easy to find your photos. Click on any race below to search for your photos.</p>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="albums.html">Albums</a></li>
+                <li><a href="https://www.instagram.com/adamwatson.photo/" target="_blank" class="instagram-link"><img src="images/instagram-icon.png" alt="Instagram" class="instagram-icon"></a></li>
+            </ul>
         </div>
-        
-        <div class="races-grid">
-            <!-- Race Card Template - Duplicate and modify for each race -->
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>ADAM WATSON PHOTO</h1>
+        <p>Professional Race Photography</p>
+    </section>
+
+    <!-- Portfolio Carousel -->
+    <section class="portfolio-section">
+        <div class="container">
+            <h2 class="section-title">Portfolio</h2>
             
-            <!-- Example Race 1 -->
-            <div class="race-card" onclick="window.location.href='2025-iceman-pro.html'">
-                <div class="race-header">
-                    <div class="race-name">Iceman Cometh</div>
-                    <div class="race-date">November 2025</div>
-                </div>
-                <div class="race-info">
-                    <div class="race-details">
-                        Pro Category • Traverse City, MI
+            <div class="carousel-container">
+                <div class="carousel" id="carousel">
+                    <!-- Add your portfolio images here -->
+                    <div class="carousel-item">
+                        <img src="portfolio/image1.jpg" alt="Portfolio Image 1">
                     </div>
-                    <div class="race-stats">
-                        <div class="stat">
-                            <div class="stat-number">500+</div>
-                            <div class="stat-label">Photos</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-number">200</div>
-                            <div class="stat-label">Racers</div>
-                        </div>
+                    <div class="carousel-item">
+                        <img src="portfolio/image2.jpg" alt="Portfolio Image 2">
                     </div>
-                    <div class="status-badge status-available">✓ Photos Available</div>
+                    <div class="carousel-item">
+                        <img src="portfolio/image3.jpg" alt="Portfolio Image 3">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="portfolio/image4.jpg" alt="Portfolio Image 4">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="portfolio/image5.jpg" alt="Portfolio Image 5">
+                    </div>
                 </div>
-                <a href="2025-iceman-pro.html" class="view-button">Search Photos</a>
+                
+                <button class="carousel-btn prev" onclick="moveCarousel(-1)">‹</button>
+                <button class="carousel-btn next" onclick="moveCarousel(1)">›</button>
             </div>
             
-            <!-- Example Race 2 -->
-            <div class="race-card" onclick="window.location.href='#'">
-                <div class="race-header">
-                    <div class="race-name">[Race Name]</div>
-                    <div class="race-date">[Date]</div>
-                </div>
-                <div class="race-info">
-                    <div class="race-details">
-                        [Category] • [Location]
-                    </div>
-                    <div class="race-stats">
-                        <div class="stat">
-                            <div class="stat-number">XXX</div>
-                            <div class="stat-label">Photos</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-number">XXX</div>
-                            <div class="stat-label">Racers</div>
-                        </div>
-                    </div>
-                    <div class="status-badge status-coming-soon">Coming Soon</div>
-                </div>
-                <a href="#" class="view-button">Search Photos</a>
-            </div>
-            
-            <!-- Example Race 3 -->
-            <div class="race-card" onclick="window.location.href='#'">
-                <div class="race-header">
-                    <div class="race-name">[Race Name]</div>
-                    <div class="race-date">[Date]</div>
-                </div>
-                <div class="race-info">
-                    <div class="race-details">
-                        [Category] • [Location]
-                    </div>
-                    <div class="race-stats">
-                        <div class="stat">
-                            <div class="stat-number">XXX</div>
-                            <div class="stat-label">Photos</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-number">XXX</div>
-                            <div class="stat-label">Racers</div>
-                        </div>
-                    </div>
-                    <div class="status-badge status-coming-soon">Coming Soon</div>
-                </div>
-                <a href="#" class="view-button">Search Photos</a>
-            </div>
-            
+            <div class="carousel-indicators" id="indicators"></div>
         </div>
-        
-        <div class="contact-info">
-            <h3>Questions or Need Help?</h3>
-            <p>Can't find your photos? Have questions about purchasing?</p>
-            <p>Email: <a href="mailto:email@adamwatsonphoto.com">email@adamwatsonphoto.com</a></p>
-            <p>Phone: <a href="tel:+17346492867">(734) 649-2867</a></p>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="contact-content">
+            <h2>Contact Me</h2>
+            <p>Don't hesitate to drop me a message. Let's chat about your needs and how I can help capture your next event.</p>
+            <a href="mailto:email@adamwatsonphoto.com" class="contact-email">email@adamwatsonphoto.com</a>
         </div>
-    </div>
-    
+    </section>
+
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2026 Adam Watson Photo | Professional Race Photography</p>
-        <p><a href="mailto:your@email.com">Contact</a> | <a href="#">About</a></p>
+        <ul class="footer-nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="albums.html">Albums</a></li>
+            <li><a href="https://www.instagram.com/adamwatson.photo/" target="_blank" class="instagram-link"><img src="images/instagram-icon.png" alt="Instagram" class="instagram-icon"></a></li>
+        </ul>
+        <p class="copyright">&copy; 2025 Adam Watson Photo. All rights reserved.</p>
     </footer>
+
+    <script>
+        // Carousel functionality
+        let currentSlide = 0;
+        const carousel = document.getElementById('carousel');
+        const items = document.querySelectorAll('.carousel-item');
+        const indicatorsContainer = document.getElementById('indicators');
+        
+        // Create indicators
+        items.forEach((_, index) => {
+            const indicator = document.createElement('span');
+            indicator.className = 'indicator';
+            if (index === 0) indicator.classList.add('active');
+            indicator.onclick = () => goToSlide(index);
+            indicatorsContainer.appendChild(indicator);
+        });
+        
+        const indicators = document.querySelectorAll('.indicator');
+        
+        function updateCarousel() {
+            carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
+            indicators.forEach((ind, index) => {
+                ind.classList.toggle('active', index === currentSlide);
+            });
+        }
+        
+        function moveCarousel(direction) {
+            currentSlide += direction;
+            if (currentSlide < 0) currentSlide = items.length - 1;
+            if (currentSlide >= items.length) currentSlide = 0;
+            updateCarousel();
+        }
+        
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+        }
+        
+        // Auto-advance carousel every 5 seconds
+        setInterval(() => {
+            moveCarousel(1);
+        }, 5000);
+    </script>
 </body>
 </html>

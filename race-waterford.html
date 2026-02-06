@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waterford Summer Race Series | Adam Watson Photo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+        
+        /* Navigation */
+        nav {
+            background: #0a0a0a;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1.1em;
+        }
+        
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+        
+        .instagram-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: #888;
+            transition: color 0.3s;
+        }
+        
+        .instagram-link:hover {
+        }
+        
+        .instagram-link:hover .instagram-icon {
+            filter: brightness(1);
+            opacity: 0.7;
+        }
+        
+        .instagram-icon {
+            width: 24px;
+            height: 24px;
+            filter: brightness(0.6);
+            transition: filter 0.3s;
+            font-size: 1.2em;
+            color: #fff;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 30px auto 0;
+            padding: 0 20px;
+        }
+        
+        .breadcrumb a {
+            color: #888;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .breadcrumb a:hover {
+            color: #fff;
+        }
+        
+        .breadcrumb span {
+            color: #555;
+            margin: 0 10px;
+        }
+        
+        /* Years Section */
+        .years-section {
+            max-width: 1200px;
+            margin: 50px auto 80px;
+            padding: 0 20px;
+        }
+        
+        .years-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .years-header h1 {
+            font-size: 3em;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+        
+        .years-header p {
+            font-size: 1.2em;
+            color: #999;
+        }
+        
+        .years-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .year-card {
+            background: #0f0f0f;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border: 1px solid #222;
+            text-align: center;
+            padding: 50px 30px;
+        }
+        
+        .year-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.5);
+            border-color: #444;
+            background: #1a1a1a;
+        }
+        
+        .year-number {
+            font-size: 3em;
+            font-weight: 300;
+            color: #ffffff;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+        
+        .year-info {
+            color: #888;
+            font-size: 1em;
+        }
+        
+        .year-stats {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #222;
+        }
+        
+        .stat {
+            color: #666;
+            font-size: 0.9em;
+            margin: 5px 0;
+        }
+        
+        /* Footer */
+        footer {
+            background: #0a0a0a;
+            padding: 40px 20px;
+            border-top: 1px solid #222;
+            margin-top: 80px;
+        }
+        
+        .footer-nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        
+        .footer-nav a {
+            color: #888;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-nav a:hover {
+            color: #fff;
+        }
+        
+        .copyright {
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 15px;
+                justify-content: center;
+            }
+            
+            .years-header h1 {
+                font-size: 2.5em;
+            }
+            
+            .years-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="albums.html">Albums</a></li>
+                <li><a href="https://www.instagram.com/adamwatson.photo/" target="_blank" class="instagram-link"><img src="images/instagram-icon.png" alt="Instagram" class="instagram-icon"></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="albums.html">Albums</a>
+        <span>›</span>
+        <span>Waterford Summer Race Series</span>
+    </div>
+
+    <!-- Years Section -->
+    <section class="years-section">
+        <div class="years-header">
+            <h1>Waterford Summer Race Series</h1>
+            <p>Select a race to view photos</p>
+        </div>
+        
+        <div class="years-grid">
+            <!-- 2025 -->
+            <div class="year-card" onclick="window.location.href='waterford-20250827.html'">
+                <div class="year-number">August 27th</div>
+                <div class="year-info">2025</div>
+                <div class="year-stats">
+                    <div class="stat">500+ Photos</div>
+                    <div class="stat">200 Racers</div>
+                </div>
+            </div>
+
+        <div class="years-grid">
+            <!-- 2025 -->
+            <div class="year-card" onclick="window.location.href='waterford-20250709.html'">
+                <div class="year-number">July 9th</div>
+                <div class="year-info">2025</div>
+                <div class="year-stats">
+                    <div class="stat">500+ Photos</div>
+                    <div class="stat">200 Racers</div>
+                </div>
+            </div>
+
+            <!-- Add more years here -->
+            <!-- Template:
+            <div class="year-card" onclick="window.location.href='iceman-YEAR.html'">
+                <div class="year-number">YEAR</div>
+                <div class="year-info">[Category/Description]</div>
+                <div class="year-stats">
+                    <div class="stat">XXX Photos</div>
+                    <div class="stat">XXX Racers</div>
+                </div>
+            </div>
+            -->
+            
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <ul class="footer-nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="albums.html">Albums</a></li>
+            <li><a href="https://www.instagram.com/adamwatson.photo/" target="_blank" class="instagram-link"><img src="images/instagram-icon.png" alt="Instagram" class="instagram-icon"></a></li>
+        </ul>
+        <p class="copyright">&copy; 2025 Adam Watson Photo. All rights reserved.</p>
+    </footer>
+</body>
+</html>
