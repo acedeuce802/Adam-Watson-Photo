@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Waterford Summer Race Series Photos | Adam Watson Photo</title>
+    <title>Cyclocross Albums | Adam Watson Photo</title>
 <style>
         * {
             margin: 0;
@@ -87,52 +87,115 @@
             filter: brightness(1);
         }
         
-        .placeholder {
-            max-width: 800px;
-            margin: 100px auto;
-            padding: 60px 40px;
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 30px auto 0;
+            padding: 0 20px;
+        }
+        
+        .breadcrumb a {
+            color: #888;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .breadcrumb a:hover {
+            color: #fff;
+        }
+        
+        .breadcrumb span {
+            color: #555;
+            margin: 0 10px;
+        }
+        
+        .races-section {
+            max-width: 1200px;
+            margin: 50px auto 80px;
+            padding: 0 20px;
+        }
+        
+        .races-header {
             text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .races-header h1 {
+            font-size: 3em;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+        
+        .races-header p {
+            font-size: 1.2em;
+            color: #999;
+        }
+        
+        .races-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .race-card {
             background: #0f0f0f;
             border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
             border: 1px solid #222;
-        }
-        
-        .placeholder h1 {
-            font-size: 2.5em;
-            font-weight: 300;
-            color: #ffffff;
-            margin-bottom: 20px;
-        }
-        
-        .placeholder p {
-            font-size: 1.2em;
-            color: #888;
-            line-height: 1.8;
-            margin-bottom: 15px;
-        }
-        
-        .back-link {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 12px 30px;
-            background: #2a2a2a;
-            color: #fff;
+            display: block;
             text-decoration: none;
-            border-radius: 5px;
-            transition: background 0.3s;
+            color: inherit;
         }
         
-        .back-link:hover {
-            background: #333;
+        .race-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.5);
+            border-color: #333;
+        }
+        
+        .race-thumbnail {
+            width: 100%;
+            height: 200px;
+            background: #2a2a2a;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .race-info {
+            padding: 20px;
+        }
+        
+        .race-name {
+            font-size: 1.3em;
+            font-weight: 400;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+        
+        .race-date {
+            color: #888;
+            font-size: 0.95em;
+            margin-bottom: 5px;
+        }
+        
+        .race-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #2a2a2a;
+            border-radius: 4px;
+            font-size: 0.85em;
+            margin-top: 10px;
+            color: #aaa;
         }
         
         footer {
             background: #0a0a0a;
             padding: 40px 20px;
             border-top: 1px solid #222;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
         }
         
         .footer-nav {
@@ -160,6 +223,22 @@
             color: #666;
             font-size: 0.9em;
         }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 15px;
+                justify-content: center;
+            }
+            
+            .races-header h1 {
+                font-size: 2.5em;
+            }
+            
+            .races-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -174,16 +253,39 @@
         </div>
     </nav>
 
-    <div class="placeholder">
-        <h1>Waterford Summer Race Series</h1>
-        <p>Clarkston, MI</p>
-        <p>July 9, 2025</p>
-        <p style="margin-top: 40px; color: #666;">
-            Photos coming soon!<br>
-            This page will be replaced with the full race gallery.
-        </p>
-        <a href="albums.html" class="back-link">← Back to Albums</a>
+    <div class="breadcrumb">
+        <a href="albums.html">Albums</a>
+        <span>›</span>
+        <span>Cyclocross</span>
     </div>
+
+    <section class="races-section">
+        <div class="races-header">
+            <h1>Cyclocross Albums</h1>
+            <p>Sorted newest to oldest</p>
+        </div>
+        
+        <div class="races-grid">
+            <a href="dicxcyclocross-20251025.html" class="race-card">
+                <img src="images/thumbnails/dicxcyclocross-20251025.jpg" alt="DICX Cyclocross" class="race-thumbnail">
+                <div class="race-info">
+                    <div class="race-name">DICX Cyclocross</div>
+                    <div class="race-date">October 25, 2025</div>
+                    
+                </div>
+            </a>
+            
+            <a href="crankcross-20250927.html" class="race-card">
+                <img src="images/thumbnails/crankcross-20250927.jpg" alt="Crank Cross" class="race-thumbnail">
+                <div class="race-info">
+                    <div class="race-name">Crank Cross</div>
+                    <div class="race-date">September 27, 2025</div>
+                    
+                </div>
+            </a>
+            
+        </div>
+    </section>
 
     <footer>
         <ul class="footer-nav">

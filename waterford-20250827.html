@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>August 27th, 2025 Waterford Race Photos | Adam Watson Photo</title>
-    <style>
+    <title>Waterford Summer Race Series Photos | Adam Watson Photo</title>
+<style>
         * {
             margin: 0;
             padding: 0;
@@ -18,7 +18,6 @@
             line-height: 1.6;
         }
         
-        /* Navigation */
         nav {
             background: #0a0a0a;
             padding: 20px 0;
@@ -57,19 +56,22 @@
         }
         
         .instagram-link {
+            color: #888;
+            transition: color 0.3s, opacity 0.3s;
             display: inline-flex;
             align-items: center;
             gap: 5px;
-            color: #888;
-            transition: color 0.3s;
+            text-decoration: none;
+            border: none;
+            outline: none;
         }
         
         .instagram-link:hover {
+            opacity: 0.7;
         }
         
-        .instagram-link:hover .instagram-icon {
-            filter: brightness(1);
-            opacity: 0.7;
+        .instagram-link:focus {
+            outline: none;
         }
         
         .instagram-icon {
@@ -77,238 +79,60 @@
             height: 24px;
             filter: brightness(0.6);
             transition: filter 0.3s;
-            font-size: 1.2em;
-            color: #fff;
-        }
-        
-        /* Breadcrumb */
-        .breadcrumb {
-            max-width: 1200px;
-            margin: 30px auto 0;
-            padding: 0 20px;
-        }
-        
-        .breadcrumb a {
-            color: #888;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .breadcrumb a:hover {
-            color: #fff;
-        }
-        
-        .breadcrumb span {
-            color: #555;
-            margin: 0 10px;
-        }
-        
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Header */
-        header {
-            background: linear-gradient(to bottom, #0a0a0a, #1a1a1a);
-            padding: 50px 20px;
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        h1 {
-            color: #ffffff;
-            margin-bottom: 10px;
-            font-size: 3em;
-            font-weight: 300;
-            letter-spacing: 2px;
-        }
-        
-        .subtitle {
-            color: #999;
-            font-size: 1.2em;
-            font-weight: 300;
-        }
-        
-        /* Instructions */
-        .instructions {
-            background: #0f0f0f;
-            padding: 25px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            border: 1px solid #222;
-        }
-        
-        .instructions h3 {
-            margin-bottom: 15px;
-            color: #fff;
-            font-weight: 400;
-            font-size: 1.2em;
-        }
-        
-        .instructions ul {
-            margin-left: 20px;
-            color: #b0b0b0;
-        }
-        
-        .instructions li {
-            margin: 8px 0;
-        }
-        
-        /* Search Box */
-        .search-box {
-            background: #0f0f0f;
-            padding: 30px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            border: 1px solid #222;
-        }
-        
-        .search-box p {
-            margin-bottom: 15px;
-            color: #999;
-            text-align: center;
-        }
-        
-        .search-input-group {
-            display: flex;
-            gap: 10px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        #searchInput {
-            flex: 1;
-            padding: 15px 20px;
-            font-size: 16px;
-            border: 1px solid #333;
-            border-radius: 5px;
-            background: #1a1a1a;
-            color: #e0e0e0;
-            transition: border-color 0.3s;
-        }
-        
-        #searchInput:focus {
-            outline: none;
-            border-color: #555;
-        }
-        
-        button {
-            padding: 15px 30px;
-            font-size: 16px;
-            background: #333;
-            color: white;
+            display: block;
             border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-            font-weight: 500;
         }
         
-        button:hover {
-            background: #444;
+        .instagram-link:hover .instagram-icon {
+            filter: brightness(1);
         }
         
-        #clearBtn {
-            background: #2a2a2a;
-        }
-        
-        #clearBtn:hover {
-            background: #333;
-        }
-        
-        /* Results Info */
-        .results-info {
+        .placeholder {
+            max-width: 800px;
+            margin: 100px auto;
+            padding: 60px 40px;
             text-align: center;
-            margin-bottom: 30px;
-            font-size: 1.1em;
-            color: #999;
-        }
-        
-        /* Gallery */
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-            margin-bottom: 50px;
-        }
-        
-        .photo-card {
             background: #0f0f0f;
             border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
             border: 1px solid #222;
         }
         
-        .photo-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.5);
-            border-color: #333;
-        }
-        
-        .photo-card img {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            background: #0a0a0a;
-        }
-        
-        .photo-placeholder {
-            width: 100%;
-            height: 220px;
-            background: #2a2a2a;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #666;
+        .placeholder h1 {
             font-size: 2.5em;
             font-weight: 300;
+            color: #ffffff;
+            margin-bottom: 20px;
         }
         
-        .photo-info {
-            padding: 20px;
-        }
-        
-        .race-number {
-            font-size: 1.5em;
-            font-weight: 400;
-            color: #fff;
-            margin-bottom: 8px;
-            letter-spacing: 1px;
-        }
-        
-        .filename {
-            color: #666;
-            font-size: 0.9em;
-        }
-        
-        /* No Results */
-        .no-results {
-            background: #0f0f0f;
-            padding: 60px;
-            border-radius: 8px;
-            text-align: center;
-            color: #999;
-            border: 1px solid #222;
-        }
-        
-        .no-results h3 {
-            color: #fff;
+        .placeholder p {
+            font-size: 1.2em;
+            color: #888;
+            line-height: 1.8;
             margin-bottom: 15px;
-            font-weight: 400;
         }
         
-        /* Footer */
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 30px;
+            background: #2a2a2a;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .back-link:hover {
+            background: #333;
+        }
+        
         footer {
             background: #0a0a0a;
             padding: 40px 20px;
             border-top: 1px solid #222;
-            margin-top: 80px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
         }
         
         .footer-nav {
@@ -336,31 +160,9 @@
             color: #666;
             font-size: 0.9em;
         }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                flex-wrap: wrap;
-                gap: 15px;
-                justify-content: center;
-            }
-            
-            h1 {
-                font-size: 2.5em;
-            }
-            
-            .search-input-group {
-                flex-direction: column;
-            }
-            
-            .gallery {
-                grid-template-columns: 1fr;
-            }
-        }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
     <nav>
         <div class="nav-container">
             <ul class="nav-links">
@@ -372,55 +174,17 @@
         </div>
     </nav>
 
-    <!-- Breadcrumb -->
-    <div class="breadcrumb">
-        <a href="albums.html">Albums</a>
-        <span>›</span>
-        <a href="race-iceman.html">Waterford Summer Race Series</a>
-        <span>›</span>
-        <span>August 27th, 2025</span>
+    <div class="placeholder">
+        <h1>Waterford Summer Race Series</h1>
+        <p>Clarkston, MI</p>
+        <p>August 27, 2025</p>
+        <p style="margin-top: 40px; color: #666;">
+            Photos coming soon!<br>
+            This page will be replaced with the full race gallery.
+        </p>
+        <a href="albums.html" class="back-link">← Back to Albums</a>
     </div>
 
-    <!-- Header -->
-    <header>
-        <h1>August 27th Waterford Race Photos</h1>
-    </header>
-    
-    <div class="container">
-        <!-- Instructions -->
-        <div class="instructions">
-            <h3>How to find your photos:</h3>
-            <ul>
-                <li>Scroll through all photos below</li>
-                <li>Or search by race number to filter (e.g., 4280)</li>
-                <li>Click any photo to view full size on Flickr</li>
-                <li>Download or share directly from Flickr</li>
-            </ul>
-        </div>
-        
-        <!-- Search Box -->
-        <div class="search-box">
-            <p>Browse all photos below, or search by race number to filter:</p>
-            <div class="search-input-group">
-                <input 
-                    type="text" 
-                    id="searchInput" 
-                    placeholder="Search by race number (optional)..."
-                    autocomplete="off"
-                >
-                <button id="searchBtn">Filter</button>
-                <button id="clearBtn">Show All</button>
-            </div>
-        </div>
-        
-        <!-- Results Info -->
-        <div id="resultsInfo" class="results-info"></div>
-        
-        <!-- Gallery -->
-        <div id="gallery" class="gallery"></div>
-    </div>
-    
-    <!-- Footer -->
     <footer>
         <ul class="footer-nav">
             <li><a href="index.html">Home</a></li>
@@ -430,225 +194,5 @@
         </ul>
         <p class="copyright">&copy; 2025 Adam Watson Photo. All rights reserved.</p>
     </footer>
-
-    <script>
-        // Photo data - will be populated from your CSV
-        let photoData = [];
-        
-        // Load photo data (this will be generated from your CSV)
-        photoData = [
-            {
-                raceNumber: '4280',
-                filename: '_75A3831.jpg',
-                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079246263/in/album-72177720331872329/',
-                photoId: 'album-72177720331872329'
-            },
-            {
-                raceNumber: '6069',
-                filename: '_75A3833.jpg',
-                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079303714/in/album-72177720331872329/',
-                photoId: 'album-72177720331872329'
-            },
-            {
-                raceNumber: '3638',
-                filename: '_75A3838.jpg',
-                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55078148957/in/album-72177720331872329/',
-                photoId: 'album-72177720331872329'
-            },
-            {
-                raceNumber: '4668',
-                filename: '_75A3841.jpg',
-                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079246223/in/album-72177720331872329/',
-                photoId: 'album-72177720331872329'
-            },
-            {
-                raceNumber: '4423',
-                filename: '_75A3844.jpg',
-                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079047311/in/album-72177720331872329/',
-                photoId: 'album-72177720331872329'
-            },
-            {
-                raceNumber: '4329',
-                filename: '_75A3847.jpg',
-                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079047261/in/album-72177720331872329/',
-                photoId: 'album-72177720331872329'
-            },
-            {
-                raceNumber: '112',
-                filename: '_75A3853.jpg',
-                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079047111/in/album-72177720331872329/',
-                photoId: 'album-72177720331872329'
-            },
-            {
-                raceNumber: '112',
-                filename: '_75A3858.jpg',
-                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079046981/in/album-72177720331872329/',
-                photoId: 'album-72177720331872329'
-            },
-            {
-                raceNumber: '112',
-                filename: '_75A3860.jpg',
-                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079047041/in/album-72177720331872329/',
-                photoId: 'album-72177720331872329'
-            },
-            {
-                raceNumber: '112',
-                filename: '_75A3862.jpg',
-                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079407595/in/album-72177720331872329/',
-                photoId: 'album-72177720331872329'
-            },
-            {
-                raceNumber: '112',
-                filename: '_75A3863.jpg',
-                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079046881/in/album-72177720331872329/',
-                photoId: 'album-72177720331872329'
-            },
-            {
-                raceNumber: '112',
-                filename: '_75A3864.jpg',
-                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079303269/in/album-72177720331872329/',
-                photoId: 'album-72177720331872329'
-            },
-            {
-                raceNumber: '112',
-                filename: '_75A3865.jpg',
-                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079245783/in/album-72177720331872329/',
-                photoId: 'album-72177720331872329'
-            },
-            {
-                raceNumber: '84',
-                filename: '_75A3866.jpg',
-                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079046846/in/album-72177720331872329/',
-                photoId: 'album-72177720331872329'
-            },
-            {
-                raceNumber: '84',
-                filename: '_75A3867.jpg',
-                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079407120/in/album-72177720331872329/',
-                photoId: 'album-72177720331872329'
-            },
-            {
-                raceNumber: '73',
-                filename: '_75A3874.jpg',
-                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079407155/in/album-72177720331872329/',
-                photoId: 'album-72177720331872329'
-            },
-            {
-                raceNumber: '73',
-                filename: '_75A3875.jpg',
-                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55079407145/in/album-72177720331872329/',
-                photoId: 'album-72177720331872329'
-            },
-            {
-                raceNumber: '73',
-                filename: '_75A3876.jpg',
-                flickrUrl: 'https://www.flickr.com/photos/acedeuce802/55078148402/in/album-72177720331872329/',
-                photoId: 'album-72177720331872329'
-            },
-        ];
-        
-        const searchInput = document.getElementById('searchInput');
-        const searchBtn = document.getElementById('searchBtn');
-        const clearBtn = document.getElementById('clearBtn');
-        const gallery = document.getElementById('gallery');
-        const resultsInfo = document.getElementById('resultsInfo');
-        
-        // Show all photos on page load
-        window.addEventListener('DOMContentLoaded', () => {
-            if (photoData.length > 0) {
-                displayResults(photoData, null);
-            }
-        });
-        
-        // Search/filter functionality
-        function searchPhotos() {
-            const searchTerm = searchInput.value.trim();
-            
-            if (!searchTerm) {
-                displayResults(photoData, null);
-                return;
-            }
-            
-            const results = photoData.filter(photo => 
-                photo.raceNumber.includes(searchTerm)
-            );
-            
-            displayResults(results, searchTerm);
-        }
-        
-        // Clear search and show all
-        function clearSearch() {
-            searchInput.value = '';
-            displayResults(photoData, null);
-        }
-        
-        function displayResults(results, searchTerm) {
-            gallery.innerHTML = '';
-            
-            if (results.length === 0) {
-                resultsInfo.innerHTML = searchTerm 
-                    ? `No photos found for race number "${searchTerm}"`
-                    : 'No photos available yet';
-                gallery.innerHTML = `
-                    <div class="no-results">
-                        <h3>No photos found</h3>
-                        <p>${searchTerm ? 'Try a different race number' : 'Photos will be added soon'}</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            // Update results info
-            if (searchTerm) {
-                resultsInfo.innerHTML = `Showing ${results.length} photo${results.length > 1 ? 's' : ''} for race number "${searchTerm}"`;
-            } else {
-                resultsInfo.innerHTML = `Showing all ${results.length} photos • Use search to filter by race number`;
-            }
-            
-            results.forEach(photo => {
-                const card = document.createElement('div');
-                card.className = 'photo-card';
-                card.onclick = () => window.open(photo.flickrUrl, '_blank');
-                
-                // Check if we have thumbnail URL (from API version)
-                if (photo.thumbnailUrl) {
-                    card.innerHTML = `
-                        <img src="${photo.thumbnailUrl}" alt="Race #${photo.raceNumber}" loading="lazy">
-                        <div class="photo-info">
-                            <div class="race-number">#${photo.raceNumber}</div>
-                            <div class="filename">${photo.filename}</div>
-                        </div>
-                    `;
-                } else {
-                    // Fallback for manual CSV version (no API yet)
-                    card.innerHTML = `
-                        <div class="photo-placeholder">#${photo.raceNumber}</div>
-                        <div class="photo-info">
-                            <div class="race-number">#${photo.raceNumber}</div>
-                            <div class="filename">${photo.filename}</div>
-                        </div>
-                    `;
-                }
-                
-                gallery.appendChild(card);
-            });
-        }
-        
-        // Event listeners
-        searchBtn.addEventListener('click', searchPhotos);
-        clearBtn.addEventListener('click', clearSearch);
-        searchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                searchPhotos();
-            }
-        });
-        
-        // Live filtering as user types
-        searchInput.addEventListener('input', () => {
-            if (searchInput.value.trim() === '') {
-                displayResults(photoData, null);
-            }
-        });
-    </script>
 </body>
 </html>

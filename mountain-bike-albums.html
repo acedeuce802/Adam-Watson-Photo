@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Albums | Adam Watson Photo</title>
-    <style>
+    <title>Mountain Bike Albums | Adam Watson Photo</title>
+<style>
         * {
             margin: 0;
             padding: 0;
@@ -18,7 +18,6 @@
             line-height: 1.6;
         }
         
-        /* Navigation */
         nav {
             background: #0a0a0a;
             padding: 20px 0;
@@ -88,40 +87,58 @@
             filter: brightness(1);
         }
         
-        /* Albums Section */
-        .albums-section {
-            max-width: 1400px;
-            margin: 80px auto;
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 30px auto 0;
             padding: 0 20px;
         }
         
-        .albums-header {
+        .breadcrumb a {
+            color: #888;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .breadcrumb a:hover {
+            color: #fff;
+        }
+        
+        .breadcrumb span {
+            color: #555;
+            margin: 0 10px;
+        }
+        
+        .races-section {
+            max-width: 1200px;
+            margin: 50px auto 80px;
+            padding: 0 20px;
+        }
+        
+        .races-header {
             text-align: center;
             margin-bottom: 60px;
         }
         
-        .albums-header h1 {
+        .races-header h1 {
             font-size: 3em;
             font-weight: 300;
             letter-spacing: 2px;
             color: #ffffff;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
         
-        .albums-header p {
+        .races-header p {
             font-size: 1.2em;
             color: #999;
         }
         
-        /* Discipline Grid */
-        .disciplines-grid {
+        .races-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 30px;
-            margin-bottom: 80px;
         }
         
-        .discipline-card {
+        .race-card {
             background: #0f0f0f;
             border-radius: 8px;
             overflow: hidden;
@@ -129,48 +146,56 @@
             transition: transform 0.3s, box-shadow 0.3s;
             cursor: pointer;
             border: 1px solid #222;
+            display: block;
             text-decoration: none;
             color: inherit;
-            display: block;
         }
         
-        .discipline-card:hover {
+        .race-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 15px rgba(0,0,0,0.5);
-            border-color: #444;
+            border-color: #333;
         }
         
-        .discipline-thumbnail {
+        .race-thumbnail {
             width: 100%;
-            height: 250px;
+            height: 200px;
             background: #2a2a2a;
             object-fit: cover;
             display: block;
         }
         
-        .discipline-info {
-            padding: 25px;
-            text-align: center;
+        .race-info {
+            padding: 20px;
         }
         
-        .discipline-name {
-            font-size: 1.5em;
+        .race-name {
+            font-size: 1.3em;
             font-weight: 400;
             color: #ffffff;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         
-        .discipline-count {
+        .race-date {
             color: #888;
             font-size: 0.95em;
+            margin-bottom: 5px;
         }
         
-        /* Footer */
+        .race-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #2a2a2a;
+            border-radius: 4px;
+            font-size: 0.85em;
+            margin-top: 10px;
+            color: #aaa;
+        }
+        
         footer {
             background: #0a0a0a;
             padding: 40px 20px;
             border-top: 1px solid #222;
-            margin-top: 80px;
         }
         
         .footer-nav {
@@ -199,7 +224,6 @@
             font-size: 0.9em;
         }
         
-        /* Responsive */
         @media (max-width: 768px) {
             .nav-links {
                 flex-wrap: wrap;
@@ -207,18 +231,17 @@
                 justify-content: center;
             }
             
-            .albums-header h1 {
+            .races-header h1 {
                 font-size: 2.5em;
             }
             
-            .disciplines-grid {
+            .races-grid {
                 grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
     <nav>
         <div class="nav-container">
             <ul class="nav-links">
@@ -230,58 +253,58 @@
         </div>
     </nav>
 
-    <!-- Albums Section -->
-    <section class="albums-section">
-        <div class="albums-header">
-            <h1>Race Photo Albums</h1>
-            <p>Browse by cycling discipline</p>
+    <div class="breadcrumb">
+        <a href="albums.html">Albums</a>
+        <span>›</span>
+        <span>Mountain Bike</span>
+    </div>
+
+    <section class="races-section">
+        <div class="races-header">
+            <h1>Mountain Bike Albums</h1>
+            <p>Sorted newest to oldest</p>
         </div>
         
-        <!-- Discipline Categories with Thumbnails -->
-        <div class="disciplines-grid">
-            <a href="mountain-bike-albums.html" class="discipline-card">
-                <img src="images/thumbnails/mountain-bike.jpg" alt="Mountain Bike" class="discipline-thumbnail">
-                <div class="discipline-info">
-                    <div class="discipline-name">Mountain Bike</div>
-                    <div class="discipline-count">4 races</div>
+        <div class="races-grid">
+            <a href="iceman-20251108.html" class="race-card">
+                <img src="images/thumbnails/iceman-20251108.jpg" alt="Iceman Cometh" class="race-thumbnail">
+                <div class="race-info">
+                    <div class="race-name">Iceman Cometh</div>
+                    <div class="race-date">November 8, 2025</div>
+                    <span class="race-badge">Race Numbers</span>
                 </div>
             </a>
             
-            <a href="gravel-albums.html" class="discipline-card">
-                <img src="images/thumbnails/gravel.jpg" alt="Gravel" class="discipline-thumbnail">
-                <div class="discipline-info">
-                    <div class="discipline-name">Gravel</div>
-                    <div class="discipline-count">1 race</div>
+            <a href="biketoberfest-20251004.html" class="race-card">
+                <img src="images/thumbnails/biketoberfest-20251004.jpg" alt="Biketoberfest" class="race-thumbnail">
+                <div class="race-info">
+                    <div class="race-name">Biketoberfest</div>
+                    <div class="race-date">October 4, 2025</div>
+                    
                 </div>
             </a>
             
-            <a href="road-albums.html" class="discipline-card">
-                <img src="images/thumbnails/road.jpg" alt="Road" class="discipline-thumbnail">
-                <div class="discipline-info">
-                    <div class="discipline-name">Road</div>
-                    <div class="discipline-count">4 races</div>
+            <a href="treefarmrelay-20250725.html" class="race-card">
+                <img src="images/thumbnails/treefarmrelay-20250725.jpg" alt="Tree Farm Relay" class="race-thumbnail">
+                <div class="race-info">
+                    <div class="race-name">Tree Farm Relay</div>
+                    <div class="race-date">July 25, 2025</div>
+                    
                 </div>
             </a>
             
-            <a href="cyclocross-albums.html" class="discipline-card">
-                <img src="images/thumbnails/cyclocross.jpg" alt="Cyclocross" class="discipline-thumbnail">
-                <div class="discipline-info">
-                    <div class="discipline-name">Cyclocross</div>
-                    <div class="discipline-count">2 races</div>
+            <a href="islandlakechallenge-20250601.html" class="race-card">
+                <img src="images/thumbnails/islandlakechallenge-20250601.jpg" alt="Island Lake Challenge" class="race-thumbnail">
+                <div class="race-info">
+                    <div class="race-name">Island Lake Challenge</div>
+                    <div class="race-date">June 1, 2025</div>
+                    
                 </div>
             </a>
             
-            <a href="track-albums.html" class="discipline-card">
-                <img src="images/thumbnails/track.jpg" alt="Track Cycling" class="discipline-thumbnail">
-                <div class="discipline-info">
-                    <div class="discipline-name">Track Cycling</div>
-                    <div class="discipline-count">1 race</div>
-                </div>
-            </a>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <ul class="footer-nav">
             <li><a href="index.html">Home</a></li>
