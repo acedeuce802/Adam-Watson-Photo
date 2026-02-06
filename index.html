@@ -371,6 +371,28 @@
         const items = document.querySelectorAll('.carousel-item');
         const indicatorsContainer = document.getElementById('indicators');
         
+        // OPTION: Shuffle carousel images on page load
+        // Set to true for random order, false for sequential order
+        const SHUFFLE_IMAGES = true;
+        
+        // Shuffle function
+        function shuffleArray(array) {
+            const shuffled = Array.from(array);
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+        
+        // Shuffle carousel items if enabled
+        if (SHUFFLE_IMAGES) {
+            const itemsArray = Array.from(items);
+            const shuffled = shuffleArray(itemsArray);
+            carousel.innerHTML = '';
+            shuffled.forEach(item => carousel.appendChild(item));
+        }
+        
         // Create indicators
         items.forEach((_, index) => {
             const indicator = document.createElement('span');
