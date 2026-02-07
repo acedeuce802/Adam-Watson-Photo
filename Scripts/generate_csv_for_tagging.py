@@ -23,13 +23,14 @@ def generate_tagging_csv(json_file, output_csv):
         writer = csv.writer(f)
         
         # Header
-        writer.writerow(['photo_number', 'guest_pass_url', 'race_number'])
+        writer.writerow(['photo_number', 'guest_pass_url', 'thumbnail_url', 'race_number'])
         
         # Data rows (race_number column empty for manual filling)
         for item in links:
             writer.writerow([
                 item['photo_number'],
                 item['guest_pass_url'],
+                item.get('thumbnail_url', ''),  # Include thumbnail if available
                 ''  # Empty race_number for user to fill
             ])
     

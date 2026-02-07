@@ -23,6 +23,7 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file)
                 photos.append({
                     'number': row['photo_number'],
                     'url': row['guest_pass_url'],
+                    'thumbnail': row.get('thumbnail_url', ''),
                     'race_number': row['race_number'].strip()
                 })
     
@@ -194,6 +195,9 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file)
             overflow: hidden;
             border: 1px solid #222;
             transition: transform 0.3s;
+            display: block;
+            text-decoration: none;
+            color: inherit;
         }}
         
         .photo-card:hover {{
@@ -201,11 +205,23 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file)
             border-color: #444;
         }}
         
-        .photo-card iframe {{
+        .photo-thumbnail {{
             width: 100%;
             height: 250px;
-            border: none;
-            display: block;
+            background: #2a2a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 3em;
+            position: relative;
+            overflow: hidden;
+        }}
+        
+        .photo-thumbnail img {{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }}
         
         .photo-info {{
@@ -326,12 +342,14 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file)
             noResults.style.display = 'none';
             
             gallery.innerHTML = photos.map(photo => `
-                <div class="photo-card">
-                    <iframe src="${{photo.url}}/player/" frameborder="0" allowfullscreen></iframe>
+                <a href="${{photo.url}}" target="_blank" class="photo-card">
+                    <div class="photo-thumbnail">
+                        ${{photo.thumbnail ? `<img src="${{photo.thumbnail}}" alt="Race photo">` : '📷'}}
+                    </div>
                     <div class="photo-info">
                         <span class="race-number-badge">#${{photo.race_number}}</span>
                     </div>
-                </div>
+                </a>
             `).join('');
         }}
         

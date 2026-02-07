@@ -151,6 +151,9 @@ def generate_browse_gallery(json_file, race_name, race_date, location, output_fi
             overflow: hidden;
             border: 1px solid #222;
             transition: transform 0.3s;
+            display: block;
+            text-decoration: none;
+            color: inherit;
         }}
         
         .photo-card:hover {{
@@ -158,11 +161,22 @@ def generate_browse_gallery(json_file, race_name, race_date, location, output_fi
             border-color: #444;
         }}
         
-        .photo-card iframe {{
+        .photo-thumbnail {{
             width: 100%;
             height: 250px;
-            border: none;
-            display: block;
+            background: #2a2a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 3em;
+            position: relative;
+        }}
+        
+        .photo-thumbnail img {{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }}
         
         footer {{
@@ -223,9 +237,12 @@ def generate_browse_gallery(json_file, race_name, race_date, location, output_fi
     
     # Add all photos
     for photo in photos:
-        html += f'''            <div class="photo-card">
-                <iframe src="{photo['guest_pass_url']}/player/" frameborder="0" allowfullscreen></iframe>
-            </div>
+        thumbnail = photo.get('thumbnail_url', '')
+        html += f'''            <a href="{photo['guest_pass_url']}" target="_blank" class="photo-card">
+                <div class="photo-thumbnail">
+                    {'<img src="' + thumbnail + '" alt="Race photo">' if thumbnail else '📷'}
+                </div>
+            </a>
 '''
     
     html += '''        </div>

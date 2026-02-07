@@ -153,6 +153,9 @@
             overflow: hidden;
             border: 1px solid #222;
             transition: transform 0.3s;
+            display: block;
+            text-decoration: none;
+            color: inherit;
         }
         
         .photo-card:hover {
@@ -160,11 +163,23 @@
             border-color: #444;
         }
         
-        .photo-card iframe {
+        .photo-thumbnail {
             width: 100%;
             height: 250px;
-            border: none;
-            display: block;
+            background: #2a2a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 3em;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .photo-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         
         .photo-info {
@@ -270,108 +285,126 @@
             "4280": [
                         {
                                     "number": "1",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/3hmw61j4o0",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/668JHahY40",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079246263_c884199059_h.jpg?s=eyJpIjo1NTA3OTI0NjI2MywiZSI6MTc3MDQzMDk0MCwicyI6IjE2NTY5ZjY2NGNmYjRjNmNhZjE0ZGVjOWYzYzk5ODhmNWIyNDJjMzkiLCJ2IjoxfQ",
                                     "race_number": "4280"
                         }
             ],
             "6069": [
                         {
                                     "number": "2",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/11935TxXE9",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/M4X6187f4P",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079303714_1fbb432663_h.jpg?s=eyJpIjo1NTA3OTMwMzcxNCwiZSI6MTc3MDQzMDk0MCwicyI6Ijc3OWY4ZWMwMjFhYWRiZjI5MzE0ZGI5OWZhZDE2M2NmOGJkYTczMjgiLCJ2IjoxfQ",
                                     "race_number": "6069"
                         }
             ],
             "3638": [
                         {
                                     "number": "3",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/086cw710ih",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/j7aP3h2g9H",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55078148957_94062500d5_h.jpg?s=eyJpIjo1NTA3ODE0ODk1NywiZSI6MTc3MDQzMDk0MCwicyI6IjUxNTAwY2ExNDg2YzRiNWExZWE4OTA4ODdjY2M3M2U4NjdiOGNlN2QiLCJ2IjoxfQ",
                                     "race_number": "3638"
                         }
             ],
             "4668": [
                         {
                                     "number": "4",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/4u1A1SZ201",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/HgX0TQ922X",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079246223_f29cf31d5e_h.jpg?s=eyJpIjo1NTA3OTI0NjIyMywiZSI6MTc3MDQzMDk0MCwicyI6ImU4ZGQ3ZjU3OTdmOTE5OTIwMDEyMWM3N2UwNTY2MzE3Y2IwOWQ3MzMiLCJ2IjoxfQ",
                                     "race_number": "4668"
                         }
             ],
             "4423": [
                         {
                                     "number": "5",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/30i6FKjv6z",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/2QEU203r5v",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079047311_f9b8fecf7f_h.jpg?s=eyJpIjo1NTA3OTA0NzMxMSwiZSI6MTc3MDQzMDk0MCwicyI6Ijc3NmVlNjUwYWJkZmMzNmEyMTllNzllZGZhZDc4NzdiMjNlZTAzYjAiLCJ2IjoxfQ",
                                     "race_number": "4423"
                         }
             ],
             "4329": [
                         {
                                     "number": "6",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/773Xd4c9g6",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/k18r61y7Lc",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079047261_58e5187af7_h.jpg?s=eyJpIjo1NTA3OTA0NzI2MSwiZSI6MTc3MDQzMDk0MCwicyI6IjFjYzIwYTg2ODZiN2RjYjg2N2M2MjY4YWU4M2MzZjI0MmRlZWE3ZTciLCJ2IjoxfQ",
                                     "race_number": "4329"
                         }
             ],
             "112": [
                         {
                                     "number": "7",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/348706zyut",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/Eh748Uo971",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079047111_de59f10687_h.jpg?s=eyJpIjo1NTA3OTA0NzExMSwiZSI6MTc3MDQzMDk0MCwicyI6ImEwYTNmYjZkYjdjMDgyNzFlODYwZDUxMzNiODBmZmM2MGRiY2FmNTMiLCJ2IjoxfQ",
                                     "race_number": "112"
                         },
                         {
                                     "number": "8",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/Q279akh10D",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/h3aq520yTX",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079046981_697ac31393_h.jpg?s=eyJpIjo1NTA3OTA0Njk4MSwiZSI6MTc3MDQzMDk0MCwicyI6IjM4ZGUyZGIxZDE2YjJjZmYwYmFhNTdmZDNjY2EzYzdlOGZhM2RjYWEiLCJ2IjoxfQ",
                                     "race_number": "112"
                         },
                         {
                                     "number": "9",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/Qrd9Rnb87G",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/Kms08aWdaz",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079047041_a65790e847_h.jpg?s=eyJpIjo1NTA3OTA0NzA0MSwiZSI6MTc3MDQzMDk0MCwicyI6ImVjYzAyZTljMDQyNjQ1ZmVjNGVkMTVhNzBlZTE0NmMyMzU3Njg5OWQiLCJ2IjoxfQ",
                                     "race_number": "112"
                         },
                         {
                                     "number": "10",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/L1ER78SW11",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/JR5W1uU452",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079407595_bdb1389bee_h.jpg?s=eyJpIjo1NTA3OTQwNzU5NSwiZSI6MTc3MDQzMDk0MCwicyI6IjcyMDBhMWNiMWJlOGZmN2YzZWYzNzVkN2EzZWVlZTM3OWVjNWZiOTciLCJ2IjoxfQ",
                                     "race_number": "112"
                         },
                         {
                                     "number": "11",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/09414292Xs",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/JQh1n8xP16",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079046881_0da58f8eae_h.jpg?s=eyJpIjo1NTA3OTA0Njg4MSwiZSI6MTc3MDQzMDk0MCwicyI6IjJkYTBkYWYwMGVlYmNhYWZkZjI4NDU4MjJkODE2ZDkyOTdjZjk4NTciLCJ2IjoxfQ",
                                     "race_number": "112"
                         },
                         {
                                     "number": "12",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/U7Y56QdJE8",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/dX76fm85YB",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079303269_1995c9ba1a_h.jpg?s=eyJpIjo1NTA3OTMwMzI2OSwiZSI6MTc3MDQzMDk0MCwicyI6IjE2NTBiMzZhODc0ZjdiNTg2NmQ3MzY5NGE2MzMwOWQxMTEzYzcwYjkiLCJ2IjoxfQ",
                                     "race_number": "112"
                         },
                         {
                                     "number": "13",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/iw7Q7D1tG0",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/0uZ91b35o1",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079245783_20cadb6d96_h.jpg?s=eyJpIjo1NTA3OTI0NTc4MywiZSI6MTc3MDQzMDk0MCwicyI6IjE2ZDUwMzY4YjMyYmFkNmZlYmRkMDUyNWRjMmUwZmE4OWNhNDM3YzYiLCJ2IjoxfQ",
                                     "race_number": "112"
                         }
             ],
             "84": [
                         {
                                     "number": "14",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/L0Von4872W",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/N414289874",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079046846_9876929bd4_h.jpg?s=eyJpIjo1NTA3OTA0Njg0NiwiZSI6MTc3MDQzMDk0MCwicyI6IjA3YzVkNDg1YTAxYWI3ZDFhNzcyYzUzOTY1YjAwYmZiMjU1ZjFjNDIiLCJ2IjoxfQ",
                                     "race_number": "84"
                         },
                         {
                                     "number": "15",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/qr53P9Wv8T",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/m1mu9Y6B72",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079407120_0cdf569edc_h.jpg?s=eyJpIjo1NTA3OTQwNzEyMCwiZSI6MTc3MDQzMDk0MCwicyI6IjFmMDZmMzk5MDBjNTdlYWI5YzIwZTQ2YzBkZDliZGE0OGI1ZTUzMjYiLCJ2IjoxfQ",
                                     "race_number": "84"
                         }
             ],
             "73": [
                         {
                                     "number": "16",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/e7K275Y0N1",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/3kF3pA7u52",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079407155_71a23c74b3_h.jpg?s=eyJpIjo1NTA3OTQwNzE1NSwiZSI6MTc3MDQzMDk0MCwicyI6ImM2YzNhZWI0MGEzOTY3NzFiZmFjZjJkZmE4OGM4MThkMDAyMjNhMTUiLCJ2IjoxfQ",
                                     "race_number": "73"
                         },
                         {
                                     "number": "17",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/03Ze372Tt7",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/J8e1KHc812",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079407145_903afeeabc_h.jpg?s=eyJpIjo1NTA3OTQwNzE0NSwiZSI6MTc3MDQzMDk0MCwicyI6ImRmZjhmNzU1NDJhMzRhYTk2YjYzMGUwOWY4MGU0ODc0NjBlZmI3MmMiLCJ2IjoxfQ",
                                     "race_number": "73"
                         },
                         {
                                     "number": "18",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/96sofge5U7",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/ZtCo2v7x6V",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55078148402_24e37b1c18_h.jpg?s=eyJpIjo1NTA3ODE0ODQwMiwiZSI6MTc3MDQzMDk0MCwicyI6IjY2MzhjYjMyYTEzMDVhYzRjOGVlYWRlZDNlZjQxOTk0ZDU2ZTVkZWIiLCJ2IjoxfQ",
                                     "race_number": "73"
                         }
             ]
@@ -381,92 +414,110 @@
         const allPhotos = [
             {
                         "number": "1",
-                        "url": "https://www.flickr.com/gp/acedeuce802/3hmw61j4o0",
+                        "url": "https://www.flickr.com/gp/acedeuce802/668JHahY40",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079246263_c884199059_h.jpg?s=eyJpIjo1NTA3OTI0NjI2MywiZSI6MTc3MDQzMDk0MCwicyI6IjE2NTY5ZjY2NGNmYjRjNmNhZjE0ZGVjOWYzYzk5ODhmNWIyNDJjMzkiLCJ2IjoxfQ",
                         "race_number": "4280"
             },
             {
                         "number": "2",
-                        "url": "https://www.flickr.com/gp/acedeuce802/11935TxXE9",
+                        "url": "https://www.flickr.com/gp/acedeuce802/M4X6187f4P",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079303714_1fbb432663_h.jpg?s=eyJpIjo1NTA3OTMwMzcxNCwiZSI6MTc3MDQzMDk0MCwicyI6Ijc3OWY4ZWMwMjFhYWRiZjI5MzE0ZGI5OWZhZDE2M2NmOGJkYTczMjgiLCJ2IjoxfQ",
                         "race_number": "6069"
             },
             {
                         "number": "3",
-                        "url": "https://www.flickr.com/gp/acedeuce802/086cw710ih",
+                        "url": "https://www.flickr.com/gp/acedeuce802/j7aP3h2g9H",
+                        "thumbnail": "https://live.staticflickr.com/65535/55078148957_94062500d5_h.jpg?s=eyJpIjo1NTA3ODE0ODk1NywiZSI6MTc3MDQzMDk0MCwicyI6IjUxNTAwY2ExNDg2YzRiNWExZWE4OTA4ODdjY2M3M2U4NjdiOGNlN2QiLCJ2IjoxfQ",
                         "race_number": "3638"
             },
             {
                         "number": "4",
-                        "url": "https://www.flickr.com/gp/acedeuce802/4u1A1SZ201",
+                        "url": "https://www.flickr.com/gp/acedeuce802/HgX0TQ922X",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079246223_f29cf31d5e_h.jpg?s=eyJpIjo1NTA3OTI0NjIyMywiZSI6MTc3MDQzMDk0MCwicyI6ImU4ZGQ3ZjU3OTdmOTE5OTIwMDEyMWM3N2UwNTY2MzE3Y2IwOWQ3MzMiLCJ2IjoxfQ",
                         "race_number": "4668"
             },
             {
                         "number": "5",
-                        "url": "https://www.flickr.com/gp/acedeuce802/30i6FKjv6z",
+                        "url": "https://www.flickr.com/gp/acedeuce802/2QEU203r5v",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079047311_f9b8fecf7f_h.jpg?s=eyJpIjo1NTA3OTA0NzMxMSwiZSI6MTc3MDQzMDk0MCwicyI6Ijc3NmVlNjUwYWJkZmMzNmEyMTllNzllZGZhZDc4NzdiMjNlZTAzYjAiLCJ2IjoxfQ",
                         "race_number": "4423"
             },
             {
                         "number": "6",
-                        "url": "https://www.flickr.com/gp/acedeuce802/773Xd4c9g6",
+                        "url": "https://www.flickr.com/gp/acedeuce802/k18r61y7Lc",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079047261_58e5187af7_h.jpg?s=eyJpIjo1NTA3OTA0NzI2MSwiZSI6MTc3MDQzMDk0MCwicyI6IjFjYzIwYTg2ODZiN2RjYjg2N2M2MjY4YWU4M2MzZjI0MmRlZWE3ZTciLCJ2IjoxfQ",
                         "race_number": "4329"
             },
             {
                         "number": "7",
-                        "url": "https://www.flickr.com/gp/acedeuce802/348706zyut",
+                        "url": "https://www.flickr.com/gp/acedeuce802/Eh748Uo971",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079047111_de59f10687_h.jpg?s=eyJpIjo1NTA3OTA0NzExMSwiZSI6MTc3MDQzMDk0MCwicyI6ImEwYTNmYjZkYjdjMDgyNzFlODYwZDUxMzNiODBmZmM2MGRiY2FmNTMiLCJ2IjoxfQ",
                         "race_number": "112"
             },
             {
                         "number": "8",
-                        "url": "https://www.flickr.com/gp/acedeuce802/Q279akh10D",
+                        "url": "https://www.flickr.com/gp/acedeuce802/h3aq520yTX",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079046981_697ac31393_h.jpg?s=eyJpIjo1NTA3OTA0Njk4MSwiZSI6MTc3MDQzMDk0MCwicyI6IjM4ZGUyZGIxZDE2YjJjZmYwYmFhNTdmZDNjY2EzYzdlOGZhM2RjYWEiLCJ2IjoxfQ",
                         "race_number": "112"
             },
             {
                         "number": "9",
-                        "url": "https://www.flickr.com/gp/acedeuce802/Qrd9Rnb87G",
+                        "url": "https://www.flickr.com/gp/acedeuce802/Kms08aWdaz",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079047041_a65790e847_h.jpg?s=eyJpIjo1NTA3OTA0NzA0MSwiZSI6MTc3MDQzMDk0MCwicyI6ImVjYzAyZTljMDQyNjQ1ZmVjNGVkMTVhNzBlZTE0NmMyMzU3Njg5OWQiLCJ2IjoxfQ",
                         "race_number": "112"
             },
             {
                         "number": "10",
-                        "url": "https://www.flickr.com/gp/acedeuce802/L1ER78SW11",
+                        "url": "https://www.flickr.com/gp/acedeuce802/JR5W1uU452",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079407595_bdb1389bee_h.jpg?s=eyJpIjo1NTA3OTQwNzU5NSwiZSI6MTc3MDQzMDk0MCwicyI6IjcyMDBhMWNiMWJlOGZmN2YzZWYzNzVkN2EzZWVlZTM3OWVjNWZiOTciLCJ2IjoxfQ",
                         "race_number": "112"
             },
             {
                         "number": "11",
-                        "url": "https://www.flickr.com/gp/acedeuce802/09414292Xs",
+                        "url": "https://www.flickr.com/gp/acedeuce802/JQh1n8xP16",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079046881_0da58f8eae_h.jpg?s=eyJpIjo1NTA3OTA0Njg4MSwiZSI6MTc3MDQzMDk0MCwicyI6IjJkYTBkYWYwMGVlYmNhYWZkZjI4NDU4MjJkODE2ZDkyOTdjZjk4NTciLCJ2IjoxfQ",
                         "race_number": "112"
             },
             {
                         "number": "12",
-                        "url": "https://www.flickr.com/gp/acedeuce802/U7Y56QdJE8",
+                        "url": "https://www.flickr.com/gp/acedeuce802/dX76fm85YB",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079303269_1995c9ba1a_h.jpg?s=eyJpIjo1NTA3OTMwMzI2OSwiZSI6MTc3MDQzMDk0MCwicyI6IjE2NTBiMzZhODc0ZjdiNTg2NmQ3MzY5NGE2MzMwOWQxMTEzYzcwYjkiLCJ2IjoxfQ",
                         "race_number": "112"
             },
             {
                         "number": "13",
-                        "url": "https://www.flickr.com/gp/acedeuce802/iw7Q7D1tG0",
+                        "url": "https://www.flickr.com/gp/acedeuce802/0uZ91b35o1",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079245783_20cadb6d96_h.jpg?s=eyJpIjo1NTA3OTI0NTc4MywiZSI6MTc3MDQzMDk0MCwicyI6IjE2ZDUwMzY4YjMyYmFkNmZlYmRkMDUyNWRjMmUwZmE4OWNhNDM3YzYiLCJ2IjoxfQ",
                         "race_number": "112"
             },
             {
                         "number": "14",
-                        "url": "https://www.flickr.com/gp/acedeuce802/L0Von4872W",
+                        "url": "https://www.flickr.com/gp/acedeuce802/N414289874",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079046846_9876929bd4_h.jpg?s=eyJpIjo1NTA3OTA0Njg0NiwiZSI6MTc3MDQzMDk0MCwicyI6IjA3YzVkNDg1YTAxYWI3ZDFhNzcyYzUzOTY1YjAwYmZiMjU1ZjFjNDIiLCJ2IjoxfQ",
                         "race_number": "84"
             },
             {
                         "number": "15",
-                        "url": "https://www.flickr.com/gp/acedeuce802/qr53P9Wv8T",
+                        "url": "https://www.flickr.com/gp/acedeuce802/m1mu9Y6B72",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079407120_0cdf569edc_h.jpg?s=eyJpIjo1NTA3OTQwNzEyMCwiZSI6MTc3MDQzMDk0MCwicyI6IjFmMDZmMzk5MDBjNTdlYWI5YzIwZTQ2YzBkZDliZGE0OGI1ZTUzMjYiLCJ2IjoxfQ",
                         "race_number": "84"
             },
             {
                         "number": "16",
-                        "url": "https://www.flickr.com/gp/acedeuce802/e7K275Y0N1",
+                        "url": "https://www.flickr.com/gp/acedeuce802/3kF3pA7u52",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079407155_71a23c74b3_h.jpg?s=eyJpIjo1NTA3OTQwNzE1NSwiZSI6MTc3MDQzMDk0MCwicyI6ImM2YzNhZWI0MGEzOTY3NzFiZmFjZjJkZmE4OGM4MThkMDAyMjNhMTUiLCJ2IjoxfQ",
                         "race_number": "73"
             },
             {
                         "number": "17",
-                        "url": "https://www.flickr.com/gp/acedeuce802/03Ze372Tt7",
+                        "url": "https://www.flickr.com/gp/acedeuce802/J8e1KHc812",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079407145_903afeeabc_h.jpg?s=eyJpIjo1NTA3OTQwNzE0NSwiZSI6MTc3MDQzMDk0MCwicyI6ImRmZjhmNzU1NDJhMzRhYTk2YjYzMGUwOWY4MGU0ODc0NjBlZmI3MmMiLCJ2IjoxfQ",
                         "race_number": "73"
             },
             {
                         "number": "18",
-                        "url": "https://www.flickr.com/gp/acedeuce802/96sofge5U7",
+                        "url": "https://www.flickr.com/gp/acedeuce802/ZtCo2v7x6V",
+                        "thumbnail": "https://live.staticflickr.com/65535/55078148402_24e37b1c18_h.jpg?s=eyJpIjo1NTA3ODE0ODQwMiwiZSI6MTc3MDQzMDk0MCwicyI6IjY2MzhjYjMyYTEzMDVhYzRjOGVlYWRlZDNlZjQxOTk0ZDU2ZTVkZWIiLCJ2IjoxfQ",
                         "race_number": "73"
             }
 ];
@@ -485,12 +536,14 @@
             noResults.style.display = 'none';
             
             gallery.innerHTML = photos.map(photo => `
-                <div class="photo-card">
-                    <iframe src="${photo.url}/player/" frameborder="0" allowfullscreen></iframe>
+                <a href="${photo.url}" target="_blank" class="photo-card">
+                    <div class="photo-thumbnail">
+                        ${photo.thumbnail ? `<img src="${photo.thumbnail}" alt="Race photo">` : '📷'}
+                    </div>
                     <div class="photo-info">
                         <span class="race-number-badge">#${photo.race_number}</span>
                     </div>
-                </div>
+                </a>
             `).join('');
         }
         
