@@ -109,14 +109,19 @@
         }
         
         .profile-image {
-            width: 300px;
-            height: 300px;
+            width: 800px;
+            height: 800px;
             border-radius: 8px;
             object-fit: cover;
             margin: 0 auto 40px;
             display: block;
             box-shadow: 0 10px 40px rgba(0,0,0,0.5);
             border: 3px solid #333;
+			image-rendering: -webkit-optimize-contrast;
+			image-rendering: high-quality;
+			image-rendering: crisp-edges;
+			backface-visibility: hidden;
+			transform: translateZ(0);
         }
         
         .about-content {
@@ -218,10 +223,7 @@
         
         <div class="about-content">
             <p>
-                I grew up in Ann Arbor, MI and now reside in Southfield, MI. I got my Mechanical Engineering degree from Kettering University. My first passion was automotive, and going to races and car meets is what initially sparked my interest in photography. I found it interesting to combine the technical aspect of cameras with the artsy side, and capturing action shots is always my favorite.
-            </p>
-            <p>
-                As I began to ride bikes, my passion started to shift. I've raced in more events than I can count: mountain bike, gravel races, and road races. Eventually I started bringing my camera to races and taking pictures after I'd finish, and now documenting the races is just as important to me as racing in them.
+                From Metro Detroit, I bring an engineer's precision and a racer's perspective to action photography. My engineering background taught me to appreciate the technical side of cameras, while years of racing bikes—mountain, gravel, and road—gave me an insider's understanding of the moments worth capturing. Whether I'm toeing the start line or behind the lens, I'm there for the energy, the effort, and the story.
             </p>
         </div>
     </section>
