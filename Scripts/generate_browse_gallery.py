@@ -120,6 +120,12 @@ def generate_browse_gallery(json_file, race_name, race_date, location, output_fi
             transition: opacity 0.3s;
             display: inline-flex;
             align-items: center;
+            outline: none;
+            border: none;
+        }}
+        
+        .instagram-link:focus {{
+            outline: none;
         }}
         
         .instagram-icon {{
@@ -127,6 +133,8 @@ def generate_browse_gallery(json_file, race_name, race_date, location, output_fi
             height: 24px;
             filter: brightness(0.6);
             display: block;
+            outline: none;
+            border: none;
         }}
         
         .breadcrumb {{
@@ -497,6 +505,7 @@ def generate_browse_gallery(json_file, race_name, race_date, location, output_fi
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="albums.html">Albums</a></li>
+                <li><a href="contact.html">Contact</a></li>
                 <li><a href="https://www.instagram.com/adamwatson.photo/" target="_blank" class="instagram-link"><img src="images/instagram-icon.png" alt="Instagram" class="instagram-icon"></a></li>
             </ul>
         </div>
@@ -545,6 +554,7 @@ def generate_browse_gallery(json_file, race_name, race_date, location, output_fi
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About</a></li>
             <li><a href="albums.html">Albums</a></li>
+            <li><a href="contact.html">Contact</a></li>
             <li><a href="https://www.instagram.com/adamwatson.photo/" target="_blank" class="instagram-link"><img src="images/instagram-icon.png" alt="Instagram" class="instagram-icon"></a></li>
         </ul>
         <p class="copyright">&copy; 2025 Adam Watson Photo. All rights reserved.</p>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thunder Bay Thriller Photos | Adam Watson Photo</title>
-<style>
+    <style>
         * {
             margin: 0;
             padding: 0;
@@ -12,7 +12,7 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: #1a1a1a;
             color: #e0e0e0;
             line-height: 1.6;
@@ -57,17 +57,11 @@
         
         .instagram-link {
             color: #888;
-            transition: color 0.3s, opacity 0.3s;
+            transition: opacity 0.3s;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
-            text-decoration: none;
-            border: none;
             outline: none;
-        }
-        
-        .instagram-link:hover {
-            opacity: 0.7;
+            border: none;
         }
         
         .instagram-link:focus {
@@ -78,61 +72,106 @@
             width: 24px;
             height: 24px;
             filter: brightness(0.6);
-            transition: filter 0.3s;
             display: block;
+            outline: none;
             border: none;
         }
         
-        .instagram-link:hover .instagram-icon {
-            filter: brightness(1);
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 30px auto 0;
+            padding: 0 20px;
         }
         
-        .placeholder {
-            max-width: 800px;
-            margin: 100px auto;
-            padding: 60px 40px;
+        .breadcrumb a {
+            color: #888;
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            color: #fff;
+        }
+        
+        .breadcrumb span {
+            color: #555;
+            margin: 0 10px;
+        }
+        
+        .gallery-section {
+            max-width: 1200px;
+            margin: 50px auto 80px;
+            padding: 0 20px;
+        }
+        
+        .gallery-header {
             text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .gallery-header h1 {
+            font-size: 3em;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+        
+        .gallery-header p {
+            font-size: 1.2em;
+            color: #999;
+            margin-bottom: 5px;
+        }
+        
+        .photo-count {
+            font-size: 1em;
+            color: #666;
+        }
+        
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .photo-card {
             background: #0f0f0f;
             border-radius: 8px;
+            overflow: hidden;
             border: 1px solid #222;
-        }
-        
-        .placeholder h1 {
-            font-size: 2.5em;
-            font-weight: 300;
-            color: #ffffff;
-            margin-bottom: 20px;
-        }
-        
-        .placeholder p {
-            font-size: 1.2em;
-            color: #888;
-            line-height: 1.8;
-            margin-bottom: 15px;
-        }
-        
-        .back-link {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 12px 30px;
-            background: #2a2a2a;
-            color: #fff;
+            transition: transform 0.3s;
+            display: block;
             text-decoration: none;
-            border-radius: 5px;
-            transition: background 0.3s;
+            color: inherit;
+            cursor: pointer;
         }
         
-        .back-link:hover {
-            background: #333;
+        .photo-card:hover {
+            transform: translateY(-5px);
+            border-color: #444;
+        }
+        
+        .photo-thumbnail {
+            width: 100%;
+            height: 250px;
+            background: #2a2a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 3em;
+            position: relative;
+        }
+        
+        .photo-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         
         footer {
             background: #0a0a0a;
             padding: 40px 20px;
             border-top: 1px solid #222;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
         }
         
         .footer-nav {
@@ -148,17 +187,254 @@
         .footer-nav a {
             color: #888;
             text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-nav a:hover {
-            color: #fff;
         }
         
         .copyright {
             text-align: center;
             color: #666;
             font-size: 0.9em;
+        }
+        
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+        }
+        
+        .lightbox.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox-content {
+            max-width: 95%;
+            max-height: 95%;
+            position: relative;
+        }
+        
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 95vh;
+            object-fit: contain;
+            display: block;
+        }
+        
+        .lightbox-close {
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            font-size: 50px;
+            color: #fff;
+            cursor: pointer;
+            background: rgba(0,0,0,0.7);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+            z-index: 10000;
+        }
+        
+        .lightbox-close:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .lightbox-nav {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 50px;
+            color: #fff;
+            cursor: pointer;
+            background: rgba(0,0,0,0.7);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+            z-index: 10000;
+        }
+        
+        .lightbox-nav:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .lightbox-prev { left: 30px; }
+        .lightbox-next { right: 30px; }
+        
+        .lightbox-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            z-index: 10000;
+        }
+        
+        .lightbox-download {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 25px;
+            border: 1px solid #666;
+            font-size: 1em;
+            font-family: inherit;
+            line-height: 1.5;
+            height: 48px;
+            display: inline-flex;
+            align-items: center;
+            box-sizing: border-box;
+            transition: all 0.3s;
+            z-index: 10000;
+            cursor: pointer;
+        }
+        
+        .lightbox-download:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: #999;
+        }
+        
+        .lightbox-flickr {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 25px;
+            border: 1px solid #666;
+            text-decoration: none;
+            font-size: 1em;
+            line-height: 1.5;
+            height: 48px;
+            display: inline-flex;
+            align-items: center;
+            box-sizing: border-box;
+            white-space: nowrap;
+            transition: all 0.3s;
+            z-index: 10000;
+        }
+        
+        .lightbox-flickr:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: #999;
+        }
+        
+        /* Lightbox Styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .lightbox.active {
+            display: flex;
+        }
+        
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: #fff;
+            cursor: pointer;
+            background: none;
+            border: none;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+        
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 40px;
+            color: #fff;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+        
+        .lightbox-nav:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .lightbox-prev {
+            left: 30px;
+        }
+        
+        .lightbox-next {
+            right: 30px;
+        }
+        
+        .lightbox-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            font-size: 1.1em;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 20px;
         }
     </style>
 </head>
@@ -169,21 +445,327 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="albums.html">Albums</a></li>
-				<li><a href="contact.html">Contact</a></li>
+                <li><a href="contact.html">Contact</a></li>
                 <li><a href="https://www.instagram.com/adamwatson.photo/" target="_blank" class="instagram-link"><img src="images/instagram-icon.png" alt="Instagram" class="instagram-icon"></a></li>
             </ul>
         </div>
     </nav>
 
-    <div class="placeholder">
-        <h1>Thunder Bay Thriller</h1>
-        <p>Alpena, MI</p>
-        <p>September 14, 2025</p>
-        <p style="margin-top: 40px; color: #666;">
-            Photos coming soon!<br>
-            This page will be replaced with the full race gallery.
-        </p>
-        <a href="albums.html" class="back-link">← Back to Albums</a>
+    <div class="breadcrumb">
+        <a href="albums.html">Albums</a>
+        <span>›</span>
+        <a href="gravel-albums.html">Gravel</a>
+        <span>›</span>
+        <span>Thunder Bay Thriller</span>
+    </div>
+
+    <section class="gallery-section">
+        <div class="gallery-header">
+            <h1>Thunder Bay Thriller</h1>
+            <p>Alpena, MI • September 14th, 2025</p>
+            <p class="photo-count">57 photos</p>
+        </div>
+        
+        <div class="photo-grid">
+            <div class="photo-card" onclick="openLightbox(0)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791715085_a8b283bab6_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(1)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791377611_adaa571208_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(2)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791715075_ba21f2573a_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(3)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791481029_0b6b473c90_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(4)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791572865_2717e864ec_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(5)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54790394092_7751c9903f_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(6)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791480749_f54d56b0ab_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(7)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791498868_6d3d043ccc_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(8)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791236571_63e6f8af79_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(9)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791236451_84bbe2a51a_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(10)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791498678_568c284a07_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(11)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791498658_18bc7774a4_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(12)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791572100_dd2981b6f6_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(13)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54790393502_a7ba91738a_b.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(14)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791480034_8c16dbdfdd_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(15)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791571920_2bf9105b10_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(16)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791498298_2fc0359087_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(17)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791479884_6d2fb1444b_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(18)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791235491_21ef8068ff_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(19)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791497923_02ed5b30be_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(20)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791235346_e64160da2a_b.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(21)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791497733_58bf7cf7be_b.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(22)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791479044_085317f47f_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(23)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791479254_9ff53b7634_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(24)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791478989_7387d44fd3_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(25)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54790392027_3d26e9dc9f_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(26)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791478514_3822100748_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(27)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791496908_2fef28804f_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(28)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791478319_b864ee2360_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(29)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791496623_7ec041c1da_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(30)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791477974_0d094f4174_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(31)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54790391212_de5d4359de_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(32)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791233546_b0914a7e07_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(33)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791496188_490844199e_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(34)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791233256_00e30b4fb7_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(35)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791569615_22ecbd10a4_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(36)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791477229_674f3f755a_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(37)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791477299_9ab245f107_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(38)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791232881_1e9292c071_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(39)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791232951_0b5384a2e4_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(40)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791232971_afbcf30e0d_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(41)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54790390357_a2da76de55_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(42)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791574965_0f690138dd_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(43)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791501278_588ad71b3b_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(44)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791483014_a88b277292_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(45)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791574710_5a2236a498_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(46)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791500923_5e7bda6ef7_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(47)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791482724_bf879ccfb5_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(48)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791574550_d5e0bc61fe_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(49)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791482029_aaa45bdfd7_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(50)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54790395107_85a22b9edd_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(51)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791573870_ddc8ccd693_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(52)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791573790_9ee646450d_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(53)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791237226_7dc697896a_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(54)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791481479_6967d4889d_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(55)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791481374_f9168f2368_h.jpg" alt="Race photo">
+                </div>
+            </div>
+            <div class="photo-card" onclick="openLightbox(56)">
+                <div class="photo-thumbnail">
+                    <img src="https://live.staticflickr.com/65535/54791499603_27569088ae_h.jpg" alt="Race photo">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <button class="lightbox-close" id="lightbox-close">&times;</button>
+        <button class="lightbox-nav lightbox-prev" id="lightbox-prev">&#8249;</button>
+        <div class="lightbox-content">
+            <img id="lightbox-image" class="lightbox-image" src="" alt="Full resolution photo">
+        </div>
+        <button class="lightbox-nav lightbox-next" id="lightbox-next">&#8250;</button>
+        <div class="lightbox-counter" id="lightbox-counter"></div>
+        <a id="lightbox-flickr" class="lightbox-flickr" href="" target="_blank">Link to Full Resolution</a>
+        <button id="lightbox-download" class="lightbox-download" onclick="downloadImage()">Download</button>
     </div>
 
     <footer>
@@ -191,10 +773,512 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About</a></li>
             <li><a href="albums.html">Albums</a></li>
-			<li><a href="contact.html">Contact</a></li>
+            <li><a href="contact.html">Contact</a></li>
             <li><a href="https://www.instagram.com/adamwatson.photo/" target="_blank" class="instagram-link"><img src="images/instagram-icon.png" alt="Instagram" class="instagram-icon"></a></li>
         </ul>
         <p class="copyright">&copy; 2025 Adam Watson Photo. All rights reserved.</p>
     </footer>
+
+    <script>
+        const photos = [
+        {
+                "number": 1,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791715085/in/album-72177720329056165",
+                "thumbnail": "https://live.staticflickr.com/65535/54791715085_a8b283bab6_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791715085_a8b283bab6_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791715085_a8b283bab6_h.jpg"
+        },
+        {
+                "number": 2,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791377611/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791377611_adaa571208_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791377611_adaa571208_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791377611_adaa571208_h.jpg"
+        },
+        {
+                "number": 3,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791715075/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791715075_ba21f2573a_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791715075_ba21f2573a_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791715075_ba21f2573a_h.jpg"
+        },
+        {
+                "number": 4,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791481029/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791481029_0b6b473c90_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791481029_0b6b473c90_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791481029_0b6b473c90_h.jpg"
+        },
+        {
+                "number": 5,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791572865/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791572865_2717e864ec_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791572865_2717e864ec_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791572865_2717e864ec_h.jpg"
+        },
+        {
+                "number": 6,
+                "url": "https://www.flickr.com/photos/acedeuce802/54790394092/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54790394092_7751c9903f_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54790394092_7751c9903f_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54790394092_7751c9903f_h.jpg"
+        },
+        {
+                "number": 7,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791480749/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791480749_f54d56b0ab_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791480749_f54d56b0ab_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791480749_f54d56b0ab_h.jpg"
+        },
+        {
+                "number": 8,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791498868/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791498868_6d3d043ccc_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791498868_6d3d043ccc_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791498868_6d3d043ccc_h.jpg"
+        },
+        {
+                "number": 9,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791236571/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791236571_63e6f8af79_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791236571_63e6f8af79_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791236571_63e6f8af79_h.jpg"
+        },
+        {
+                "number": 10,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791236451/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791236451_84bbe2a51a_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791236451_84bbe2a51a_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791236451_84bbe2a51a_h.jpg"
+        },
+        {
+                "number": 11,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791498678/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791498678_568c284a07_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791498678_568c284a07_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791498678_568c284a07_h.jpg"
+        },
+        {
+                "number": 12,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791498658/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791498658_18bc7774a4_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791498658_18bc7774a4_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791498658_18bc7774a4_h.jpg"
+        },
+        {
+                "number": 13,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791572100/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791572100_dd2981b6f6_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791572100_dd2981b6f6_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791572100_dd2981b6f6_h.jpg"
+        },
+        {
+                "number": 14,
+                "url": "https://www.flickr.com/photos/acedeuce802/54790393502/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54790393502_a7ba91738a_b.jpg",
+                "original": "https://live.staticflickr.com/65535/54790393502_a7ba91738a_b.jpg",
+                "download": "https://live.staticflickr.com/65535/54790393502_a7ba91738a_b.jpg"
+        },
+        {
+                "number": 15,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791480034/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791480034_8c16dbdfdd_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791480034_8c16dbdfdd_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791480034_8c16dbdfdd_h.jpg"
+        },
+        {
+                "number": 16,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791571920/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791571920_2bf9105b10_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791571920_2bf9105b10_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791571920_2bf9105b10_h.jpg"
+        },
+        {
+                "number": 17,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791498298/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791498298_2fc0359087_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791498298_2fc0359087_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791498298_2fc0359087_h.jpg"
+        },
+        {
+                "number": 18,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791479884/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791479884_6d2fb1444b_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791479884_6d2fb1444b_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791479884_6d2fb1444b_h.jpg"
+        },
+        {
+                "number": 19,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791235491/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791235491_21ef8068ff_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791235491_21ef8068ff_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791235491_21ef8068ff_h.jpg"
+        },
+        {
+                "number": 20,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791497923/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791497923_02ed5b30be_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791497923_02ed5b30be_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791497923_02ed5b30be_h.jpg"
+        },
+        {
+                "number": 21,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791235346/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791235346_e64160da2a_b.jpg",
+                "original": "https://live.staticflickr.com/65535/54791235346_e64160da2a_b.jpg",
+                "download": "https://live.staticflickr.com/65535/54791235346_e64160da2a_b.jpg"
+        },
+        {
+                "number": 22,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791497733/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791497733_58bf7cf7be_b.jpg",
+                "original": "https://live.staticflickr.com/65535/54791497733_58bf7cf7be_b.jpg",
+                "download": "https://live.staticflickr.com/65535/54791497733_58bf7cf7be_b.jpg"
+        },
+        {
+                "number": 23,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791479044/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791479044_085317f47f_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791479044_085317f47f_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791479044_085317f47f_h.jpg"
+        },
+        {
+                "number": 24,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791479254/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791479254_9ff53b7634_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791479254_9ff53b7634_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791479254_9ff53b7634_h.jpg"
+        },
+        {
+                "number": 25,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791478989/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791478989_7387d44fd3_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791478989_7387d44fd3_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791478989_7387d44fd3_h.jpg"
+        },
+        {
+                "number": 26,
+                "url": "https://www.flickr.com/photos/acedeuce802/54790392027/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54790392027_3d26e9dc9f_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54790392027_3d26e9dc9f_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54790392027_3d26e9dc9f_h.jpg"
+        },
+        {
+                "number": 27,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791478514/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791478514_3822100748_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791478514_3822100748_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791478514_3822100748_h.jpg"
+        },
+        {
+                "number": 28,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791496908/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791496908_2fef28804f_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791496908_2fef28804f_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791496908_2fef28804f_h.jpg"
+        },
+        {
+                "number": 29,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791478319/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791478319_b864ee2360_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791478319_b864ee2360_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791478319_b864ee2360_h.jpg"
+        },
+        {
+                "number": 30,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791496623/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791496623_7ec041c1da_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791496623_7ec041c1da_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791496623_7ec041c1da_h.jpg"
+        },
+        {
+                "number": 31,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791477974/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791477974_0d094f4174_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791477974_0d094f4174_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791477974_0d094f4174_h.jpg"
+        },
+        {
+                "number": 32,
+                "url": "https://www.flickr.com/photos/acedeuce802/54790391212/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54790391212_de5d4359de_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54790391212_de5d4359de_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54790391212_de5d4359de_h.jpg"
+        },
+        {
+                "number": 33,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791233546/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791233546_b0914a7e07_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791233546_b0914a7e07_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791233546_b0914a7e07_h.jpg"
+        },
+        {
+                "number": 34,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791496188/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791496188_490844199e_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791496188_490844199e_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791496188_490844199e_h.jpg"
+        },
+        {
+                "number": 35,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791233256/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791233256_00e30b4fb7_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791233256_00e30b4fb7_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791233256_00e30b4fb7_h.jpg"
+        },
+        {
+                "number": 36,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791569615/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791569615_22ecbd10a4_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791569615_22ecbd10a4_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791569615_22ecbd10a4_h.jpg"
+        },
+        {
+                "number": 37,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791477229/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791477229_674f3f755a_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791477229_674f3f755a_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791477229_674f3f755a_h.jpg"
+        },
+        {
+                "number": 38,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791477299/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791477299_9ab245f107_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791477299_9ab245f107_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791477299_9ab245f107_h.jpg"
+        },
+        {
+                "number": 39,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791232881/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791232881_1e9292c071_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791232881_1e9292c071_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791232881_1e9292c071_h.jpg"
+        },
+        {
+                "number": 40,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791232951/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791232951_0b5384a2e4_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791232951_0b5384a2e4_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791232951_0b5384a2e4_h.jpg"
+        },
+        {
+                "number": 41,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791232971/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791232971_afbcf30e0d_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791232971_afbcf30e0d_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791232971_afbcf30e0d_h.jpg"
+        },
+        {
+                "number": 42,
+                "url": "https://www.flickr.com/photos/acedeuce802/54790390357/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54790390357_a2da76de55_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54790390357_a2da76de55_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54790390357_a2da76de55_h.jpg"
+        },
+        {
+                "number": 43,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791574965/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791574965_0f690138dd_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791574965_0f690138dd_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791574965_0f690138dd_h.jpg"
+        },
+        {
+                "number": 44,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791501278/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791501278_588ad71b3b_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791501278_588ad71b3b_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791501278_588ad71b3b_h.jpg"
+        },
+        {
+                "number": 45,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791483014/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791483014_a88b277292_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791483014_a88b277292_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791483014_a88b277292_h.jpg"
+        },
+        {
+                "number": 46,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791574710/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791574710_5a2236a498_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791574710_5a2236a498_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791574710_5a2236a498_h.jpg"
+        },
+        {
+                "number": 47,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791500923/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791500923_5e7bda6ef7_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791500923_5e7bda6ef7_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791500923_5e7bda6ef7_h.jpg"
+        },
+        {
+                "number": 48,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791482724/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791482724_bf879ccfb5_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791482724_bf879ccfb5_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791482724_bf879ccfb5_h.jpg"
+        },
+        {
+                "number": 49,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791574550/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791574550_d5e0bc61fe_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791574550_d5e0bc61fe_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791574550_d5e0bc61fe_h.jpg"
+        },
+        {
+                "number": 50,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791482029/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791482029_aaa45bdfd7_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791482029_aaa45bdfd7_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791482029_aaa45bdfd7_h.jpg"
+        },
+        {
+                "number": 51,
+                "url": "https://www.flickr.com/photos/acedeuce802/54790395107/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54790395107_85a22b9edd_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54790395107_85a22b9edd_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54790395107_85a22b9edd_h.jpg"
+        },
+        {
+                "number": 52,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791573870/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791573870_ddc8ccd693_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791573870_ddc8ccd693_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791573870_ddc8ccd693_h.jpg"
+        },
+        {
+                "number": 53,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791573790/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791573790_9ee646450d_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791573790_9ee646450d_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791573790_9ee646450d_h.jpg"
+        },
+        {
+                "number": 54,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791237226/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791237226_7dc697896a_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791237226_7dc697896a_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791237226_7dc697896a_h.jpg"
+        },
+        {
+                "number": 55,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791481479/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791481479_6967d4889d_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791481479_6967d4889d_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791481479_6967d4889d_h.jpg"
+        },
+        {
+                "number": 56,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791481374/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791481374_f9168f2368_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791481374_f9168f2368_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791481374_f9168f2368_h.jpg"
+        },
+        {
+                "number": 57,
+                "url": "https://www.flickr.com/photos/acedeuce802/54791499603/in/album-72177720329056165/",
+                "thumbnail": "https://live.staticflickr.com/65535/54791499603_27569088ae_h.jpg",
+                "original": "https://live.staticflickr.com/65535/54791499603_27569088ae_h.jpg",
+                "download": "https://live.staticflickr.com/65535/54791499603_27569088ae_h.jpg"
+        }
+];
+        let currentLightboxIndex = 0;
+        
+        // Verify photos loaded
+        console.log('Total photos loaded:', photos.length);
+        if (photos.length > 0) {
+            console.log('First photo:', photos[0]);
+        }
+        
+        function openLightbox(index) {
+            console.log('Opening lightbox for photo', index);
+            currentLightboxIndex = index;
+            const photo = photos[index];
+            console.log('Photo data:', photo);
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const counter = document.getElementById('lightbox-counter');
+            const download = document.getElementById('lightbox-download');
+            const flickrLink = document.getElementById('lightbox-flickr');
+            
+            // Use original image URL if available
+            const imageUrl = photo.original || photo.url;
+            console.log('Image URL:', imageUrl);
+            lightboxImage.src = imageUrl;
+            counter.textContent = `${index + 1} / ${photos.length}`;
+            download.href = photo.download || imageUrl;
+            flickrLink.href = photo.url;
+            
+            lightbox.classList.add('active');
+        }
+        
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+        
+        function navigateLightbox(direction) {
+            currentLightboxIndex += direction;
+            
+            if (currentLightboxIndex < 0) {
+                currentLightboxIndex = photos.length - 1;
+            } else if (currentLightboxIndex >= photos.length) {
+                currentLightboxIndex = 0;
+            }
+            
+            const photo = photos[currentLightboxIndex];
+            const lightboxImage = document.getElementById('lightbox-image');
+            const counter = document.getElementById('lightbox-counter');
+            const download = document.getElementById('lightbox-download');
+            const flickrLink = document.getElementById('lightbox-flickr');
+            
+            const imageUrl = photo.original || photo.url;
+            lightboxImage.src = imageUrl;
+            counter.textContent = `${currentLightboxIndex + 1} / ${photos.length}`;
+            download.href = photo.download || imageUrl;
+            flickrLink.href = photo.url;
+        }
+        
+        // Event listeners
+        document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+        document.getElementById('lightbox-prev').addEventListener('click', () => navigateLightbox(-1));
+        document.getElementById('lightbox-next').addEventListener('click', () => navigateLightbox(1));
+        
+        // Download function - force download instead of opening in tab
+        function downloadImage() {
+            const photo = photos[currentLightboxIndex];
+            const imageUrl = photo.download || photo.original || photo.url;
+            
+            // Fetch the image and trigger download
+            fetch(imageUrl)
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `photo-${currentLightboxIndex + 1}.jpg`;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                })
+                .catch(error => {
+                    console.error('Download failed:', error);
+                    // Fallback: open in new tab
+                    window.open(imageUrl, '_blank');
+                });
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('lightbox').classList.contains('active')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') navigateLightbox(-1);
+                if (e.key === 'ArrowRight') navigateLightbox(1);
+            }
+        });
+        
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target.id === 'lightbox') closeLightbox();
+        });
+    </script>
 </body>
 </html>
