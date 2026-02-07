@@ -9,7 +9,7 @@ import json
 import argparse
 from datetime import datetime
 
-def generate_race_gallery(csv_file, race_name, race_date, location, output_file):
+def generate_race_gallery(csv_file, race_name, race_date, location, output_file, discipline=None):
     """
     Generate HTML gallery with race number search functionality
     """
@@ -38,6 +38,22 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file)
         by_race_number[rn].append(photo)
     
     print(f"Found {len(by_race_number)} unique race numbers")
+    
+    # Breadcrumb based on discipline
+    if discipline:
+        breadcrumb = f'''    <div class="breadcrumb">
+        <a href="albums.html">Albums</a>
+        <span>›</span>
+        <a href="{discipline.lower().replace(' ', '-')}-albums.html">{discipline}</a>
+        <span>›</span>
+        <span>{race_name}</span>
+    </div>'''
+    else:
+        breadcrumb = f'''    <div class="breadcrumb">
+        <a href="albums.html">Albums</a>
+        <span>›</span>
+        <span>{race_name}</span>
+    </div>'''
     
     # Generate HTML
     html = f'''<!DOCTYPE html>
@@ -271,6 +287,103 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file)
             color: #666;
             font-size: 0.9em;
         }}
+        
+        /* Lightbox Styles */
+        .lightbox {{
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }}
+        
+        .lightbox.active {{
+            display: flex;
+        }}
+        
+        .lightbox-content {{
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }}
+        
+        .lightbox-image {{
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+        }}
+        
+        .lightbox-close {{
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: #fff;
+            cursor: pointer;
+            background: none;
+            border: none;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }}
+        
+        .lightbox-close:hover {{
+            background: rgba(255, 255, 255, 0.1);
+        }}
+        
+        .lightbox-nav {{
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 40px;
+            color: #fff;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }}
+        
+        .lightbox-nav:hover {{
+            background: rgba(255, 255, 255, 0.2);
+        }}
+        
+        .lightbox-prev {{
+            left: 30px;
+        }}
+        
+        .lightbox-next {{
+            right: 30px;
+        }}
+        
+        .lightbox-counter {{
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            font-size: 1.1em;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 20px;
+        }}
     </style>
 </head>
 <body>
@@ -285,11 +398,7 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file)
         </div>
     </nav>
 
-    <div class="breadcrumb">
-        <a href="albums.html">Albums</a>
-        <span>›</span>
-        <span>{race_name}</span>
-    </div>
+{breadcrumb}
 
     <section class="gallery-section">
         <div class="gallery-header">
@@ -310,6 +419,17 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file)
             No photos found for that race number.
         </div>
     </section>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+        <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)">&#8249;</button>
+        <div class="lightbox-content">
+            <img id="lightbox-image" class="lightbox-image" src="" alt="Full resolution photo">
+        </div>
+        <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)">&#8250;</button>
+        <div class="lightbox-counter" id="lightbox-counter"></div>
+    </div>
 
     <footer>
         <ul class="footer-nav">
@@ -341,15 +461,15 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file)
             
             noResults.style.display = 'none';
             
-            gallery.innerHTML = photos.map(photo => `
-                <a href="${{photo.url}}" target="_blank" class="photo-card">
+            gallery.innerHTML = photos.map((photo, index) => `
+                <div class="photo-card" onclick="openLightbox(${{index}})">
                     <div class="photo-thumbnail">
                         ${{photo.thumbnail ? `<img src="${{photo.thumbnail}}" alt="Race photo">` : '📷'}}
                     </div>
                     <div class="photo-info">
                         <span class="race-number-badge">#${{photo.race_number}}</span>
                     </div>
-                </a>
+                </div>
             `).join('');
         }}
         
@@ -370,6 +490,66 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file)
         
         // Show all photos initially
         displayPhotos(allPhotos);
+        
+        // Lightbox functionality
+        let currentLightboxIndex = 0;
+        let currentPhotos = allPhotos;
+        
+        function openLightbox(index) {{
+            currentLightboxIndex = index;
+            currentPhotos = searchInput.value.trim() ? 
+                (photosByRaceNumber[searchInput.value.trim()] || []) : 
+                allPhotos;
+            
+            const photo = currentPhotos[index];
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const counter = document.getElementById('lightbox-counter');
+            
+            // Load full resolution image from guest pass URL
+            lightboxImage.src = photo.url;
+            counter.textContent = `${{index + 1}} / ${{currentPhotos.length}}`;
+            
+            lightbox.classList.add('active');
+        }}
+        
+        function closeLightbox() {{
+            document.getElementById('lightbox').classList.remove('active');
+        }}
+        
+        function navigateLightbox(direction) {{
+            currentLightboxIndex += direction;
+            
+            // Wrap around
+            if (currentLightboxIndex < 0) {{
+                currentLightboxIndex = currentPhotos.length - 1;
+            }} else if (currentLightboxIndex >= currentPhotos.length) {{
+                currentLightboxIndex = 0;
+            }}
+            
+            const photo = currentPhotos[currentLightboxIndex];
+            const lightboxImage = document.getElementById('lightbox-image');
+            const counter = document.getElementById('lightbox-counter');
+            
+            lightboxImage.src = photo.url;
+            counter.textContent = `${{currentLightboxIndex + 1}} / ${{currentPhotos.length}}`;
+        }}
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {{
+            if (document.getElementById('lightbox').classList.contains('active')) {{
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') navigateLightbox(-1);
+                if (e.key === 'ArrowRight') navigateLightbox(1);
+            }}
+        }});
+        
+        // Close lightbox when clicking outside image
+        document.getElementById('lightbox').addEventListener('click', (e) => {{
+            if (e.target.id === 'lightbox') {{
+                closeLightbox();
+            }}
+        }});
     </script>
 </body>
 </html>'''
@@ -391,6 +571,7 @@ if __name__ == '__main__':
     parser.add_argument('--race', required=True, help='Race name')
     parser.add_argument('--date', required=True, help='Race date (e.g., "November 8, 2025")')
     parser.add_argument('--location', required=True, help='Race location')
+    parser.add_argument('--discipline', help='Cycling discipline (e.g., "Mountain Bike", "Road", "Cyclocross")')
     parser.add_argument('--output', required=True, help='Output HTML filename')
     
     args = parser.parse_args()
@@ -400,5 +581,6 @@ if __name__ == '__main__':
         args.race,
         args.date,
         args.location,
-        args.output
+        args.output,
+        args.discipline
     )

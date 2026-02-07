@@ -412,56 +412,83 @@
     </footer>
 
     <script>
-        // Carousel functionality
-        let currentSlide = 0;
-        const carousel = document.getElementById('carousel');
-        const items = document.querySelectorAll('.carousel-item');
-        const indicatorsContainer = document.getElementById('indicators');
-        
-        // OPTION: Shuffle carousel images on page load
-        // Set to true for random order, false for sequential order
-        const SHUFFLE_IMAGES = true;
-        
-        // Shuffle function
-        function shuffleArray(array) {
-            const shuffled = Array.from(array);
-            for (let i = shuffled.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-            }
-            return shuffled;
+    // Portfolio Carousel with Timer Reset
+    const images = [];
+    document.querySelectorAll('.carousel-item img').forEach(img => {
+        images.push(img.src);
+    });
+
+    // Shuffle images
+    for (let i = images.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [images[i], images[j]] = [images[j], images[i]];
+    }
+
+    let currentIndex = 0;
+    let autoRotateInterval = null;
+
+    const carousel = document.getElementById('carousel');
+    const items = document.querySelectorAll('.carousel-item');
+    const indicatorsContainer = document.getElementById('indicators');
+    
+    // Create indicators
+    items.forEach((_, index) => {
+        const indicator = document.createElement('span');
+        indicator.className = 'indicator';
+        if (index === 0) indicator.classList.add('active');
+        indicator.onclick = () => goToSlide(index);
+        indicatorsContainer.appendChild(indicator);
+    });
+    
+    const indicators = document.querySelectorAll('.indicator');
+
+    // Apply shuffled order
+    items.forEach((item, index) => {
+        item.querySelector('img').src = images[index];
+    });
+
+    function showImage(index) {
+        carousel.style.transform = `translateX(-${index * 100}%)`;
+        indicators.forEach((ind, i) => {
+            ind.classList.toggle('active', i === index);
+        });
+    }
+
+    function nextImage() {
+        currentIndex = (currentIndex + 1) % items.length;
+        showImage(currentIndex);
+    }
+
+    function prevImage() {
+        currentIndex = (currentIndex - 1 + items.length) % items.length;
+        showImage(currentIndex);
+    }
+
+    function goToSlide(index) {
+        currentIndex = index;
+        showImage(currentIndex);
+        startAutoRotate(); // Reset timer when clicking indicator
+    }
+
+    function startAutoRotate() {
+        if (autoRotateInterval) {
+            clearInterval(autoRotateInterval);
         }
-        
-        // Shuffle carousel items if enabled
-        if (SHUFFLE_IMAGES) {
-            const itemsArray = Array.from(items);
-            const shuffled = shuffleArray(itemsArray);
-            carousel.innerHTML = '';
-            shuffled.forEach(item => carousel.appendChild(item));
+        autoRotateInterval = setInterval(nextImage, 5000);
+    }
+
+    function moveCarousel(direction) {
+        if (direction > 0) {
+            nextImage();
+        } else {
+            prevImage();
         }
-        
-        // Indicators removed - too many images
-        
-        function updateCarousel() {
-            carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
-        }
-        
-        function moveCarousel(direction) {
-            currentSlide += direction;
-            if (currentSlide < 0) currentSlide = items.length - 1;
-            if (currentSlide >= items.length) currentSlide = 0;
-            updateCarousel();
-        }
-        
-        function goToSlide(index) {
-            currentSlide = index;
-            updateCarousel();
-        }
-        
-        // Auto-advance carousel every 5 seconds
-        setInterval(() => {
-            moveCarousel(1);
-        }, 5000);
-    </script>
+        startAutoRotate(); // Reset the 5-second timer
+    }
+
+    // Initial setup
+    showImage(currentIndex);
+    startAutoRotate();
+</script>
 </body>
 </html>

@@ -229,6 +229,103 @@
             color: #666;
             font-size: 0.9em;
         }
+        
+        /* Lightbox Styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .lightbox.active {
+            display: flex;
+        }
+        
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: #fff;
+            cursor: pointer;
+            background: none;
+            border: none;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+        
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 40px;
+            color: #fff;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+        
+        .lightbox-nav:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .lightbox-prev {
+            left: 30px;
+        }
+        
+        .lightbox-next {
+            right: 30px;
+        }
+        
+        .lightbox-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            font-size: 1.1em;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 20px;
+        }
     </style>
 </head>
 <body>
@@ -269,6 +366,17 @@
         </div>
     </section>
 
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+        <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)">&#8249;</button>
+        <div class="lightbox-content">
+            <img id="lightbox-image" class="lightbox-image" src="" alt="Full resolution photo">
+        </div>
+        <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)">&#8250;</button>
+        <div class="lightbox-counter" id="lightbox-counter"></div>
+    </div>
+
     <footer>
         <ul class="footer-nav">
             <li><a href="index.html">Home</a></li>
@@ -285,126 +393,126 @@
             "4280": [
                         {
                                     "number": "1",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/668JHahY40",
-                                    "thumbnail": "https://live.staticflickr.com/65535/55079246263_c884199059_h.jpg?s=eyJpIjo1NTA3OTI0NjI2MywiZSI6MTc3MDQzMDk0MCwicyI6IjE2NTY5ZjY2NGNmYjRjNmNhZjE0ZGVjOWYzYzk5ODhmNWIyNDJjMzkiLCJ2IjoxfQ",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/1YBxJ15S29",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079246263_c884199059_h.jpg?s=eyJpIjo1NTA3OTI0NjI2MywiZSI6MTc3MDQ3NzUwNywicyI6IjFhMDE5MzRjMDAzZTIzZDkyYTg2Nzg4NjgxMDdlYTk5NDZjZjdmYjAiLCJ2IjoxfQ",
                                     "race_number": "4280"
                         }
             ],
             "6069": [
                         {
                                     "number": "2",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/M4X6187f4P",
-                                    "thumbnail": "https://live.staticflickr.com/65535/55079303714_1fbb432663_h.jpg?s=eyJpIjo1NTA3OTMwMzcxNCwiZSI6MTc3MDQzMDk0MCwicyI6Ijc3OWY4ZWMwMjFhYWRiZjI5MzE0ZGI5OWZhZDE2M2NmOGJkYTczMjgiLCJ2IjoxfQ",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/011pL134vS",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079303714_1fbb432663_h.jpg?s=eyJpIjo1NTA3OTMwMzcxNCwiZSI6MTc3MDQ3NzUxMSwicyI6ImZmY2Y3ZTIzZTIzMGE3OTYxZDFkZTg4ZDg0ZmE3ZDViMGUyMjI5OWMiLCJ2IjoxfQ",
                                     "race_number": "6069"
                         }
             ],
             "3638": [
                         {
                                     "number": "3",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/j7aP3h2g9H",
-                                    "thumbnail": "https://live.staticflickr.com/65535/55078148957_94062500d5_h.jpg?s=eyJpIjo1NTA3ODE0ODk1NywiZSI6MTc3MDQzMDk0MCwicyI6IjUxNTAwY2ExNDg2YzRiNWExZWE4OTA4ODdjY2M3M2U4NjdiOGNlN2QiLCJ2IjoxfQ",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/R5D4uV7z3e",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55078148957_94062500d5_h.jpg?s=eyJpIjo1NTA3ODE0ODk1NywiZSI6MTc3MDQ3NzUxMSwicyI6ImFhNTM0MDE1Mjg1YzAwYjNhNWJlODA1MTk0NjNkMjQ2N2YzZGUzZGEiLCJ2IjoxfQ",
                                     "race_number": "3638"
                         }
             ],
             "4668": [
                         {
                                     "number": "4",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/HgX0TQ922X",
-                                    "thumbnail": "https://live.staticflickr.com/65535/55079246223_f29cf31d5e_h.jpg?s=eyJpIjo1NTA3OTI0NjIyMywiZSI6MTc3MDQzMDk0MCwicyI6ImU4ZGQ3ZjU3OTdmOTE5OTIwMDEyMWM3N2UwNTY2MzE3Y2IwOWQ3MzMiLCJ2IjoxfQ",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/9U7G3Wc5A7",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079246223_f29cf31d5e_h.jpg?s=eyJpIjo1NTA3OTI0NjIyMywiZSI6MTc3MDQ3NzUxMSwicyI6ImUwOWM2MDMwZjc0NGY1OTk0YWQ2N2YwNTBiYTMzZGI1NmU3NWFiYmUiLCJ2IjoxfQ",
                                     "race_number": "4668"
                         }
             ],
             "4423": [
                         {
                                     "number": "5",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/2QEU203r5v",
-                                    "thumbnail": "https://live.staticflickr.com/65535/55079047311_f9b8fecf7f_h.jpg?s=eyJpIjo1NTA3OTA0NzMxMSwiZSI6MTc3MDQzMDk0MCwicyI6Ijc3NmVlNjUwYWJkZmMzNmEyMTllNzllZGZhZDc4NzdiMjNlZTAzYjAiLCJ2IjoxfQ",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/e7mjaoWoz4",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079047311_f9b8fecf7f_h.jpg?s=eyJpIjo1NTA3OTA0NzMxMSwiZSI6MTc3MDQ3NzUxMSwicyI6IjM2MjA1Y2NjYjEzZDg5OTc1OTY3M2Q4NDE2NGFjM2YzMTUwMmRmNTQiLCJ2IjoxfQ",
                                     "race_number": "4423"
                         }
             ],
             "4329": [
                         {
                                     "number": "6",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/k18r61y7Lc",
-                                    "thumbnail": "https://live.staticflickr.com/65535/55079047261_58e5187af7_h.jpg?s=eyJpIjo1NTA3OTA0NzI2MSwiZSI6MTc3MDQzMDk0MCwicyI6IjFjYzIwYTg2ODZiN2RjYjg2N2M2MjY4YWU4M2MzZjI0MmRlZWE3ZTciLCJ2IjoxfQ",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/HDqrM3Y0N6",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079047261_58e5187af7_h.jpg?s=eyJpIjo1NTA3OTA0NzI2MSwiZSI6MTc3MDQ3NzUxMSwicyI6ImIwMjVjZDkxMGY2NDVkNTA0YWI0ZDczMDkzZDJlZjI0Zjc0MDEzMTAiLCJ2IjoxfQ",
                                     "race_number": "4329"
                         }
             ],
             "112": [
                         {
                                     "number": "7",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/Eh748Uo971",
-                                    "thumbnail": "https://live.staticflickr.com/65535/55079047111_de59f10687_h.jpg?s=eyJpIjo1NTA3OTA0NzExMSwiZSI6MTc3MDQzMDk0MCwicyI6ImEwYTNmYjZkYjdjMDgyNzFlODYwZDUxMzNiODBmZmM2MGRiY2FmNTMiLCJ2IjoxfQ",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/C0402cFg99",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079047111_de59f10687_h.jpg?s=eyJpIjo1NTA3OTA0NzExMSwiZSI6MTc3MDQ3NzUxMSwicyI6IjM3MmY0YTNjMGJjNDU2ZjE2YmI4YTI3NThiY2VhMDQyYWExZGNhM2UiLCJ2IjoxfQ",
                                     "race_number": "112"
                         },
                         {
                                     "number": "8",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/h3aq520yTX",
-                                    "thumbnail": "https://live.staticflickr.com/65535/55079046981_697ac31393_h.jpg?s=eyJpIjo1NTA3OTA0Njk4MSwiZSI6MTc3MDQzMDk0MCwicyI6IjM4ZGUyZGIxZDE2YjJjZmYwYmFhNTdmZDNjY2EzYzdlOGZhM2RjYWEiLCJ2IjoxfQ",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/J655C0qn71",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079046981_697ac31393_h.jpg?s=eyJpIjo1NTA3OTA0Njk4MSwiZSI6MTc3MDQ3NzUxMSwicyI6IjZjMjA4YzhjOTQ5MjlmNWQyZWEzMmEzNmY2ZGZjZDQ2MDJlNzZkYTciLCJ2IjoxfQ",
                                     "race_number": "112"
                         },
                         {
                                     "number": "9",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/Kms08aWdaz",
-                                    "thumbnail": "https://live.staticflickr.com/65535/55079047041_a65790e847_h.jpg?s=eyJpIjo1NTA3OTA0NzA0MSwiZSI6MTc3MDQzMDk0MCwicyI6ImVjYzAyZTljMDQyNjQ1ZmVjNGVkMTVhNzBlZTE0NmMyMzU3Njg5OWQiLCJ2IjoxfQ",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/kR1z50F49B",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079047041_a65790e847_h.jpg?s=eyJpIjo1NTA3OTA0NzA0MSwiZSI6MTc3MDQ3NzUxMSwicyI6ImY2N2Q3MzRiY2UzYWIyNDdlM2I3MTc3ZWJiYTdkODYyYzMxMTAwOTQiLCJ2IjoxfQ",
                                     "race_number": "112"
                         },
                         {
                                     "number": "10",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/JR5W1uU452",
-                                    "thumbnail": "https://live.staticflickr.com/65535/55079407595_bdb1389bee_h.jpg?s=eyJpIjo1NTA3OTQwNzU5NSwiZSI6MTc3MDQzMDk0MCwicyI6IjcyMDBhMWNiMWJlOGZmN2YzZWYzNzVkN2EzZWVlZTM3OWVjNWZiOTciLCJ2IjoxfQ",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/d28Nt7f99H",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079407595_bdb1389bee_h.jpg?s=eyJpIjo1NTA3OTQwNzU5NSwiZSI6MTc3MDQ3NzUxMSwicyI6ImUyODVkOTRhNmVhMGI3YmRmODA0NGY3YjdkMTY5NTFhYmJmMjJlYzYiLCJ2IjoxfQ",
                                     "race_number": "112"
                         },
                         {
                                     "number": "11",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/JQh1n8xP16",
-                                    "thumbnail": "https://live.staticflickr.com/65535/55079046881_0da58f8eae_h.jpg?s=eyJpIjo1NTA3OTA0Njg4MSwiZSI6MTc3MDQzMDk0MCwicyI6IjJkYTBkYWYwMGVlYmNhYWZkZjI4NDU4MjJkODE2ZDkyOTdjZjk4NTciLCJ2IjoxfQ",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/32733LSU1J",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079046881_0da58f8eae_h.jpg?s=eyJpIjo1NTA3OTA0Njg4MSwiZSI6MTc3MDQ3NzUxMSwicyI6IjczM2IzNGUwZWUwMTJjOWRiNTlkNzAxMjNjZmRhNzAzMGE0YjUwOTYiLCJ2IjoxfQ",
                                     "race_number": "112"
                         },
                         {
                                     "number": "12",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/dX76fm85YB",
-                                    "thumbnail": "https://live.staticflickr.com/65535/55079303269_1995c9ba1a_h.jpg?s=eyJpIjo1NTA3OTMwMzI2OSwiZSI6MTc3MDQzMDk0MCwicyI6IjE2NTBiMzZhODc0ZjdiNTg2NmQ3MzY5NGE2MzMwOWQxMTEzYzcwYjkiLCJ2IjoxfQ",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/X5rn23r4h0",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079303269_1995c9ba1a_h.jpg?s=eyJpIjo1NTA3OTMwMzI2OSwiZSI6MTc3MDQ3NzUxMSwicyI6IjNmY2IyZDFmNmE4MTg0ODRhYzkwZGExYjJlNzZhOTZkYWQ5Y2I2OGQiLCJ2IjoxfQ",
                                     "race_number": "112"
                         },
                         {
                                     "number": "13",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/0uZ91b35o1",
-                                    "thumbnail": "https://live.staticflickr.com/65535/55079245783_20cadb6d96_h.jpg?s=eyJpIjo1NTA3OTI0NTc4MywiZSI6MTc3MDQzMDk0MCwicyI6IjE2ZDUwMzY4YjMyYmFkNmZlYmRkMDUyNWRjMmUwZmE4OWNhNDM3YzYiLCJ2IjoxfQ",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/507cy0mKE3",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079245783_20cadb6d96_h.jpg?s=eyJpIjo1NTA3OTI0NTc4MywiZSI6MTc3MDQ3NzUxMSwicyI6ImNjNTRhYmYyNmMzYWMyZjcyMmE5ODQ1NGE2ZGIyMmRmMmJkZDhkN2EiLCJ2IjoxfQ",
                                     "race_number": "112"
                         }
             ],
             "84": [
                         {
                                     "number": "14",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/N414289874",
-                                    "thumbnail": "https://live.staticflickr.com/65535/55079046846_9876929bd4_h.jpg?s=eyJpIjo1NTA3OTA0Njg0NiwiZSI6MTc3MDQzMDk0MCwicyI6IjA3YzVkNDg1YTAxYWI3ZDFhNzcyYzUzOTY1YjAwYmZiMjU1ZjFjNDIiLCJ2IjoxfQ",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/2RzQmxwJ9o",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079046846_9876929bd4_h.jpg?s=eyJpIjo1NTA3OTA0Njg0NiwiZSI6MTc3MDQ3NzUxMSwicyI6IjUzYThlMmQ3NGY5OGI5YmYxNTFiOGY2MjA4ZjhjZmM2NjRiZmVmMWIiLCJ2IjoxfQ",
                                     "race_number": "84"
                         },
                         {
                                     "number": "15",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/m1mu9Y6B72",
-                                    "thumbnail": "https://live.staticflickr.com/65535/55079407120_0cdf569edc_h.jpg?s=eyJpIjo1NTA3OTQwNzEyMCwiZSI6MTc3MDQzMDk0MCwicyI6IjFmMDZmMzk5MDBjNTdlYWI5YzIwZTQ2YzBkZDliZGE0OGI1ZTUzMjYiLCJ2IjoxfQ",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/g42k294968",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079407120_0cdf569edc_h.jpg?s=eyJpIjo1NTA3OTQwNzEyMCwiZSI6MTc3MDQ3NzUxMSwicyI6IjM1NTFlMDBkODg0NGQzNDc4ZjU1YTY3YWZiMmZmMmE2ZGE4MzFmM2UiLCJ2IjoxfQ",
                                     "race_number": "84"
                         }
             ],
             "73": [
                         {
                                     "number": "16",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/3kF3pA7u52",
-                                    "thumbnail": "https://live.staticflickr.com/65535/55079407155_71a23c74b3_h.jpg?s=eyJpIjo1NTA3OTQwNzE1NSwiZSI6MTc3MDQzMDk0MCwicyI6ImM2YzNhZWI0MGEzOTY3NzFiZmFjZjJkZmE4OGM4MThkMDAyMjNhMTUiLCJ2IjoxfQ",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/3544zGVdTn",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079407155_71a23c74b3_h.jpg?s=eyJpIjo1NTA3OTQwNzE1NSwiZSI6MTc3MDQ3NzUxMSwicyI6IjM2YTBhOGZhNzY4ODgxYTUzMzZjYWY1YTdjMjk5ZTZiMjQ5MTczNzIiLCJ2IjoxfQ",
                                     "race_number": "73"
                         },
                         {
                                     "number": "17",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/J8e1KHc812",
-                                    "thumbnail": "https://live.staticflickr.com/65535/55079407145_903afeeabc_h.jpg?s=eyJpIjo1NTA3OTQwNzE0NSwiZSI6MTc3MDQzMDk0MCwicyI6ImRmZjhmNzU1NDJhMzRhYTk2YjYzMGUwOWY4MGU0ODc0NjBlZmI3MmMiLCJ2IjoxfQ",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/973C224N0b",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55079407145_903afeeabc_h.jpg?s=eyJpIjo1NTA3OTQwNzE0NSwiZSI6MTc3MDQ3NzUxMSwicyI6IjY5ZjQ1ODMzMTg3ODY2MjExMDI5YmYzZWZkNDYyZjAwMDkwZWQyMzgiLCJ2IjoxfQ",
                                     "race_number": "73"
                         },
                         {
                                     "number": "18",
-                                    "url": "https://www.flickr.com/gp/acedeuce802/ZtCo2v7x6V",
-                                    "thumbnail": "https://live.staticflickr.com/65535/55078148402_24e37b1c18_h.jpg?s=eyJpIjo1NTA3ODE0ODQwMiwiZSI6MTc3MDQzMDk0MCwicyI6IjY2MzhjYjMyYTEzMDVhYzRjOGVlYWRlZDNlZjQxOTk0ZDU2ZTVkZWIiLCJ2IjoxfQ",
+                                    "url": "https://www.flickr.com/gp/acedeuce802/HP5Z61E8Wk",
+                                    "thumbnail": "https://live.staticflickr.com/65535/55078148402_24e37b1c18_h.jpg?s=eyJpIjo1NTA3ODE0ODQwMiwiZSI6MTc3MDQ3NzUxMSwicyI6IjY5NGVmYTgxMzc0YjEwYTlmYjkzNTkyMTVkMThjNGU2ODZmNzBmYmUiLCJ2IjoxfQ",
                                     "race_number": "73"
                         }
             ]
@@ -414,110 +522,110 @@
         const allPhotos = [
             {
                         "number": "1",
-                        "url": "https://www.flickr.com/gp/acedeuce802/668JHahY40",
-                        "thumbnail": "https://live.staticflickr.com/65535/55079246263_c884199059_h.jpg?s=eyJpIjo1NTA3OTI0NjI2MywiZSI6MTc3MDQzMDk0MCwicyI6IjE2NTY5ZjY2NGNmYjRjNmNhZjE0ZGVjOWYzYzk5ODhmNWIyNDJjMzkiLCJ2IjoxfQ",
+                        "url": "https://www.flickr.com/gp/acedeuce802/1YBxJ15S29",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079246263_c884199059_h.jpg?s=eyJpIjo1NTA3OTI0NjI2MywiZSI6MTc3MDQ3NzUwNywicyI6IjFhMDE5MzRjMDAzZTIzZDkyYTg2Nzg4NjgxMDdlYTk5NDZjZjdmYjAiLCJ2IjoxfQ",
                         "race_number": "4280"
             },
             {
                         "number": "2",
-                        "url": "https://www.flickr.com/gp/acedeuce802/M4X6187f4P",
-                        "thumbnail": "https://live.staticflickr.com/65535/55079303714_1fbb432663_h.jpg?s=eyJpIjo1NTA3OTMwMzcxNCwiZSI6MTc3MDQzMDk0MCwicyI6Ijc3OWY4ZWMwMjFhYWRiZjI5MzE0ZGI5OWZhZDE2M2NmOGJkYTczMjgiLCJ2IjoxfQ",
+                        "url": "https://www.flickr.com/gp/acedeuce802/011pL134vS",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079303714_1fbb432663_h.jpg?s=eyJpIjo1NTA3OTMwMzcxNCwiZSI6MTc3MDQ3NzUxMSwicyI6ImZmY2Y3ZTIzZTIzMGE3OTYxZDFkZTg4ZDg0ZmE3ZDViMGUyMjI5OWMiLCJ2IjoxfQ",
                         "race_number": "6069"
             },
             {
                         "number": "3",
-                        "url": "https://www.flickr.com/gp/acedeuce802/j7aP3h2g9H",
-                        "thumbnail": "https://live.staticflickr.com/65535/55078148957_94062500d5_h.jpg?s=eyJpIjo1NTA3ODE0ODk1NywiZSI6MTc3MDQzMDk0MCwicyI6IjUxNTAwY2ExNDg2YzRiNWExZWE4OTA4ODdjY2M3M2U4NjdiOGNlN2QiLCJ2IjoxfQ",
+                        "url": "https://www.flickr.com/gp/acedeuce802/R5D4uV7z3e",
+                        "thumbnail": "https://live.staticflickr.com/65535/55078148957_94062500d5_h.jpg?s=eyJpIjo1NTA3ODE0ODk1NywiZSI6MTc3MDQ3NzUxMSwicyI6ImFhNTM0MDE1Mjg1YzAwYjNhNWJlODA1MTk0NjNkMjQ2N2YzZGUzZGEiLCJ2IjoxfQ",
                         "race_number": "3638"
             },
             {
                         "number": "4",
-                        "url": "https://www.flickr.com/gp/acedeuce802/HgX0TQ922X",
-                        "thumbnail": "https://live.staticflickr.com/65535/55079246223_f29cf31d5e_h.jpg?s=eyJpIjo1NTA3OTI0NjIyMywiZSI6MTc3MDQzMDk0MCwicyI6ImU4ZGQ3ZjU3OTdmOTE5OTIwMDEyMWM3N2UwNTY2MzE3Y2IwOWQ3MzMiLCJ2IjoxfQ",
+                        "url": "https://www.flickr.com/gp/acedeuce802/9U7G3Wc5A7",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079246223_f29cf31d5e_h.jpg?s=eyJpIjo1NTA3OTI0NjIyMywiZSI6MTc3MDQ3NzUxMSwicyI6ImUwOWM2MDMwZjc0NGY1OTk0YWQ2N2YwNTBiYTMzZGI1NmU3NWFiYmUiLCJ2IjoxfQ",
                         "race_number": "4668"
             },
             {
                         "number": "5",
-                        "url": "https://www.flickr.com/gp/acedeuce802/2QEU203r5v",
-                        "thumbnail": "https://live.staticflickr.com/65535/55079047311_f9b8fecf7f_h.jpg?s=eyJpIjo1NTA3OTA0NzMxMSwiZSI6MTc3MDQzMDk0MCwicyI6Ijc3NmVlNjUwYWJkZmMzNmEyMTllNzllZGZhZDc4NzdiMjNlZTAzYjAiLCJ2IjoxfQ",
+                        "url": "https://www.flickr.com/gp/acedeuce802/e7mjaoWoz4",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079047311_f9b8fecf7f_h.jpg?s=eyJpIjo1NTA3OTA0NzMxMSwiZSI6MTc3MDQ3NzUxMSwicyI6IjM2MjA1Y2NjYjEzZDg5OTc1OTY3M2Q4NDE2NGFjM2YzMTUwMmRmNTQiLCJ2IjoxfQ",
                         "race_number": "4423"
             },
             {
                         "number": "6",
-                        "url": "https://www.flickr.com/gp/acedeuce802/k18r61y7Lc",
-                        "thumbnail": "https://live.staticflickr.com/65535/55079047261_58e5187af7_h.jpg?s=eyJpIjo1NTA3OTA0NzI2MSwiZSI6MTc3MDQzMDk0MCwicyI6IjFjYzIwYTg2ODZiN2RjYjg2N2M2MjY4YWU4M2MzZjI0MmRlZWE3ZTciLCJ2IjoxfQ",
+                        "url": "https://www.flickr.com/gp/acedeuce802/HDqrM3Y0N6",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079047261_58e5187af7_h.jpg?s=eyJpIjo1NTA3OTA0NzI2MSwiZSI6MTc3MDQ3NzUxMSwicyI6ImIwMjVjZDkxMGY2NDVkNTA0YWI0ZDczMDkzZDJlZjI0Zjc0MDEzMTAiLCJ2IjoxfQ",
                         "race_number": "4329"
             },
             {
                         "number": "7",
-                        "url": "https://www.flickr.com/gp/acedeuce802/Eh748Uo971",
-                        "thumbnail": "https://live.staticflickr.com/65535/55079047111_de59f10687_h.jpg?s=eyJpIjo1NTA3OTA0NzExMSwiZSI6MTc3MDQzMDk0MCwicyI6ImEwYTNmYjZkYjdjMDgyNzFlODYwZDUxMzNiODBmZmM2MGRiY2FmNTMiLCJ2IjoxfQ",
+                        "url": "https://www.flickr.com/gp/acedeuce802/C0402cFg99",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079047111_de59f10687_h.jpg?s=eyJpIjo1NTA3OTA0NzExMSwiZSI6MTc3MDQ3NzUxMSwicyI6IjM3MmY0YTNjMGJjNDU2ZjE2YmI4YTI3NThiY2VhMDQyYWExZGNhM2UiLCJ2IjoxfQ",
                         "race_number": "112"
             },
             {
                         "number": "8",
-                        "url": "https://www.flickr.com/gp/acedeuce802/h3aq520yTX",
-                        "thumbnail": "https://live.staticflickr.com/65535/55079046981_697ac31393_h.jpg?s=eyJpIjo1NTA3OTA0Njk4MSwiZSI6MTc3MDQzMDk0MCwicyI6IjM4ZGUyZGIxZDE2YjJjZmYwYmFhNTdmZDNjY2EzYzdlOGZhM2RjYWEiLCJ2IjoxfQ",
+                        "url": "https://www.flickr.com/gp/acedeuce802/J655C0qn71",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079046981_697ac31393_h.jpg?s=eyJpIjo1NTA3OTA0Njk4MSwiZSI6MTc3MDQ3NzUxMSwicyI6IjZjMjA4YzhjOTQ5MjlmNWQyZWEzMmEzNmY2ZGZjZDQ2MDJlNzZkYTciLCJ2IjoxfQ",
                         "race_number": "112"
             },
             {
                         "number": "9",
-                        "url": "https://www.flickr.com/gp/acedeuce802/Kms08aWdaz",
-                        "thumbnail": "https://live.staticflickr.com/65535/55079047041_a65790e847_h.jpg?s=eyJpIjo1NTA3OTA0NzA0MSwiZSI6MTc3MDQzMDk0MCwicyI6ImVjYzAyZTljMDQyNjQ1ZmVjNGVkMTVhNzBlZTE0NmMyMzU3Njg5OWQiLCJ2IjoxfQ",
+                        "url": "https://www.flickr.com/gp/acedeuce802/kR1z50F49B",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079047041_a65790e847_h.jpg?s=eyJpIjo1NTA3OTA0NzA0MSwiZSI6MTc3MDQ3NzUxMSwicyI6ImY2N2Q3MzRiY2UzYWIyNDdlM2I3MTc3ZWJiYTdkODYyYzMxMTAwOTQiLCJ2IjoxfQ",
                         "race_number": "112"
             },
             {
                         "number": "10",
-                        "url": "https://www.flickr.com/gp/acedeuce802/JR5W1uU452",
-                        "thumbnail": "https://live.staticflickr.com/65535/55079407595_bdb1389bee_h.jpg?s=eyJpIjo1NTA3OTQwNzU5NSwiZSI6MTc3MDQzMDk0MCwicyI6IjcyMDBhMWNiMWJlOGZmN2YzZWYzNzVkN2EzZWVlZTM3OWVjNWZiOTciLCJ2IjoxfQ",
+                        "url": "https://www.flickr.com/gp/acedeuce802/d28Nt7f99H",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079407595_bdb1389bee_h.jpg?s=eyJpIjo1NTA3OTQwNzU5NSwiZSI6MTc3MDQ3NzUxMSwicyI6ImUyODVkOTRhNmVhMGI3YmRmODA0NGY3YjdkMTY5NTFhYmJmMjJlYzYiLCJ2IjoxfQ",
                         "race_number": "112"
             },
             {
                         "number": "11",
-                        "url": "https://www.flickr.com/gp/acedeuce802/JQh1n8xP16",
-                        "thumbnail": "https://live.staticflickr.com/65535/55079046881_0da58f8eae_h.jpg?s=eyJpIjo1NTA3OTA0Njg4MSwiZSI6MTc3MDQzMDk0MCwicyI6IjJkYTBkYWYwMGVlYmNhYWZkZjI4NDU4MjJkODE2ZDkyOTdjZjk4NTciLCJ2IjoxfQ",
+                        "url": "https://www.flickr.com/gp/acedeuce802/32733LSU1J",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079046881_0da58f8eae_h.jpg?s=eyJpIjo1NTA3OTA0Njg4MSwiZSI6MTc3MDQ3NzUxMSwicyI6IjczM2IzNGUwZWUwMTJjOWRiNTlkNzAxMjNjZmRhNzAzMGE0YjUwOTYiLCJ2IjoxfQ",
                         "race_number": "112"
             },
             {
                         "number": "12",
-                        "url": "https://www.flickr.com/gp/acedeuce802/dX76fm85YB",
-                        "thumbnail": "https://live.staticflickr.com/65535/55079303269_1995c9ba1a_h.jpg?s=eyJpIjo1NTA3OTMwMzI2OSwiZSI6MTc3MDQzMDk0MCwicyI6IjE2NTBiMzZhODc0ZjdiNTg2NmQ3MzY5NGE2MzMwOWQxMTEzYzcwYjkiLCJ2IjoxfQ",
+                        "url": "https://www.flickr.com/gp/acedeuce802/X5rn23r4h0",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079303269_1995c9ba1a_h.jpg?s=eyJpIjo1NTA3OTMwMzI2OSwiZSI6MTc3MDQ3NzUxMSwicyI6IjNmY2IyZDFmNmE4MTg0ODRhYzkwZGExYjJlNzZhOTZkYWQ5Y2I2OGQiLCJ2IjoxfQ",
                         "race_number": "112"
             },
             {
                         "number": "13",
-                        "url": "https://www.flickr.com/gp/acedeuce802/0uZ91b35o1",
-                        "thumbnail": "https://live.staticflickr.com/65535/55079245783_20cadb6d96_h.jpg?s=eyJpIjo1NTA3OTI0NTc4MywiZSI6MTc3MDQzMDk0MCwicyI6IjE2ZDUwMzY4YjMyYmFkNmZlYmRkMDUyNWRjMmUwZmE4OWNhNDM3YzYiLCJ2IjoxfQ",
+                        "url": "https://www.flickr.com/gp/acedeuce802/507cy0mKE3",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079245783_20cadb6d96_h.jpg?s=eyJpIjo1NTA3OTI0NTc4MywiZSI6MTc3MDQ3NzUxMSwicyI6ImNjNTRhYmYyNmMzYWMyZjcyMmE5ODQ1NGE2ZGIyMmRmMmJkZDhkN2EiLCJ2IjoxfQ",
                         "race_number": "112"
             },
             {
                         "number": "14",
-                        "url": "https://www.flickr.com/gp/acedeuce802/N414289874",
-                        "thumbnail": "https://live.staticflickr.com/65535/55079046846_9876929bd4_h.jpg?s=eyJpIjo1NTA3OTA0Njg0NiwiZSI6MTc3MDQzMDk0MCwicyI6IjA3YzVkNDg1YTAxYWI3ZDFhNzcyYzUzOTY1YjAwYmZiMjU1ZjFjNDIiLCJ2IjoxfQ",
+                        "url": "https://www.flickr.com/gp/acedeuce802/2RzQmxwJ9o",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079046846_9876929bd4_h.jpg?s=eyJpIjo1NTA3OTA0Njg0NiwiZSI6MTc3MDQ3NzUxMSwicyI6IjUzYThlMmQ3NGY5OGI5YmYxNTFiOGY2MjA4ZjhjZmM2NjRiZmVmMWIiLCJ2IjoxfQ",
                         "race_number": "84"
             },
             {
                         "number": "15",
-                        "url": "https://www.flickr.com/gp/acedeuce802/m1mu9Y6B72",
-                        "thumbnail": "https://live.staticflickr.com/65535/55079407120_0cdf569edc_h.jpg?s=eyJpIjo1NTA3OTQwNzEyMCwiZSI6MTc3MDQzMDk0MCwicyI6IjFmMDZmMzk5MDBjNTdlYWI5YzIwZTQ2YzBkZDliZGE0OGI1ZTUzMjYiLCJ2IjoxfQ",
+                        "url": "https://www.flickr.com/gp/acedeuce802/g42k294968",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079407120_0cdf569edc_h.jpg?s=eyJpIjo1NTA3OTQwNzEyMCwiZSI6MTc3MDQ3NzUxMSwicyI6IjM1NTFlMDBkODg0NGQzNDc4ZjU1YTY3YWZiMmZmMmE2ZGE4MzFmM2UiLCJ2IjoxfQ",
                         "race_number": "84"
             },
             {
                         "number": "16",
-                        "url": "https://www.flickr.com/gp/acedeuce802/3kF3pA7u52",
-                        "thumbnail": "https://live.staticflickr.com/65535/55079407155_71a23c74b3_h.jpg?s=eyJpIjo1NTA3OTQwNzE1NSwiZSI6MTc3MDQzMDk0MCwicyI6ImM2YzNhZWI0MGEzOTY3NzFiZmFjZjJkZmE4OGM4MThkMDAyMjNhMTUiLCJ2IjoxfQ",
+                        "url": "https://www.flickr.com/gp/acedeuce802/3544zGVdTn",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079407155_71a23c74b3_h.jpg?s=eyJpIjo1NTA3OTQwNzE1NSwiZSI6MTc3MDQ3NzUxMSwicyI6IjM2YTBhOGZhNzY4ODgxYTUzMzZjYWY1YTdjMjk5ZTZiMjQ5MTczNzIiLCJ2IjoxfQ",
                         "race_number": "73"
             },
             {
                         "number": "17",
-                        "url": "https://www.flickr.com/gp/acedeuce802/J8e1KHc812",
-                        "thumbnail": "https://live.staticflickr.com/65535/55079407145_903afeeabc_h.jpg?s=eyJpIjo1NTA3OTQwNzE0NSwiZSI6MTc3MDQzMDk0MCwicyI6ImRmZjhmNzU1NDJhMzRhYTk2YjYzMGUwOWY4MGU0ODc0NjBlZmI3MmMiLCJ2IjoxfQ",
+                        "url": "https://www.flickr.com/gp/acedeuce802/973C224N0b",
+                        "thumbnail": "https://live.staticflickr.com/65535/55079407145_903afeeabc_h.jpg?s=eyJpIjo1NTA3OTQwNzE0NSwiZSI6MTc3MDQ3NzUxMSwicyI6IjY5ZjQ1ODMzMTg3ODY2MjExMDI5YmYzZWZkNDYyZjAwMDkwZWQyMzgiLCJ2IjoxfQ",
                         "race_number": "73"
             },
             {
                         "number": "18",
-                        "url": "https://www.flickr.com/gp/acedeuce802/ZtCo2v7x6V",
-                        "thumbnail": "https://live.staticflickr.com/65535/55078148402_24e37b1c18_h.jpg?s=eyJpIjo1NTA3ODE0ODQwMiwiZSI6MTc3MDQzMDk0MCwicyI6IjY2MzhjYjMyYTEzMDVhYzRjOGVlYWRlZDNlZjQxOTk0ZDU2ZTVkZWIiLCJ2IjoxfQ",
+                        "url": "https://www.flickr.com/gp/acedeuce802/HP5Z61E8Wk",
+                        "thumbnail": "https://live.staticflickr.com/65535/55078148402_24e37b1c18_h.jpg?s=eyJpIjo1NTA3ODE0ODQwMiwiZSI6MTc3MDQ3NzUxMSwicyI6IjY5NGVmYTgxMzc0YjEwYTlmYjkzNTkyMTVkMThjNGU2ODZmNzBmYmUiLCJ2IjoxfQ",
                         "race_number": "73"
             }
 ];
@@ -535,15 +643,15 @@
             
             noResults.style.display = 'none';
             
-            gallery.innerHTML = photos.map(photo => `
-                <a href="${photo.url}" target="_blank" class="photo-card">
+            gallery.innerHTML = photos.map((photo, index) => `
+                <div class="photo-card" onclick="openLightbox(${index})">
                     <div class="photo-thumbnail">
                         ${photo.thumbnail ? `<img src="${photo.thumbnail}" alt="Race photo">` : '📷'}
                     </div>
                     <div class="photo-info">
                         <span class="race-number-badge">#${photo.race_number}</span>
                     </div>
-                </a>
+                </div>
             `).join('');
         }
         
@@ -564,6 +672,66 @@
         
         // Show all photos initially
         displayPhotos(allPhotos);
+        
+        // Lightbox functionality
+        let currentLightboxIndex = 0;
+        let currentPhotos = allPhotos;
+        
+        function openLightbox(index) {
+            currentLightboxIndex = index;
+            currentPhotos = searchInput.value.trim() ? 
+                (photosByRaceNumber[searchInput.value.trim()] || []) : 
+                allPhotos;
+            
+            const photo = currentPhotos[index];
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const counter = document.getElementById('lightbox-counter');
+            
+            // Load full resolution image from guest pass URL
+            lightboxImage.src = photo.url;
+            counter.textContent = `${index + 1} / ${currentPhotos.length}`;
+            
+            lightbox.classList.add('active');
+        }
+        
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+        
+        function navigateLightbox(direction) {
+            currentLightboxIndex += direction;
+            
+            // Wrap around
+            if (currentLightboxIndex < 0) {
+                currentLightboxIndex = currentPhotos.length - 1;
+            } else if (currentLightboxIndex >= currentPhotos.length) {
+                currentLightboxIndex = 0;
+            }
+            
+            const photo = currentPhotos[currentLightboxIndex];
+            const lightboxImage = document.getElementById('lightbox-image');
+            const counter = document.getElementById('lightbox-counter');
+            
+            lightboxImage.src = photo.url;
+            counter.textContent = `${currentLightboxIndex + 1} / ${currentPhotos.length}`;
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('lightbox').classList.contains('active')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') navigateLightbox(-1);
+                if (e.key === 'ArrowRight') navigateLightbox(1);
+            }
+        });
+        
+        // Close lightbox when clicking outside image
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target.id === 'lightbox') {
+                closeLightbox();
+            }
+        });
     </script>
 </body>
 </html>
