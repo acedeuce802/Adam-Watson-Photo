@@ -12,11 +12,34 @@ def generate_browse_gallery(json_file, race_name, race_date, location, output_fi
     Generate HTML gallery showing all photos (no search)
     """
     
-    # Load guest pass links
+    # Load photos
     with open(json_file, 'r') as f:
-        photos = json.load(f)
+        raw_photos = json.load(f)
     
-    print(f"Loaded {len(photos)} photos from {json_file}")
+    print(f"Loaded {len(raw_photos)} photos from {json_file}")
+    
+    # Normalize photo format (handle both public and private formats)
+    photos = []
+    for photo in raw_photos:
+        if 'large_url' in photo:
+            # PUBLIC PHOTOS format
+            photos.append({
+                'number': photo['photo_number'],
+                'url': photo.get('photo_url', ''),
+                'thumbnail': photo.get('thumbnail_url', ''),
+                'original': photo.get('large_url', ''),
+                'download': photo.get('original_url', '')
+            })
+        else:
+            # PRIVATE PHOTOS format (guest pass)
+            photos.append({
+                'number': photo['photo_number'],
+                'url': photo['guest_pass_url'],
+                'thumbnail': photo.get('thumbnail_url', ''),
+                'original': photo.get('original_image_url', ''),
+                'download': photo.get('original_image_url', '')
+            })
+    
     
     # Breadcrumb based on discipline
     if discipline:
@@ -103,6 +126,7 @@ def generate_browse_gallery(json_file, race_name, race_date, location, output_fi
             width: 24px;
             height: 24px;
             filter: brightness(0.6);
+            display: block;
         }}
         
         .breadcrumb {{
@@ -170,6 +194,7 @@ def generate_browse_gallery(json_file, race_name, race_date, location, output_fi
             display: block;
             text-decoration: none;
             color: inherit;
+            cursor: pointer;
         }}
         
         .photo-card:hover {{
@@ -220,6 +245,151 @@ def generate_browse_gallery(json_file, race_name, race_date, location, output_fi
             text-align: center;
             color: #666;
             font-size: 0.9em;
+        }}
+        
+        /* Lightbox */
+        .lightbox {{
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+        }}
+        
+        .lightbox.active {{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }}
+        
+        .lightbox-content {{
+            max-width: 95%;
+            max-height: 95%;
+            position: relative;
+        }}
+        
+        .lightbox-image {{
+            max-width: 100%;
+            max-height: 95vh;
+            object-fit: contain;
+            display: block;
+        }}
+        
+        .lightbox-close {{
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            font-size: 50px;
+            color: #fff;
+            cursor: pointer;
+            background: rgba(0,0,0,0.7);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+            z-index: 10000;
+        }}
+        
+        .lightbox-close:hover {{
+            background: rgba(255,255,255,0.2);
+        }}
+        
+        .lightbox-nav {{
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 50px;
+            color: #fff;
+            cursor: pointer;
+            background: rgba(0,0,0,0.7);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+            z-index: 10000;
+        }}
+        
+        .lightbox-nav:hover {{
+            background: rgba(255,255,255,0.2);
+        }}
+        
+        .lightbox-prev {{ left: 30px; }}
+        .lightbox-next {{ right: 30px; }}
+        
+        .lightbox-counter {{
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            z-index: 10000;
+        }}
+        
+        .lightbox-download {{
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 25px;
+            border: 1px solid #666;
+            font-size: 1em;
+            font-family: inherit;
+            line-height: 1.5;
+            height: 48px;
+            display: inline-flex;
+            align-items: center;
+            box-sizing: border-box;
+            transition: all 0.3s;
+            z-index: 10000;
+            cursor: pointer;
+        }}
+        
+        .lightbox-download:hover {{
+            background: rgba(255,255,255,0.2);
+            border-color: #999;
+        }}
+        
+        .lightbox-flickr {{
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 25px;
+            border: 1px solid #666;
+            text-decoration: none;
+            font-size: 1em;
+            line-height: 1.5;
+            height: 48px;
+            display: inline-flex;
+            align-items: center;
+            box-sizing: border-box;
+            white-space: nowrap;
+            transition: all 0.3s;
+            z-index: 10000;
+        }}
+        
+        .lightbox-flickr:hover {{
+            background: rgba(255,255,255,0.2);
+            border-color: #999;
         }}
         
         /* Lightbox Styles */
@@ -346,7 +516,7 @@ def generate_browse_gallery(json_file, race_name, race_date, location, output_fi
     
     # Add all photos
     for idx, photo in enumerate(photos):
-        thumbnail = photo.get('thumbnail_url', '')
+        thumbnail = photo.get('thumbnail', '')
         html += f'''            <div class="photo-card" onclick="openLightbox({idx})">
                 <div class="photo-thumbnail">
                     {'<img src="' + thumbnail + '" alt="Race photo">' if thumbnail else '📷'}
@@ -359,13 +529,15 @@ def generate_browse_gallery(json_file, race_name, race_date, location, output_fi
 
     <!-- Lightbox -->
     <div id="lightbox" class="lightbox">
-        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
-        <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)">&#8249;</button>
+        <button class="lightbox-close" id="lightbox-close">&times;</button>
+        <button class="lightbox-nav lightbox-prev" id="lightbox-prev">&#8249;</button>
         <div class="lightbox-content">
             <img id="lightbox-image" class="lightbox-image" src="" alt="Full resolution photo">
         </div>
-        <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)">&#8250;</button>
+        <button class="lightbox-nav lightbox-next" id="lightbox-next">&#8250;</button>
         <div class="lightbox-counter" id="lightbox-counter"></div>
+        <a id="lightbox-flickr" class="lightbox-flickr" href="" target="_blank">Link to Full Resolution</a>
+        <button id="lightbox-download" class="lightbox-download" onclick="downloadImage()">Download</button>
     </div>
 
     <footer>
@@ -379,54 +551,110 @@ def generate_browse_gallery(json_file, race_name, race_date, location, output_fi
     </footer>
 
     <script>
-        const photos = {json.dumps(photos, indent=8)};
+        const photos = '''
+    
+    # Insert the JSON data
+    html += json.dumps(photos, indent=8)
+    
+    html += ''';
         let currentLightboxIndex = 0;
         
-        function openLightbox(index) {{
+        // Verify photos loaded
+        console.log('Total photos loaded:', photos.length);
+        if (photos.length > 0) {
+            console.log('First photo:', photos[0]);
+        }
+        
+        function openLightbox(index) {
+            console.log('Opening lightbox for photo', index);
             currentLightboxIndex = index;
             const photo = photos[index];
+            console.log('Photo data:', photo);
             const lightbox = document.getElementById('lightbox');
             const lightboxImage = document.getElementById('lightbox-image');
             const counter = document.getElementById('lightbox-counter');
+            const download = document.getElementById('lightbox-download');
+            const flickrLink = document.getElementById('lightbox-flickr');
             
-            lightboxImage.src = photo.guest_pass_url;
-            counter.textContent = `${{index + 1}} / ${{photos.length}}`;
+            // Use original image URL if available
+            const imageUrl = photo.original || photo.url;
+            console.log('Image URL:', imageUrl);
+            lightboxImage.src = imageUrl;
+            counter.textContent = `${index + 1} / ${photos.length}`;
+            download.href = photo.download || imageUrl;
+            flickrLink.href = photo.url;
             
             lightbox.classList.add('active');
-        }}
+        }
         
-        function closeLightbox() {{
+        function closeLightbox() {
             document.getElementById('lightbox').classList.remove('active');
-        }}
+        }
         
-        function navigateLightbox(direction) {{
+        function navigateLightbox(direction) {
             currentLightboxIndex += direction;
             
-            if (currentLightboxIndex < 0) {{
+            if (currentLightboxIndex < 0) {
                 currentLightboxIndex = photos.length - 1;
-            }} else if (currentLightboxIndex >= photos.length) {{
+            } else if (currentLightboxIndex >= photos.length) {
                 currentLightboxIndex = 0;
-            }}
+            }
             
             const photo = photos[currentLightboxIndex];
             const lightboxImage = document.getElementById('lightbox-image');
             const counter = document.getElementById('lightbox-counter');
+            const download = document.getElementById('lightbox-download');
+            const flickrLink = document.getElementById('lightbox-flickr');
             
-            lightboxImage.src = photo.guest_pass_url;
-            counter.textContent = `${{currentLightboxIndex + 1}} / ${{photos.length}}`;
-        }}
+            const imageUrl = photo.original || photo.url;
+            lightboxImage.src = imageUrl;
+            counter.textContent = `${currentLightboxIndex + 1} / ${photos.length}`;
+            download.href = photo.download || imageUrl;
+            flickrLink.href = photo.url;
+        }
         
-        document.addEventListener('keydown', (e) => {{
-            if (document.getElementById('lightbox').classList.contains('active')) {{
+        // Event listeners
+        document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+        document.getElementById('lightbox-prev').addEventListener('click', () => navigateLightbox(-1));
+        document.getElementById('lightbox-next').addEventListener('click', () => navigateLightbox(1));
+        
+        // Download function - force download instead of opening in tab
+        function downloadImage() {
+            const photo = photos[currentLightboxIndex];
+            const imageUrl = photo.download || photo.original || photo.url;
+            
+            // Fetch the image and trigger download
+            fetch(imageUrl)
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `photo-${currentLightboxIndex + 1}.jpg`;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                })
+                .catch(error => {
+                    console.error('Download failed:', error);
+                    // Fallback: open in new tab
+                    window.open(imageUrl, '_blank');
+                });
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('lightbox').classList.contains('active')) {
                 if (e.key === 'Escape') closeLightbox();
                 if (e.key === 'ArrowLeft') navigateLightbox(-1);
                 if (e.key === 'ArrowRight') navigateLightbox(1);
-            }}
-        }});
+            }
+        });
         
-        document.getElementById('lightbox').addEventListener('click', (e) => {{
+        document.getElementById('lightbox').addEventListener('click', (e) => {
             if (e.target.id === 'lightbox') closeLightbox();
-        }});
+        });
     </script>
 </body>
 </html>'''

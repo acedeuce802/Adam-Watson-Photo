@@ -20,14 +20,33 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
         reader = csv.DictReader(f)
         for row in reader:
             if row['race_number'].strip():  # Only include photos with race numbers
-                photos.append({
-                    'number': row['photo_number'],
-                    'url': row['guest_pass_url'],
-                    'thumbnail': row.get('thumbnail_url', ''),
-                    'race_number': row['race_number'].strip()
-                })
+                # Detect format by checking which columns exist
+                if 'large_url' in row:
+                    # PUBLIC PHOTOS format
+                    photos.append({
+                        'number': row['photo_number'],
+                        'url': row.get('photo_url', ''),
+                        'thumbnail': row.get('thumbnail_url', ''),
+                        'original': row.get('large_url', ''),  # Use large_url for lightbox
+                        'download': row.get('original_url', ''),  # Use original_url for download
+                        'race_number': row['race_number'].strip()
+                    })
+                else:
+                    # PRIVATE PHOTOS format (guest pass)
+                    photos.append({
+                        'number': row['photo_number'],
+                        'url': row['guest_pass_url'],
+                        'thumbnail': row.get('thumbnail_url', ''),
+                        'original': row.get('original_image_url', ''),
+                        'download': row.get('original_image_url', ''),
+                        'race_number': row['race_number'].strip()
+                    })
     
     print(f"Loaded {len(photos)} tagged photos")
+    
+    # Debug: Show first photo structure
+    if photos:
+        print(f"Sample photo data: {photos[0]}")
     
     # Group by race number
     by_race_number = {}
@@ -124,6 +143,7 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
             width: 24px;
             height: 24px;
             filter: brightness(0.6);
+            display: block;
         }}
         
         .breadcrumb {{
@@ -288,7 +308,7 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
             font-size: 0.9em;
         }}
         
-        /* Lightbox Styles */
+        /* Lightbox */
         .lightbox {{
             display: none;
             position: fixed;
@@ -298,91 +318,143 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
             height: 100%;
             background: rgba(0, 0, 0, 0.95);
             z-index: 9999;
-            justify-content: center;
-            align-items: center;
         }}
         
         .lightbox.active {{
             display: flex;
+            align-items: center;
+            justify-content: center;
         }}
         
         .lightbox-content {{
+            max-width: 95%;
+            max-height: 95%;
             position: relative;
-            max-width: 90%;
-            max-height: 90%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }}
         
         .lightbox-image {{
             max-width: 100%;
-            max-height: 90vh;
+            max-height: 95vh;
             object-fit: contain;
+            display: block;
         }}
         
         .lightbox-close {{
-            position: absolute;
+            position: fixed;
             top: 20px;
             right: 30px;
-            font-size: 40px;
+            font-size: 50px;
             color: #fff;
             cursor: pointer;
-            background: none;
-            border: none;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: background 0.3s;
-        }}
-        
-        .lightbox-close:hover {{
-            background: rgba(255, 255, 255, 0.1);
-        }}
-        
-        .lightbox-nav {{
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 40px;
-            color: #fff;
-            cursor: pointer;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0,0,0,0.7);
             border: none;
             width: 60px;
             height: 60px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
             transition: background 0.3s;
+            z-index: 10000;
+        }}
+        
+        .lightbox-close:hover {{
+            background: rgba(255,255,255,0.2);
+        }}
+        
+        .lightbox-nav {{
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 50px;
+            color: #fff;
+            cursor: pointer;
+            background: rgba(0,0,0,0.7);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+            z-index: 10000;
         }}
         
         .lightbox-nav:hover {{
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255,255,255,0.2);
         }}
         
-        .lightbox-prev {{
-            left: 30px;
-        }}
-        
-        .lightbox-next {{
-            right: 30px;
-        }}
+        .lightbox-prev {{ left: 30px; }}
+        .lightbox-next {{ right: 30px; }}
         
         .lightbox-counter {{
-            position: absolute;
-            bottom: 20px;
+            position: fixed;
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
             color: #fff;
+            padding: 12px 24px;
+            border-radius: 25px;
             font-size: 1.1em;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px 20px;
-            border-radius: 20px;
+            z-index: 10000;
+        }}
+        
+        .lightbox-download {{
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 25px;
+            border: 1px solid #666;
+            font-size: 1em;
+            font-family: inherit;
+            line-height: 1.5;
+            height: 48px;
+            display: inline-flex;
+            align-items: center;
+            box-sizing: border-box;
+            transition: all 0.3s;
+            z-index: 10000;
+            cursor: pointer;
+        }}
+        
+        .lightbox-download:hover {{
+            background: rgba(255,255,255,0.2);
+            border-color: #999;
+        }}
+        
+        .lightbox-flickr {{
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 25px;
+            border: 1px solid #666;
+            text-decoration: none;
+            font-size: 1em;
+            line-height: 1.5;
+            height: 48px;
+            display: inline-flex;
+            align-items: center;
+            box-sizing: border-box;
+            white-space: nowrap;
+            transition: all 0.3s;
+            z-index: 10000;
+        }}
+        
+        .lightbox-flickr:hover {{
+            background: rgba(255,255,255,0.2);
+            border-color: #999;
+        }}
+        
+        .lightbox-flickr:hover {{
+            background: rgba(255,255,255,0.2);
         }}
     </style>
 </head>
@@ -422,13 +494,15 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
 
     <!-- Lightbox -->
     <div id="lightbox" class="lightbox">
-        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
-        <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)">&#8249;</button>
+        <button class="lightbox-close" id="lightbox-close">&times;</button>
+        <button class="lightbox-nav lightbox-prev" id="lightbox-prev">&#8249;</button>
         <div class="lightbox-content">
             <img id="lightbox-image" class="lightbox-image" src="" alt="Full resolution photo">
         </div>
-        <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)">&#8250;</button>
+        <button class="lightbox-nav lightbox-next" id="lightbox-next">&#8250;</button>
         <div class="lightbox-counter" id="lightbox-counter"></div>
+        <a id="lightbox-flickr" class="lightbox-flickr" href="" target="_blank">Link to Full Resolution</a>
+        <button id="lightbox-download" class="lightbox-download" onclick="downloadImage()">Download</button>
     </div>
 
     <footer>
@@ -505,10 +579,12 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
             const lightbox = document.getElementById('lightbox');
             const lightboxImage = document.getElementById('lightbox-image');
             const counter = document.getElementById('lightbox-counter');
+            const flickrLink = document.getElementById('lightbox-flickr');
             
-            // Load full resolution image from guest pass URL
-            lightboxImage.src = photo.url;
+            // Display large image (_h), download original (_o)
+            lightboxImage.src = photo.original || photo.url;
             counter.textContent = `${{index + 1}} / ${{currentPhotos.length}}`;
+            flickrLink.href = photo.url;  // Link to Flickr page
             
             lightbox.classList.add('active');
         }}
@@ -520,7 +596,6 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
         function navigateLightbox(direction) {{
             currentLightboxIndex += direction;
             
-            // Wrap around
             if (currentLightboxIndex < 0) {{
                 currentLightboxIndex = currentPhotos.length - 1;
             }} else if (currentLightboxIndex >= currentPhotos.length) {{
@@ -530,9 +605,41 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
             const photo = currentPhotos[currentLightboxIndex];
             const lightboxImage = document.getElementById('lightbox-image');
             const counter = document.getElementById('lightbox-counter');
+            const flickrLink = document.getElementById('lightbox-flickr');
             
-            lightboxImage.src = photo.url;
+            lightboxImage.src = photo.original || photo.url;
             counter.textContent = `${{currentLightboxIndex + 1}} / ${{currentPhotos.length}}`;
+            flickrLink.href = photo.url;
+        }}
+        
+        // Event listeners
+        document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+        document.getElementById('lightbox-prev').addEventListener('click', () => navigateLightbox(-1));
+        document.getElementById('lightbox-next').addEventListener('click', () => navigateLightbox(1));
+        
+        // Download function - force download instead of opening in tab
+        function downloadImage() {{
+            const photo = currentPhotos[currentLightboxIndex];
+            const imageUrl = photo.download || photo.original || photo.url;
+            
+            // Fetch the image and trigger download
+            fetch(imageUrl)
+                .then(response => response.blob())
+                .then(blob => {{
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `race-photo-${{photo.race_number}}.jpg`;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                }})
+                .catch(error => {{
+                    console.error('Download failed:', error);
+                    // Fallback: open in new tab
+                    window.open(imageUrl, '_blank');
+                }});
         }}
         
         // Keyboard navigation
@@ -544,11 +651,9 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
             }}
         }});
         
-        // Close lightbox when clicking outside image
+        // Close when clicking background
         document.getElementById('lightbox').addEventListener('click', (e) => {{
-            if (e.target.id === 'lightbox') {{
-                closeLightbox();
-            }}
+            if (e.target.id === 'lightbox') closeLightbox();
         }});
     </script>
 </body>
