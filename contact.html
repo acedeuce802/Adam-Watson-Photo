@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About | Adam Watson Photo</title>
+    <title>Contact | Adam Watson Photo</title>
     <style>
         * {
             margin: 0;
@@ -63,8 +63,8 @@
             align-items: center;
             gap: 5px;
             text-decoration: none;
-            border: none;
-            outline: none;
+            border: none !important;
+            outline: none !important;
         }
         
         .instagram-link:hover {
@@ -72,7 +72,7 @@
         }
         
         .instagram-link:focus {
-            outline: none;
+            outline: none !important;
         }
         
         .instagram-icon {
@@ -81,57 +81,84 @@
             filter: brightness(0.6);
             transition: filter 0.3s;
             display: block;
-            border: none;
+            border: none !important;
+            outline: none !important;
+        }
+        
+        .instagram-link img {
+            outline: none !important;
+            border: none !important;
         }
         
         .instagram-link:hover .instagram-icon {
             filter: brightness(1);
         }
         
-        /* About Section */
-        .about-section {
-            max-width: 900px;
-            margin: 80px auto;
-            padding: 0 20px;
-        }
-        
-        .about-header {
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(to bottom, #0a0a0a, #1a1a1a);
+            padding: 80px 20px;
             text-align: center;
-            margin-bottom: 60px;
         }
         
-        .about-header h1 {
-            font-size: 3em;
+        .hero h1 {
+            font-size: 4em;
             font-weight: 300;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
             color: #ffffff;
-            margin-bottom: 20px;
         }
         
-        .profile-image {
-            width: 300px;
-            height: 300px;
-            border-radius: 8px;
-            object-fit: cover;
-            margin: 0 auto 40px;
-            display: block;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            border: 3px solid #333;
+        .hero p {
+            font-size: 1.3em;
+            color: #999;
+            font-weight: 300;
         }
         
-        .about-content {
-            background: #0f0f0f;
-            padding: 50px;
-            border-radius: 8px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            border: 1px solid #222;
+        /* Contact Section */
+        .contact-section {
+            padding: 100px 20px;
+            background: #1a1a1a;
+            min-height: 60vh;
         }
         
-        .about-content p {
+        .contact-content {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .contact-content h2 {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 30px;
+            color: #ffffff;
+            letter-spacing: 2px;
+        }
+        
+        .contact-content p {
             font-size: 1.2em;
-            color: #b0b0b0;
-            line-height: 1.9;
-            margin-bottom: 20px;
+            color: #999;
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+        
+        .contact-email {
+            display: inline-block;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.5em;
+            padding: 15px 40px;
+            border: 2px solid #444;
+            border-radius: 5px;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+        }
+        
+        .contact-email:hover {
+            background: #2a2a2a;
+            border-color: #666;
+            transform: translateY(-2px);
         }
         
         /* Footer */
@@ -139,7 +166,6 @@
             background: #0a0a0a;
             padding: 40px 20px;
             border-top: 1px solid #222;
-            margin-top: 80px;
         }
         
         .footer-nav {
@@ -159,7 +185,7 @@
         }
         
         .footer-nav a:hover {
-            color: #fff;
+            color: #ffffff;
         }
         
         .copyright {
@@ -176,21 +202,17 @@
                 justify-content: center;
             }
             
-            .about-header h1 {
+            .hero h1 {
                 font-size: 2.5em;
             }
             
-            .profile-image {
-                width: 250px;
-                height: 250px;
+            .contact-content h2 {
+                font-size: 2em;
             }
             
-            .about-content {
-                padding: 30px 25px;
-            }
-            
-            .about-content p {
-                font-size: 1.1em;
+            .contact-email {
+                font-size: 1.2em;
+                padding: 12px 30px;
             }
         }
     </style>
@@ -203,26 +225,24 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="albums.html">Albums</a></li>
-				<li><a href="contact.html">Contact</a></li>
+                <li><a href="contact.html">Contact</a></li>
                 <li><a href="https://www.instagram.com/adamwatson.photo/" target="_blank" class="instagram-link"><img src="images/instagram-icon.png" alt="Instagram" class="instagram-icon"></a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- About Section -->
-    <section class="about-section">
-        <div class="about-header">
-            <h1>About Me</h1>
-            <img src="images/adam-profile.jpg" alt="Adam Watson" class="profile-image">
-        </div>
-        
-        <div class="about-content">
-            <p>
-                I grew up in Ann Arbor, MI and now reside in Southfield, MI. I got my Mechanical Engineering degree from Kettering University. My first passion was automotive, and going to races and car meets is what initially sparked my interest in photography. I found it interesting to combine the technical aspect of cameras with the artsy side, and capturing action shots is always my favorite.
-            </p>
-            <p>
-                As I began to ride bikes, my passion started to shift. I've raced in more events than I can count: mountain bike, gravel races, and road races. Eventually I started bringing my camera to races and taking pictures after I'd finish, and now documenting the races is just as important to me as racing in them.
-            </p>
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>CONTACT</h1>
+        <p>Let's Work Together</p>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="contact-content">
+            <h2>Get In Touch</h2>
+            <p>Don't hesitate to drop me a message. Let's chat about your needs and how I can help capture your next event.</p>
+            <a href="mailto:adam@adamwatsonphoto.com" class="contact-email">adam@adamwatsonphoto.com</a>
         </div>
     </section>
 
@@ -232,7 +252,7 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About</a></li>
             <li><a href="albums.html">Albums</a></li>
-			<li><a href="contact.html">Contact</a></li>
+            <li><a href="contact.html">Contact</a></li>
             <li><a href="https://www.instagram.com/adamwatson.photo/" target="_blank" class="instagram-link"><img src="images/instagram-icon.png" alt="Instagram" class="instagram-icon"></a></li>
         </ul>
         <p class="copyright">&copy; 2025 Adam Watson Photo. All rights reserved.</p>

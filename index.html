@@ -63,8 +63,8 @@
             align-items: center;
             gap: 5px;
             text-decoration: none;
-            border: none;
-            outline: none;
+            border: none !important;
+            outline: none !important;
         }
         
         .instagram-link:hover {
@@ -72,7 +72,7 @@
         }
         
         .instagram-link:focus {
-            outline: none;
+            outline: none !important;
         }
         
         .instagram-icon {
@@ -81,12 +81,13 @@
             filter: brightness(0.6);
             transition: filter 0.3s;
             display: block;
-            border: none;
+            border: none !important;
+			outline: non !important;
         }
 		
 		.instagram-link img {
-			outline: none;
-			border: none;
+			outline: none !important;
+			border: none !important;
 		}
         
         .instagram-link:hover .instagram-icon {
@@ -296,6 +297,7 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="albums.html">Albums</a></li>
+				<li><a href="contact.html">Contact</a></li>
                 <li><a href="https://www.instagram.com/adamwatson.photo/" target="_blank" class="instagram-link"><img src="images/instagram-icon.png" alt="Instagram" class="instagram-icon"></a></li>
             </ul>
         </div>
@@ -411,19 +413,19 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About</a></li>
             <li><a href="albums.html">Albums</a></li>
+			<li><a href="contact.html">Contact</a></li>
             <li><a href="https://www.instagram.com/adamwatson.photo/" target="_blank" class="instagram-link"><img src="images/instagram-icon.png" alt="Instagram" class="instagram-icon"></a></li>
         </ul>
         <p class="copyright">&copy; 2025 Adam Watson Photo. All rights reserved.</p>
     </footer>
 
     <script>
-    // Portfolio Carousel with Timer Reset - CORRECTED
+    // Portfolio Carousel with Timer Reset
     let currentIndex = 0;
     let autoRotateInterval = null;
 
     const carousel = document.getElementById('carousel');
     const items = document.querySelectorAll('.carousel-item');
-    const indicatorsContainer = document.getElementById('indicators');
     
     // Shuffle carousel items on load
     const itemsArray = Array.from(items);
@@ -431,23 +433,10 @@
     carousel.innerHTML = '';
     shuffled.forEach(item => carousel.appendChild(item));
     
-    // Create indicators AFTER shuffle
     const shuffledItems = document.querySelectorAll('.carousel-item');
-    shuffledItems.forEach((_, index) => {
-        const indicator = document.createElement('span');
-        indicator.className = 'indicator';
-        if (index === 0) indicator.classList.add('active');
-        indicator.onclick = () => goToSlide(index);
-        indicatorsContainer.appendChild(indicator);
-    });
-    
-    const indicators = document.querySelectorAll('.indicator');
 
     function updateCarousel() {
         carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
-        indicators.forEach((ind, index) => {
-            ind.classList.toggle('active', index === currentIndex);
-        });
     }
 
     function nextImage() {
@@ -460,12 +449,6 @@
         updateCarousel();
     }
 
-    function goToSlide(index) {
-        currentIndex = index;
-        updateCarousel();
-        startAutoRotate();
-    }
-
     function startAutoRotate() {
         if (autoRotateInterval) {
             clearInterval(autoRotateInterval);
@@ -474,16 +457,16 @@
     }
 
     function moveCarousel(direction) {
-        if (direction > 0) {
+        if (direction === 1) {
             nextImage();
         } else {
             prevImage();
         }
+        // Reset the 5-second timer when user clicks
         startAutoRotate();
     }
 
-    // Initial start
-    updateCarousel();
+    // Start auto-rotation on page load
     startAutoRotate();
 </script>
 </body>
