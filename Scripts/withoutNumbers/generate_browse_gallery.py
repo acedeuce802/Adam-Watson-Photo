@@ -1,107 +1,45 @@
 #!/usr/bin/env python3
 """
-Generate searchable race gallery HTML from tagged CSV
+Generate browse-all gallery HTML (no race numbers)
 """
 
-import csv
-import sys
 import json
+import sys
 import argparse
-from datetime import datetime
 
-def generate_race_gallery(csv_file, race_name, race_date, location, output_file, discipline=None):
+def generate_browse_gallery(json_file, race_name, race_date, location, output_file, discipline=None):
     """
-    Generate HTML gallery with race number search functionality
-    Supports multi-person photos (up to 10 race numbers per photo)
+    Generate HTML gallery showing all photos (no search)
     """
     
-    # Load CSV data
+    # Load photos
+    with open(json_file, 'r') as f:
+        raw_photos = json.load(f)
+    
+    print(f"Loaded {len(raw_photos)} photos from {json_file}")
+    
+    # Normalize photo format (handle both public and private formats)
     photos = []
-    with open(csv_file, 'r', encoding='utf-8') as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            # Detect format by checking which columns exist
-            # Priority: Check for URLs first (after Flickr upload), then local files
-            
-            if 'large_url' in row and row.get('large_url', '').strip():
-                # PUBLIC PHOTOS format (from Flickr with direct URLs)
-                # This includes CSVs that started as local but now have URLs merged in
-                
-                # Collect all race numbers from race_number_1 through race_number_10
-                race_numbers = []
-                for i in range(1, 11):
-                    col_name = f'race_number_{i}'
-                    if col_name in row and row[col_name].strip():
-                        race_numbers.append(row[col_name].strip())
-                
-                # Create one entry per race number (multi-person support)
-                for race_num in race_numbers:
-                    photos.append({
-                        'number': row['photo_number'],
-                        'url': row.get('photo_url', ''),
-                        'thumbnail': row.get('thumbnail_url', ''),
-                        'original': row.get('large_url', ''),  # Use large_url for lightbox
-                        'download': row.get('original_url', ''),  # Use original_url for download
-                        'race_number': race_num,
-                        'all_race_numbers': ','.join(race_numbers)
-                    })
-                
-            elif 'filename' in row:
-                # LOCAL IMAGES format (generated from local files BEFORE Flickr upload)
-                # Has filename and race_number_1 through race_number_10 but NO URLs yet
-                
-                # Collect all race numbers from race_number_1 through race_number_10
-                race_numbers = []
-                for i in range(1, 11):
-                    col_name = f'race_number_{i}'
-                    if col_name in row and row[col_name].strip():
-                        race_numbers.append(row[col_name].strip())
-                
-                # Create one entry per race number (multi-person support)
-                for race_num in race_numbers:
-                    photos.append({
-                        'number': row['photo_number'],
-                        'filename': row['filename'],
-                        'url': '',  # Will be filled after Flickr upload
-                        'thumbnail': '',  # Will be filled after Flickr upload
-                        'original': '',
-                        'download': '',
-                        'race_number': race_num,
-                        'all_race_numbers': ','.join(race_numbers)
-                    })
-                
-            elif 'race_number' in row and row['race_number'].strip():
-                # PRIVATE PHOTOS format (guest pass) - single race number only
-                photos.append({
-                    'number': row['photo_number'],
-                    'url': row['guest_pass_url'],
-                    'thumbnail': row.get('thumbnail_url', ''),
-                    'original': row.get('original_image_url', ''),
-                    'download': row.get('original_image_url', ''),
-                    'race_number': row['race_number'].strip(),
-                    'all_race_numbers': row['race_number'].strip()
-                })
+    for photo in raw_photos:
+        if 'large_url' in photo:
+            # PUBLIC PHOTOS format
+            photos.append({
+                'number': photo['photo_number'],
+                'url': photo.get('photo_url', ''),
+                'thumbnail': photo.get('thumbnail_url', ''),
+                'original': photo.get('large_url', ''),
+                'download': photo.get('original_url', '')
+            })
+        else:
+            # PRIVATE PHOTOS format (guest pass)
+            photos.append({
+                'number': photo['photo_number'],
+                'url': photo['guest_pass_url'],
+                'thumbnail': photo.get('thumbnail_url', ''),
+                'original': photo.get('original_image_url', ''),
+                'download': photo.get('original_image_url', '')
+            })
     
-    print(f"Loaded {len(photos)} photo entries from CSV")
-    
-    # Count unique photos
-    unique_photos = len(set(p['number'] for p in photos))
-    print(f"  ({unique_photos} unique photos, some may appear multiple times for multi-person shots)")
-    
-    # Debug: Show first photo structure
-    if photos:
-        print(f"Sample photo data: {photos[0]}")
-    
-    
-    # Group by race number
-    by_race_number = {}
-    for photo in photos:
-        rn = photo['race_number']
-        if rn not in by_race_number:
-            by_race_number[rn] = []
-        by_race_number[rn].append(photo)
-    
-    print(f"Found {len(by_race_number)} unique race numbers")
     
     # Breadcrumb based on discipline
     if discipline:
@@ -241,35 +179,12 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
         .gallery-header p {{
             font-size: 1.2em;
             color: #999;
+            margin-bottom: 5px;
         }}
         
-        .search-box {{
-            max-width: 500px;
-            margin: 0 auto 50px;
-            text-align: center;
-        }}
-        
-        .search-box input {{
-            width: 100%;
-            padding: 15px 20px;
-            font-size: 1.2em;
-            background: #0f0f0f;
-            border: 2px solid #333;
-            border-radius: 8px;
-            color: #fff;
-            text-align: center;
-        }}
-        
-        .search-box input:focus {{
-            outline: none;
-            border-color: #555;
-        }}
-        
-        .search-box label {{
-            display: block;
-            margin-bottom: 10px;
-            font-size: 1.1em;
-            color: #aaa;
+        .photo-count {{
+            font-size: 1em;
+            color: #666;
         }}
         
         .photo-grid {{
@@ -287,6 +202,7 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
             display: block;
             text-decoration: none;
             color: inherit;
+            cursor: pointer;
         }}
         
         .photo-card:hover {{
@@ -304,20 +220,12 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
             color: #666;
             font-size: 3em;
             position: relative;
-            overflow: hidden;
         }}
         
         .photo-thumbnail img {{
             width: 100%;
             height: 100%;
             object-fit: cover;
-        }}
-        
-        .no-results {{
-            text-align: center;
-            padding: 60px 20px;
-            color: #666;
-            font-size: 1.2em;
         }}
         
         footer {{
@@ -492,8 +400,101 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
             border-color: #999;
         }}
         
-        .lightbox-flickr:hover {{
-            background: rgba(255,255,255,0.2);
+        /* Lightbox Styles */
+        .lightbox {{
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }}
+        
+        .lightbox.active {{
+            display: flex;
+        }}
+        
+        .lightbox-content {{
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }}
+        
+        .lightbox-image {{
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+        }}
+        
+        .lightbox-close {{
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: #fff;
+            cursor: pointer;
+            background: none;
+            border: none;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }}
+        
+        .lightbox-close:hover {{
+            background: rgba(255, 255, 255, 0.1);
+        }}
+        
+        .lightbox-nav {{
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 40px;
+            color: #fff;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }}
+        
+        .lightbox-nav:hover {{
+            background: rgba(255, 255, 255, 0.2);
+        }}
+        
+        .lightbox-prev {{
+            left: 30px;
+        }}
+        
+        .lightbox-next {{
+            right: 30px;
+        }}
+        
+        .lightbox-counter {{
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            font-size: 1.1em;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 20px;
         }}
     </style>
 </head>
@@ -516,20 +517,23 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
         <div class="gallery-header">
             <h1>{race_name}</h1>
             <p>{location} • {race_date}</p>
+            <p class="photo-count">{len(photos)} photos</p>
         </div>
         
-        <div class="search-box">
-            <label for="raceNumberSearch">Search by Race Number:</label>
-            <input type="text" id="raceNumberSearch" placeholder="Enter race number..." />
-        </div>
-        
-        <div id="photoGallery" class="photo-grid">
-            <!-- Photos will be inserted here by JavaScript -->
-        </div>
-        
-        <div id="noResults" class="no-results" style="display: none;">
-            No photos found for that race number.
-        </div>
+        <div class="photo-grid">
+'''
+    
+    # Add all photos
+    for idx, photo in enumerate(photos):
+        thumbnail = photo.get('thumbnail', '')
+        html += f'''            <div class="photo-card" onclick="openLightbox({idx})">
+                <div class="photo-thumbnail">
+                    {'<img src="' + thumbnail + '" alt="Race photo">' if thumbnail else '📷'}
+                </div>
+            </div>
+'''
+    
+    html += '''        </div>
     </section>
 
     <!-- Lightbox -->
@@ -557,100 +561,67 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
     </footer>
 
     <script>
-        // Photo data
-        const photosByRaceNumber = {json.dumps(by_race_number, indent=12)};
-        
-        // All photos (for showing all initially)
-        const allPhotos = {json.dumps(photos, indent=12)};
-        
-        const searchInput = document.getElementById('raceNumberSearch');
-        const gallery = document.getElementById('photoGallery');
-        const noResults = document.getElementById('noResults');
-        
-        function displayPhotos(photos) {{
-            if (photos.length === 0) {{
-                gallery.innerHTML = '';
-                noResults.style.display = 'block';
-                return;
-            }}
-            
-            noResults.style.display = 'none';
-            
-            gallery.innerHTML = photos.map((photo, index) => {{
-                return `
-                <div class="photo-card" onclick="openLightbox(${{index}})">
-                    <div class="photo-thumbnail">
-                        ${{photo.thumbnail ? `<img src="${{photo.thumbnail}}" alt="Race photo">` : '📷'}}
-                    </div>
-                </div>
-                `;
-            }}).join('');
-        }}
-        
-        // Search functionality
-        searchInput.addEventListener('input', (e) => {{
-            const searchTerm = e.target.value.trim();
-            
-            if (!searchTerm) {{
-                // Show all photos
-                displayPhotos(allPhotos);
-                return;
-            }}
-            
-            // Find matching photos
-            const matches = photosByRaceNumber[searchTerm] || [];
-            displayPhotos(matches);
-        }});
-        
-        // Show all photos initially
-        displayPhotos(allPhotos);
-        
-        // Lightbox functionality
+        const photos = '''
+    
+    # Insert the JSON data
+    html += json.dumps(photos, indent=8)
+    
+    html += ''';
         let currentLightboxIndex = 0;
-        let currentPhotos = allPhotos;
         
-        function openLightbox(index) {{
+        // Verify photos loaded
+        console.log('Total photos loaded:', photos.length);
+        if (photos.length > 0) {
+            console.log('First photo:', photos[0]);
+        }
+        
+        function openLightbox(index) {
+            console.log('Opening lightbox for photo', index);
             currentLightboxIndex = index;
-            currentPhotos = searchInput.value.trim() ? 
-                (photosByRaceNumber[searchInput.value.trim()] || []) : 
-                allPhotos;
-            
-            const photo = currentPhotos[index];
+            const photo = photos[index];
+            console.log('Photo data:', photo);
             const lightbox = document.getElementById('lightbox');
             const lightboxImage = document.getElementById('lightbox-image');
             const counter = document.getElementById('lightbox-counter');
+            const download = document.getElementById('lightbox-download');
             const flickrLink = document.getElementById('lightbox-flickr');
             
-            // Display large image (_h), download original (_o)
-            lightboxImage.src = photo.original || photo.url;
-            counter.textContent = `${{index + 1}} / ${{currentPhotos.length}}`;
-            flickrLink.href = photo.url;  // Link to Flickr page
+            // Use original image URL if available
+            const imageUrl = photo.original || photo.url;
+            console.log('Image URL:', imageUrl);
+            lightboxImage.src = imageUrl;
+            counter.textContent = `${index + 1} / ${photos.length}`;
+            download.href = photo.download || imageUrl;
+            flickrLink.href = photo.url;
             
             lightbox.classList.add('active');
-        }}
+        }
         
-        function closeLightbox() {{
+        function closeLightbox() {
             document.getElementById('lightbox').classList.remove('active');
-        }}
+        }
         
-        function navigateLightbox(direction) {{
+        function navigateLightbox(direction) {
             currentLightboxIndex += direction;
             
-            if (currentLightboxIndex < 0) {{
-                currentLightboxIndex = currentPhotos.length - 1;
-            }} else if (currentLightboxIndex >= currentPhotos.length) {{
+            if (currentLightboxIndex < 0) {
+                currentLightboxIndex = photos.length - 1;
+            } else if (currentLightboxIndex >= photos.length) {
                 currentLightboxIndex = 0;
-            }}
+            }
             
-            const photo = currentPhotos[currentLightboxIndex];
+            const photo = photos[currentLightboxIndex];
             const lightboxImage = document.getElementById('lightbox-image');
             const counter = document.getElementById('lightbox-counter');
+            const download = document.getElementById('lightbox-download');
             const flickrLink = document.getElementById('lightbox-flickr');
             
-            lightboxImage.src = photo.original || photo.url;
-            counter.textContent = `${{currentLightboxIndex + 1}} / ${{currentPhotos.length}}`;
+            const imageUrl = photo.original || photo.url;
+            lightboxImage.src = imageUrl;
+            counter.textContent = `${currentLightboxIndex + 1} / ${photos.length}`;
+            download.href = photo.download || imageUrl;
             flickrLink.href = photo.url;
-        }}
+        }
         
         // Event listeners
         document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
@@ -658,43 +629,42 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
         document.getElementById('lightbox-next').addEventListener('click', () => navigateLightbox(1));
         
         // Download function - force download instead of opening in tab
-        function downloadImage() {{
-            const photo = currentPhotos[currentLightboxIndex];
+        function downloadImage() {
+            const photo = photos[currentLightboxIndex];
             const imageUrl = photo.download || photo.original || photo.url;
             
             // Fetch the image and trigger download
             fetch(imageUrl)
                 .then(response => response.blob())
-                .then(blob => {{
+                .then(blob => {
                     const url = window.URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = url;
-                    a.download = `race-photo-${{photo.race_number}}.jpg`;
+                    a.download = `photo-${currentLightboxIndex + 1}.jpg`;
                     document.body.appendChild(a);
                     a.click();
                     window.URL.revokeObjectURL(url);
                     document.body.removeChild(a);
-                }})
-                .catch(error => {{
+                })
+                .catch(error => {
                     console.error('Download failed:', error);
                     // Fallback: open in new tab
                     window.open(imageUrl, '_blank');
-                }});
-        }}
+                });
+        }
         
         // Keyboard navigation
-        document.addEventListener('keydown', (e) => {{
-            if (document.getElementById('lightbox').classList.contains('active')) {{
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('lightbox').classList.contains('active')) {
                 if (e.key === 'Escape') closeLightbox();
                 if (e.key === 'ArrowLeft') navigateLightbox(-1);
                 if (e.key === 'ArrowRight') navigateLightbox(1);
-            }}
-        }});
+            }
+        });
         
-        // Close when clicking background
-        document.getElementById('lightbox').addEventListener('click', (e) => {{
+        document.getElementById('lightbox').addEventListener('click', (e) => {
             if (e.target.id === 'lightbox') closeLightbox();
-        }});
+        });
     </script>
 </body>
 </html>'''
@@ -704,25 +674,23 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
         f.write(html)
     
     print(f"\n✓ Generated: {output_file}")
-    print(f"\nGallery stats:")
-    print(f"  - Total photos with race numbers: {len(photos)}")
-    print(f"  - Unique race numbers: {len(by_race_number)}")
-    print(f"\nUpload to your website and test the search!")
+    print(f"\nGallery contains {len(photos)} photos")
+    print(f"\nUpload to your website!")
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Generate race gallery HTML from tagged CSV')
-    parser.add_argument('--csv', required=True, help='CSV file with race numbers')
+    parser = argparse.ArgumentParser(description='Generate browse-all gallery HTML')
+    parser.add_argument('--json', required=True, help='guest_pass_links.json file')
     parser.add_argument('--race', required=True, help='Race name')
-    parser.add_argument('--date', required=True, help='Race date (e.g., "November 8, 2025")')
+    parser.add_argument('--date', required=True, help='Race date (e.g., "July 25, 2025")')
     parser.add_argument('--location', required=True, help='Race location')
-    parser.add_argument('--discipline', help='Cycling discipline (e.g., "Mountain Bike", "Road", "Cyclocross")')
+    parser.add_argument('--discipline', help='Cycling discipline (e.g., "Mountain Bike", "Road")')
     parser.add_argument('--output', required=True, help='Output HTML filename')
     
     args = parser.parse_args()
     
-    generate_race_gallery(
-        args.csv,
+    generate_browse_gallery(
+        args.json,
         args.race,
         args.date,
         args.location,
