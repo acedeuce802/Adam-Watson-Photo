@@ -60,6 +60,12 @@
             transition: opacity 0.3s;
             display: inline-flex;
             align-items: center;
+            outline: none;
+            border: none;
+        }
+        
+        .instagram-link:focus {
+            outline: none;
         }
         
         .instagram-icon {
@@ -67,6 +73,8 @@
             height: 24px;
             filter: brightness(0.6);
             display: block;
+            outline: none;
+            border: none;
         }
         
         .breadcrumb {
@@ -185,6 +193,43 @@
             text-align: center;
             color: #666;
             font-size: 0.9em;
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 40px 0;
+            padding: 20px;
+        }
+        
+        .pagination button {
+            background: #2a2a2a;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+        
+        .pagination button:hover:not(:disabled) {
+            background: #3a3a3a;
+            border-color: #666;
+        }
+        
+        .pagination button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        .pagination .page-info {
+            color: #999;
+            font-size: 1em;
+            margin: 0 15px;
         }
         
         /* Lightbox */
@@ -437,7 +482,7 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="albums.html">Albums</a></li>
-				<li><a href="contact.html">Contact</a></li>
+                <li><a href="contact.html">Contact</a></li>
                 <li><a href="https://www.instagram.com/adamwatson.photo/" target="_blank" class="instagram-link"><img src="images/instagram-icon.png" alt="Instagram" class="instagram-icon"></a></li>
             </ul>
         </div>
@@ -458,932 +503,14 @@
             <p class="photo-count">185 photos</p>
         </div>
         
-        <div class="photo-grid">
-            <div class="photo-card" onclick="openLightbox(0)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036730802_4685f7ab0a_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(1)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037813633_350b6869ff_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(2)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037813258_ec344e7b44_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(3)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037888044_86d1f84a27_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(4)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037977665_456fa11555_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(5)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037813138_9ddad237f9_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(6)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037977175_8bdbaf9209_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(7)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037632831_fe7630495d_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(8)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037812783_009f64b0df_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(9)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036729777_5e85206323_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(10)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037812253_2428fe84f3_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(11)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037887064_63c85e6c4d_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(12)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037887049_9234e1f294_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(13)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036729317_5330040a77_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(14)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037886449_444d714050_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(15)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037886394_aeb0a1c23c_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(16)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036728997_f02b1dae67_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(17)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036728842_773520109e_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(18)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037886159_99e07b1e69_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(19)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037631506_cd6efbbdc2_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(20)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037975620_64347aae10_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(21)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036728732_181b4cdfb1_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(22)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037811408_5917943198_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(23)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037811008_ce1e879f29_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(24)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037975395_549598bfc2_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(25)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037631191_f29bc30177_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(26)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037975255_6be47b9926_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(27)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037810498_da86377dbd_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(28)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037885334_3e3decc76e_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(29)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037630781_10b4b2707f_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(30)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037810453_0114173f57_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(31)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037630876_3a4ed7e683_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(32)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037885169_eb38883240_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(33)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037884974_0643c68d10_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(34)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037810003_304a157595_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(35)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036727372_0f8b1fa9f4_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(36)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037974190_e6f0b3c1c3_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(37)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037629981_f53a202d50_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(38)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037973860_6bb2a675dd_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(39)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037973875_ae1e6e5281_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(40)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037973990_ec784a77b7_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(41)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037809453_baae99c269_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(42)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036726637_81ba600be9_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(43)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037973600_173f498eec_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(44)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037809293_3bf3216eee_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(45)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037883794_68dea2be75_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(46)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037973150_fc491b84fd_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(47)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037629126_480998b116_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(48)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037883549_ca0c84956e_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(49)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037972865_a1f9ede51d_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(50)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037883229_87d24d16fa_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(51)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037883184_c8a8a01869_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(52)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036725762_4fb72cb5c7_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(53)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037972435_9e6241ff4d_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(54)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037628236_a29a6325c0_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(55)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036725527_77e25ee0d6_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(56)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036725367_a97ed91852_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(57)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037882629_9a011aaec3_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(58)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036725192_967bc84c3e_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(59)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037882519_e154edff1d_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(60)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036725052_47a6c49a49_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(61)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037807538_29de6bb4cc_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(62)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037807448_b0b78b6d68_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(63)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037627486_5a5a517eb4_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(64)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037971465_da75513595_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(65)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037627001_b1ba1f7e5a_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(66)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037881604_e7b5f6888d_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(67)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037626921_49dbe687dc_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(68)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037626841_274fa1c5a7_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(69)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037970675_9f360394f0_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(70)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037626601_f3dd3d4e8a_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(71)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037626481_a52276f4ea_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(72)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037880944_b08fbce7cf_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(73)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036723412_00e7559b7e_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(74)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037626066_ec744338e3_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(75)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037880649_68107a954a_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(76)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037880504_e844343053_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(77)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037880019_22e9aac9bf_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(78)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036722902_ff2de606d4_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(79)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037879989_a2614f10db_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(80)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036722752_8e95193d71_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(81)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037805088_65bb56982e_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(82)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037969065_c7b6ee58ec_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(83)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036722487_ad8eb0913f_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(84)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036722392_192592ca09_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(85)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037879214_a6694e1b9f_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(86)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037624916_bc2ded94ba_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(87)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037968775_67d39a2b1f_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(88)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037624821_db3cc36643_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(89)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037624736_466358b1d9_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(90)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037968530_1eb13e6882_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(91)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037624681_aabfab9115_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(92)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037624631_e25243d2c7_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(93)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037624286_21c40b50e6_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(94)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037804233_7a6cfb427d_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(95)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037624271_44805dc129_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(96)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037624221_63c2fe38a8_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(97)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037878219_8aba01b9d8_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(98)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037878314_daa109ae48_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(99)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037804053_4700d92dbe_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(100)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036721392_8faebea161_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(101)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037803833_30c0a352eb_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(102)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037878114_b989036fe9_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(103)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037623826_dbf8d7acda_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(104)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037803783_f8390ddcf5_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(105)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037877889_06eecb11a5_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(106)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037623621_05d3a5532f_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(107)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037623626_dc62ee7191_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(108)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036720987_d089296b6a_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(109)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037623456_14f37c7b6a_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(110)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037967395_709be58a92_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(111)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037967340_0651f752b6_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(112)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037877549_c19f970794_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(113)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037877429_789c2d1688_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(114)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037967190_741448f296_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(115)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037877374_0d3df734fe_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(116)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037877384_0237ae665a_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(117)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036720502_2daef6ed67_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(118)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037877254_ada9191077_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(119)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037803053_30d0815bca_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(120)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036720462_7c06904e0e_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(121)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037802903_5c23cc355e_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(122)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037802908_58918e1f05_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(123)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036720302_320b21b2a2_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(124)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037622861_b1ee1b471b_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(125)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037802773_bba4fbc95c_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(126)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037802763_b1235258a8_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(127)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037622766_e479da3d77_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(128)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037802758_3f8d97a9ed_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(129)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037622611_f3b4d09df7_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(130)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037802503_10e3453d00_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(131)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037802468_073163d710_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(132)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037802508_353f26cbe8_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(133)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037622416_430df7093d_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(134)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037876539_a50676c134_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(135)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037876499_5e8aa07445_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(136)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037876494_a801709b99_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(137)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037876369_0b119d24ed_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(138)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037876294_58d20d8c55_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(139)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036719512_70634f539b_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(140)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037876269_c3b816efd8_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(141)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037621946_f7db241518_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(142)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037876164_491f375979_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(143)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036719307_a152574026_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(144)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037801873_0f88007505_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(145)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037875924_bead19e132_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(146)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037875894_888bff238c_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(147)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037965475_d49091f665_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(148)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037621666_693f36747c_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(149)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037621686_4ac571ec08_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(150)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037621461_8fce158620_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(151)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036718857_e47f765f76_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(152)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037621451_1620ada99b_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(153)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037965230_8dee3f39dd_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(154)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036718527_8ba5f3fc7d_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(155)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036718567_a33e938d64_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(156)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037621321_44685873a9_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(157)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037875319_6f80b09088_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(158)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037875139_aeed8bf493_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(159)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037621071_5fe4bd5125_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(160)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037800928_33c87587df_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(161)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037964755_a862e114a9_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(162)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037800683_af24424f47_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(163)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037964460_10d0c2ebd6_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(164)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037874829_572ae57462_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(165)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037874869_ed2ded9160_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(166)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037800338_12af47c846_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(167)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037874424_fb1691b0c2_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(168)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037800258_ae1b5eda60_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(169)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037964045_87ed4f4577_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(170)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037620201_d925c714b9_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(171)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037874069_a9e94450f9_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(172)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037874059_cbd5fedc9e_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(173)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037799918_31e109e94a_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(174)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037873979_565ff8db5d_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(175)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037873894_d44896ef76_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(176)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037963580_9efba4af9d_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(177)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037619821_7883ee2924_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(178)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037799488_a6e9bc5bc0_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(179)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037799603_9c5ba232cc_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(180)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037619686_a1455224cd_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(181)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036716612_6beac3a6db_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(182)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037619376_082aebd307_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(183)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55037799213_0abd37aa7e_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(184)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/55036716597_5e06852c54_h.jpg" alt="Race photo">
-                </div>
-            </div>
+        <div id="photoGallery" class="photo-grid">
+            <!-- Photos will be inserted here by JavaScript -->
+        </div>
+        
+        <div id="pagination" class="pagination" style="display: none;">
+            <button id="prevPage" onclick="changePage(-1)">← Previous</button>
+            <span class="page-info" id="pageInfo">Page 1 of 1</span>
+            <button id="nextPage" onclick="changePage(1)">Next →</button>
         </div>
     </section>
 
@@ -1405,7 +532,7 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About</a></li>
             <li><a href="albums.html">Albums</a></li>
-			<li><a href="contact.html">Contact</a></li>
+            <li><a href="contact.html">Contact</a></li>
             <li><a href="https://www.instagram.com/adamwatson.photo/" target="_blank" class="instagram-link"><img src="images/instagram-icon.png" alt="Instagram" class="instagram-icon"></a></li>
         </ul>
         <p class="copyright">&copy; 2025 Adam Watson Photo. All rights reserved.</p>
@@ -2709,7 +1836,55 @@
                 "download": "https://live.staticflickr.com/65535/55036716597_5e06852c54_h.jpg"
         }
 ];
+        const gallery = document.getElementById('photoGallery');
+        const pagination = document.getElementById('pagination');
+        const pageInfo = document.getElementById('pageInfo');
+        const prevButton = document.getElementById('prevPage');
+        const nextButton = document.getElementById('nextPage');
+        
+        let currentPage = 1;
+        let photosPerPage = 100;
         let currentLightboxIndex = 0;
+        
+        // Render photos with pagination
+        function renderPage() {
+            const totalPages = Math.ceil(photos.length / photosPerPage);
+            const startIndex = (currentPage - 1) * photosPerPage;
+            const endIndex = Math.min(startIndex + photosPerPage, photos.length);
+            const pagePhotos = photos.slice(startIndex, endIndex);
+            
+            // Update page info
+            pageInfo.textContent = `Page ${currentPage} of ${totalPages} (${photos.length} photos)`;
+            prevButton.disabled = currentPage === 1;
+            nextButton.disabled = currentPage === totalPages;
+            
+            // Show/hide pagination
+            pagination.style.display = totalPages > 1 ? 'flex' : 'none';
+            
+            // Render photos for current page
+            gallery.innerHTML = pagePhotos.map((photo, index) => {
+                const actualIndex = startIndex + index;  // Global index for lightbox
+                const thumbnail = photo.thumbnail || '';
+                return `
+                <div class="photo-card" onclick="openLightbox(${actualIndex})">
+                    <div class="photo-thumbnail">
+                        ${thumbnail ? `<img src="${thumbnail}" alt="Race photo">` : '📷'}
+                    </div>
+                </div>
+                `;
+            }).join('');
+            
+            // Scroll to top of gallery
+            document.querySelector('.gallery-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        function changePage(direction) {
+            currentPage += direction;
+            renderPage();
+        }
+        
+        // Initialize gallery
+        renderPage();
         
         // Verify photos loaded
         console.log('Total photos loaded:', photos.length);
