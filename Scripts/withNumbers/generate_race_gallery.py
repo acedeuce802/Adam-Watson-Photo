@@ -320,6 +320,42 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
             font-size: 1.2em;
         }}
         
+        .pagination {{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 40px 0;
+            padding: 20px;
+        }}
+        
+        .pagination button {{
+            background: #2a2a2a;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+        }}
+        
+        .pagination button:hover:not(:disabled) {{
+            background: #3a3a3a;
+            border-color: #666;
+        }}
+        
+        .pagination button:disabled {{
+            opacity: 0.3;
+            cursor: not-allowed;
+        }}
+        
+        .pagination .page-info {{
+            color: #999;
+            font-size: 1em;
+            margin: 0 15px;
+        }}
+        
         footer {{
             background: #0a0a0a;
             padding: 40px 20px;
@@ -527,6 +563,12 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
             <!-- Photos will be inserted here by JavaScript -->
         </div>
         
+        <div id="pagination" class="pagination" style="display: none;">
+            <button id="prevPage" onclick="changePage(-1)">← Previous</button>
+            <span class="page-info" id="pageInfo">Page 1 of 1</span>
+            <button id="nextPage" onclick="changePage(1)">Next →</button>
+        </div>
+        
         <div id="noResults" class="no-results" style="display: none;">
             No photos found for that race number.
         </div>
@@ -566,25 +608,66 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
         const searchInput = document.getElementById('raceNumberSearch');
         const gallery = document.getElementById('photoGallery');
         const noResults = document.getElementById('noResults');
+        const pagination = document.getElementById('pagination');
+        const pageInfo = document.getElementById('pageInfo');
+        const prevButton = document.getElementById('prevPage');
+        const nextButton = document.getElementById('nextPage');
+        
+        let currentPage = 1;
+        let photosPerPage = 100;
+        let currentPhotos = [];
         
         function displayPhotos(photos) {{
+            currentPhotos = photos;
+            currentPage = 1;  // Reset to first page
+            renderPage();
+        }}
+        
+        function renderPage() {{
+            const photos = currentPhotos;
+            
             if (photos.length === 0) {{
                 gallery.innerHTML = '';
                 noResults.style.display = 'block';
+                pagination.style.display = 'none';
                 return;
             }}
             
             noResults.style.display = 'none';
             
-            gallery.innerHTML = photos.map((photo, index) => {{
+            // Calculate pagination
+            const totalPages = Math.ceil(photos.length / photosPerPage);
+            const startIndex = (currentPage - 1) * photosPerPage;
+            const endIndex = Math.min(startIndex + photosPerPage, photos.length);
+            const pagePhotos = photos.slice(startIndex, endIndex);
+            
+            // Update page info
+            pageInfo.textContent = `Page ${{currentPage}} of ${{totalPages}} (${{photos.length}} photos)`;
+            prevButton.disabled = currentPage === 1;
+            nextButton.disabled = currentPage === totalPages;
+            
+            // Show/hide pagination
+            pagination.style.display = totalPages > 1 ? 'flex' : 'none';
+            
+            // Render photos for current page
+            gallery.innerHTML = pagePhotos.map((photo, index) => {{
+                const actualIndex = startIndex + index;  // Global index for lightbox
                 return `
-                <div class="photo-card" onclick="openLightbox(${{index}})">
+                <div class="photo-card" onclick="openLightbox(${{actualIndex}})">
                     <div class="photo-thumbnail">
                         ${{photo.thumbnail ? `<img src="${{photo.thumbnail}}" alt="Race photo">` : '📷'}}
                     </div>
                 </div>
                 `;
             }}).join('');
+            
+            // Scroll to top of gallery
+            document.querySelector('.gallery-section').scrollIntoView({{ behavior: 'smooth', block: 'start' }});
+        }}
+        
+        function changePage(direction) {{
+            currentPage += direction;
+            renderPage();
         }}
         
         // Search functionality

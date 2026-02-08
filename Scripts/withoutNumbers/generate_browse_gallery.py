@@ -255,6 +255,43 @@ def generate_browse_gallery(json_file, race_name, race_date, location, output_fi
             font-size: 0.9em;
         }}
         
+        /* Pagination */
+        .pagination {{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 40px 0;
+            padding: 20px;
+        }}
+        
+        .pagination button {{
+            background: #2a2a2a;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+        }}
+        
+        .pagination button:hover:not(:disabled) {{
+            background: #3a3a3a;
+            border-color: #666;
+        }}
+        
+        .pagination button:disabled {{
+            opacity: 0.3;
+            cursor: not-allowed;
+        }}
+        
+        .pagination .page-info {{
+            color: #999;
+            font-size: 1em;
+            margin: 0 15px;
+        }}
+        
         /* Lightbox */
         .lightbox {{
             display: none;
@@ -520,20 +557,15 @@ def generate_browse_gallery(json_file, race_name, race_date, location, output_fi
             <p class="photo-count">{len(photos)} photos</p>
         </div>
         
-        <div class="photo-grid">
-'''
-    
-    # Add all photos
-    for idx, photo in enumerate(photos):
-        thumbnail = photo.get('thumbnail', '')
-        html += f'''            <div class="photo-card" onclick="openLightbox({idx})">
-                <div class="photo-thumbnail">
-                    {'<img src="' + thumbnail + '" alt="Race photo">' if thumbnail else '📷'}
-                </div>
-            </div>
-'''
-    
-    html += '''        </div>
+        <div id="photoGallery" class="photo-grid">
+            <!-- Photos will be inserted here by JavaScript -->
+        </div>
+        
+        <div id="pagination" class="pagination" style="display: none;">
+            <button id="prevPage" onclick="changePage(-1)">← Previous</button>
+            <span class="page-info" id="pageInfo">Page 1 of 1</span>
+            <button id="nextPage" onclick="changePage(1)">Next →</button>
+        </div>
     </section>
 
     <!-- Lightbox -->
@@ -567,7 +599,55 @@ def generate_browse_gallery(json_file, race_name, race_date, location, output_fi
     html += json.dumps(photos, indent=8)
     
     html += ''';
+        const gallery = document.getElementById('photoGallery');
+        const pagination = document.getElementById('pagination');
+        const pageInfo = document.getElementById('pageInfo');
+        const prevButton = document.getElementById('prevPage');
+        const nextButton = document.getElementById('nextPage');
+        
+        let currentPage = 1;
+        let photosPerPage = 100;
         let currentLightboxIndex = 0;
+        
+        // Render photos with pagination
+        function renderPage() {
+            const totalPages = Math.ceil(photos.length / photosPerPage);
+            const startIndex = (currentPage - 1) * photosPerPage;
+            const endIndex = Math.min(startIndex + photosPerPage, photos.length);
+            const pagePhotos = photos.slice(startIndex, endIndex);
+            
+            // Update page info
+            pageInfo.textContent = `Page ${currentPage} of ${totalPages} (${photos.length} photos)`;
+            prevButton.disabled = currentPage === 1;
+            nextButton.disabled = currentPage === totalPages;
+            
+            // Show/hide pagination
+            pagination.style.display = totalPages > 1 ? 'flex' : 'none';
+            
+            // Render photos for current page
+            gallery.innerHTML = pagePhotos.map((photo, index) => {
+                const actualIndex = startIndex + index;  // Global index for lightbox
+                const thumbnail = photo.thumbnail || '';
+                return `
+                <div class="photo-card" onclick="openLightbox(${actualIndex})">
+                    <div class="photo-thumbnail">
+                        ${thumbnail ? `<img src="${thumbnail}" alt="Race photo">` : '📷'}
+                    </div>
+                </div>
+                `;
+            }).join('');
+            
+            // Scroll to top of gallery
+            document.querySelector('.gallery-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        function changePage(direction) {
+            currentPage += direction;
+            renderPage();
+        }
+        
+        // Initialize gallery
+        renderPage();
         
         // Verify photos loaded
         console.log('Total photos loaded:', photos.length);
