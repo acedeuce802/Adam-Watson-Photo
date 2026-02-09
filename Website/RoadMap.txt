@@ -12,8 +12,22 @@
   - Nav buttons at bottom to all pages + link to instagram
 -Albums
   - Nav buttons at top to all pages + link to instagram
-  - Existing format with cards for each race
-  - Main album page will have links to the race name, but no mention of year
-  - After clicking on the race, all dates show up (ie: click on Iceman -> next page has links to 2024, 2025, 2026, etc)
+  - Links to bike disciplines
+    - Mountain Bike Albums
+      - Iceman Cometh - Traverse City, MI - 11/8/2025 (numbers)
+      - Biketoberfest - Northville, MI - 10/4/2025 (no numbers)
+      - Tree Farm Relay - Novi, MI - 7/25/2025 (no numbers)
+      - Island Lake Challenge - Island Lake Recreation Area - 6/1/2025 (no numbers)
+    - Gravel Albums
+      - Thunder Bay Thriller - Alpena, MI - 9/14/2025 (no numbers)
+    - Road Albums
+      - Waterford Summer Race Series - Clarkston, MI - 8/27/2025 (no numbers)
+      - Dabaets-Devos Pro-Am Crit - Auburn Hills, MI - 8/17/2025 (no numbers)
+      - Waterford Summer Race Series - Clarkston, MI - 7/9/2025  (no numbers)
+      - Ronde Belle Isle - Detroit, MI - 6/21/2025 (no numbers)
+    - Cyclocross Albums
+      - DICX Cyclocross - Detroit, MI - 10/25/2025 (no numbers)
+      - Crank Cross - Madison Heights, MI - 9/27/2025 (no numbers)
+    - Track Cycling Albums
+      - Mad Track 8th Anniversary Race - Detroit, MI - 1/10/2026 (no numbers)
   - Nav buttons at bottom to all pages + link to instagram
-  
