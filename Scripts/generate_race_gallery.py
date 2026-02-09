@@ -502,35 +502,6 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
             border-color: #999;
         }}
         
-        .lightbox-flickr {{
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            background: rgba(0,0,0,0.7);
-            color: #fff;
-            padding: 12px 24px;
-            border-radius: 25px;
-            border: 1px solid #666;
-            text-decoration: none;
-            font-size: 1em;
-            line-height: 1.5;
-            height: 48px;
-            display: inline-flex;
-            align-items: center;
-            box-sizing: border-box;
-            white-space: nowrap;
-            transition: all 0.3s;
-            z-index: 10000;
-        }}
-        
-        .lightbox-flickr:hover {{
-            background: rgba(255,255,255,0.2);
-            border-color: #999;
-        }}
-        
-        .lightbox-flickr:hover {{
-            background: rgba(255,255,255,0.2);
-        }}
     </style>
 </head>
 <body>
@@ -583,8 +554,7 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
         </div>
         <button class="lightbox-nav lightbox-next" id="lightbox-next">&#8250;</button>
         <div class="lightbox-counter" id="lightbox-counter"></div>
-        <a id="lightbox-flickr" class="lightbox-flickr" href="" target="_blank">Link to Full Resolution</a>
-        <button id="lightbox-download" class="lightbox-download" onclick="downloadImage()">Download</button>
+        <button id="lightbox-download" class="lightbox-download" onclick="downloadImage()">View & Download</button>
     </div>
 
     <footer>
@@ -690,7 +660,7 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
         
         // Lightbox functionality
         let currentLightboxIndex = 0;
-        let currentPhotos = allPhotos;
+        // currentPhotos already declared above for pagination
         
         function openLightbox(index) {{
             currentLightboxIndex = index;
@@ -702,12 +672,10 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
             const lightbox = document.getElementById('lightbox');
             const lightboxImage = document.getElementById('lightbox-image');
             const counter = document.getElementById('lightbox-counter');
-            const flickrLink = document.getElementById('lightbox-flickr');
             
             // Display large image (_h), download original (_o)
             lightboxImage.src = photo.original || photo.url;
             counter.textContent = `${{index + 1}} / ${{currentPhotos.length}}`;
-            flickrLink.href = photo.url;  // Link to Flickr page
             
             lightbox.classList.add('active');
         }}
@@ -728,11 +696,9 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
             const photo = currentPhotos[currentLightboxIndex];
             const lightboxImage = document.getElementById('lightbox-image');
             const counter = document.getElementById('lightbox-counter');
-            const flickrLink = document.getElementById('lightbox-flickr');
             
             lightboxImage.src = photo.original || photo.url;
             counter.textContent = `${{currentLightboxIndex + 1}} / ${{currentPhotos.length}}`;
-            flickrLink.href = photo.url;
         }}
         
         // Event listeners
