@@ -57,9 +57,10 @@ def scrape_public_album(album_url):
         
         photos = []
         photo_count = 0
-        max_photos = 1000  # Safety limit
+        max_photos = 10000  # Safety limit (increased for very large albums)
         
         print("\nNavigating through photos with arrow button...\n")
+        print(f"(Safety limit: {max_photos} photos)\n")
         
         while photo_count < max_photos:
             photo_count += 1
@@ -187,6 +188,11 @@ def scrape_public_album(album_url):
                 print(f"\n✗ Error clicking next: {e}")
                 print("  Assuming end of album")
                 break
+        
+        # Check if we hit the safety limit
+        if photo_count >= max_photos:
+            print(f"\n⚠ WARNING: Reached safety limit of {max_photos} photos!")
+            print("  Album may have more photos. Increase max_photos in script if needed.")
         
         return photos
         
