@@ -3,42 +3,56 @@
 Generate browse-all gallery HTML (no race numbers)
 """
 
+import csv
 import json
 import sys
 import argparse
 
-def generate_browse_gallery(json_file, race_name, race_date, location, output_file, discipline=None):
+def generate_browse_gallery(csv_file, race_name, race_date, location, output_file, discipline=None):
     """
     Generate HTML gallery showing all photos (no search)
     """
     
-    # Load photos
-    with open(json_file, 'r') as f:
-        raw_photos = json.load(f)
-    
-    print(f"Loaded {len(raw_photos)} photos from {json_file}")
-    
-    # Normalize photo format (handle both public and private formats)
+    # Load photos from CSV
     photos = []
-    for photo in raw_photos:
-        if 'large_url' in photo:
-            # PUBLIC PHOTOS format
-            photos.append({
-                'number': photo['photo_number'],
-                'url': photo.get('photo_url', ''),
-                'thumbnail': photo.get('thumbnail_url', ''),
-                'original': photo.get('large_url', ''),
-                'download': photo.get('original_url', '')
-            })
-        else:
-            # PRIVATE PHOTOS format (guest pass)
-            photos.append({
-                'number': photo['photo_number'],
-                'url': photo['guest_pass_url'],
-                'thumbnail': photo.get('thumbnail_url', ''),
-                'original': photo.get('original_image_url', ''),
-                'download': photo.get('original_image_url', '')
-            })
+    with open(csv_file, 'r', encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+        
+        for row in reader:
+            # Detect format by checking which URL columns exist
+            has_large_url = 'large_url' in row and row['large_url']
+            has_guest_pass = 'guest_pass_url' in row and row['guest_pass_url']
+            has_filename = 'filename' in row and row['filename']
+            
+            if has_large_url:
+                # PUBLIC PHOTOS format (B2 or Flickr)
+                photos.append({
+                    'number': row['photo_number'],
+                    'url': row.get('photo_url', ''),
+                    'thumbnail': row.get('thumbnail_url', ''),
+                    'original': row.get('large_url', ''),
+                    'download': row.get('original_url', '')
+                })
+            elif has_guest_pass:
+                # PRIVATE PHOTOS format (guest pass)
+                photos.append({
+                    'number': row['photo_number'],
+                    'url': row['guest_pass_url'],
+                    'thumbnail': row.get('thumbnail_url', ''),
+                    'original': row.get('original_image_url', ''),
+                    'download': row.get('original_image_url', '')
+                })
+            elif has_filename:
+                # LOCAL PHOTOS format (testing)
+                photos.append({
+                    'number': row['photo_number'],
+                    'url': row['filename'],
+                    'thumbnail': row['filename'],
+                    'original': row['filename'],
+                    'download': row['filename']
+                })
+    
+    print(f"Loaded {len(photos)} photos from {csv_file}")
     
     
     # Breadcrumb based on discipline
@@ -290,6 +304,33 @@ def generate_browse_gallery(json_file, race_name, race_date, location, output_fi
             color: #999;
             font-size: 1em;
             margin: 0 15px;
+        }}
+        
+        .page-input {{
+            background: #2a2a2a;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 10px 12px;
+            border-radius: 5px;
+            font-size: 1em;
+            width: 70px;
+            text-align: center;
+        }}
+        
+        .page-input:focus {{
+            outline: none;
+            border-color: #666;
+        }}
+        
+        /* Hide number input arrows */
+        .page-input::-webkit-inner-spin-button,
+        .page-input::-webkit-outer-spin-button {{
+            -webkit-appearance: none;
+            margin: 0;
+        }}
+        
+        .page-input {{
+            -moz-appearance: textfield;
         }}
         
         /* Lightbox */
@@ -564,6 +605,8 @@ def generate_browse_gallery(json_file, race_name, race_date, location, output_fi
         <div id="pagination" class="pagination" style="display: none;">
             <button id="prevPage" onclick="changePage(-1)">← Previous</button>
             <span class="page-info" id="pageInfo">Page 1 of 1</span>
+            <input type="number" id="pageInput" class="page-input" min="1" onkeypress="if(event.key === 'Enter') goToPage()">
+            <button onclick="goToPage()">Go</button>
             <button id="nextPage" onclick="changePage(1)">Next →</button>
         </div>
     </section>
@@ -644,6 +687,20 @@ def generate_browse_gallery(json_file, race_name, race_date, location, output_fi
         function changePage(direction) {
             currentPage += direction;
             renderPage();
+        }
+        
+        function goToPage() {
+            const input = document.getElementById('pageInput');
+            const pageNum = parseInt(input.value);
+            const totalPages = Math.ceil(photos.length / photosPerPage);
+            
+            if (pageNum && pageNum >= 1 && pageNum <= totalPages) {
+                currentPage = pageNum; // currentPage is 1-based, so use pageNum directly
+                renderPage();
+                input.value = ''; // Clear input after navigating
+            } else {
+                alert(`Please enter a page number between 1 and ${totalPages}`);
+            }
         }
         
         // Initialize gallery
@@ -760,7 +817,7 @@ def generate_browse_gallery(json_file, race_name, race_date, location, output_fi
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate browse-all gallery HTML')
-    parser.add_argument('--json', required=True, help='guest_pass_links.json file')
+    parser.add_argument('--csv', required=True, help='CSV file with photo URLs (e.g., race_tagging.csv)')
     parser.add_argument('--race', required=True, help='Race name')
     parser.add_argument('--date', required=True, help='Race date (e.g., "July 25, 2025")')
     parser.add_argument('--location', required=True, help='Race location')
@@ -770,7 +827,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     
     generate_browse_gallery(
-        args.json,
+        args.csv,
         args.race,
         args.date,
         args.location,

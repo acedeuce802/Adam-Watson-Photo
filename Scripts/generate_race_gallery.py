@@ -356,6 +356,33 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
             margin: 0 15px;
         }}
         
+        .page-input {{
+            background: #2a2a2a;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 10px 12px;
+            border-radius: 5px;
+            font-size: 1em;
+            width: 70px;
+            text-align: center;
+        }}
+        
+        .page-input:focus {{
+            outline: none;
+            border-color: #666;
+        }}
+        
+        /* Hide number input arrows */
+        .page-input::-webkit-inner-spin-button,
+        .page-input::-webkit-outer-spin-button {{
+            -webkit-appearance: none;
+            margin: 0;
+        }}
+        
+        .page-input {{
+            -moz-appearance: textfield;
+        }}
+        
         footer {{
             background: #0a0a0a;
             padding: 40px 20px;
@@ -537,6 +564,8 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
         <div id="pagination" class="pagination" style="display: none;">
             <button id="prevPage" onclick="changePage(-1)">← Previous</button>
             <span class="page-info" id="pageInfo">Page 1 of 1</span>
+            <input type="number" id="pageInput" class="page-input" min="1" onkeypress="if(event.key === 'Enter') goToPage()">
+            <button onclick="goToPage()">Go</button>
             <button id="nextPage" onclick="changePage(1)">Next →</button>
         </div>
         
@@ -638,6 +667,20 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
         function changePage(direction) {{
             currentPage += direction;
             renderPage();
+        }}
+        
+        function goToPage() {{
+            const input = document.getElementById('pageInput');
+            const pageNum = parseInt(input.value);
+            const totalPages = Math.ceil(currentPhotos.length / photosPerPage);
+            
+            if (pageNum && pageNum >= 1 && pageNum <= totalPages) {{
+                currentPage = pageNum; // currentPage is 1-based, so use pageNum directly
+                renderPage();
+                input.value = ''; // Clear input after navigating
+            }} else {{
+                alert(`Please enter a page number between 1 and ${{totalPages}}`);
+            }}
         }}
         
         // Search functionality
