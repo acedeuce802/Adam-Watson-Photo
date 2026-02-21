@@ -119,12 +119,35 @@
         .gallery-header p {
             font-size: 1.2em;
             color: #999;
-            margin-bottom: 5px;
         }
         
-        .photo-count {
-            font-size: 1em;
-            color: #666;
+        .search-box {
+            max-width: 500px;
+            margin: 0 auto 50px;
+            text-align: center;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1.2em;
+            background: #0f0f0f;
+            border: 2px solid #333;
+            border-radius: 8px;
+            color: #fff;
+            text-align: center;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: #555;
+        }
+        
+        .search-box label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            color: #aaa;
         }
         
         .photo-grid {
@@ -142,7 +165,6 @@
             display: block;
             text-decoration: none;
             color: inherit;
-            cursor: pointer;
         }
         
         .photo-card:hover {
@@ -160,12 +182,83 @@
             color: #666;
             font-size: 3em;
             position: relative;
+            overflow: hidden;
         }
         
         .photo-thumbnail img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+            font-size: 1.2em;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 40px 0;
+            padding: 20px;
+        }
+        
+        .pagination button {
+            background: #2a2a2a;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+        
+        .pagination button:hover:not(:disabled) {
+            background: #3a3a3a;
+            border-color: #666;
+        }
+        
+        .pagination button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        .pagination .page-info {
+            color: #999;
+            font-size: 1em;
+            margin: 0 15px;
+        }
+        
+        .page-input {
+            background: #2a2a2a;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 10px 12px;
+            border-radius: 5px;
+            font-size: 1em;
+            width: 70px;
+            text-align: center;
+        }
+        
+        .page-input:focus {
+            outline: none;
+            border-color: #666;
+        }
+        
+        /* Hide number input arrows */
+        .page-input::-webkit-inner-spin-button,
+        .page-input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        
+        .page-input {
+            -moz-appearance: textfield;
         }
         
         footer {
@@ -314,128 +407,6 @@
             border-color: #999;
         }
         
-        .lightbox-flickr {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            background: rgba(0,0,0,0.7);
-            color: #fff;
-            padding: 12px 24px;
-            border-radius: 25px;
-            border: 1px solid #666;
-            text-decoration: none;
-            font-size: 1em;
-            line-height: 1.5;
-            height: 48px;
-            display: inline-flex;
-            align-items: center;
-            box-sizing: border-box;
-            white-space: nowrap;
-            transition: all 0.3s;
-            z-index: 10000;
-        }
-        
-        .lightbox-flickr:hover {
-            background: rgba(255,255,255,0.2);
-            border-color: #999;
-        }
-        
-        /* Lightbox Styles */
-        .lightbox {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .lightbox.active {
-            display: flex;
-        }
-        
-        .lightbox-content {
-            position: relative;
-            max-width: 90%;
-            max-height: 90%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .lightbox-image {
-            max-width: 100%;
-            max-height: 90vh;
-            object-fit: contain;
-        }
-        
-        .lightbox-close {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            font-size: 40px;
-            color: #fff;
-            cursor: pointer;
-            background: none;
-            border: none;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: background 0.3s;
-        }
-        
-        .lightbox-close:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-        
-        .lightbox-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 40px;
-            color: #fff;
-            cursor: pointer;
-            background: rgba(0, 0, 0, 0.5);
-            border: none;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: background 0.3s;
-        }
-        
-        .lightbox-nav:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-        
-        .lightbox-prev {
-            left: 30px;
-        }
-        
-        .lightbox-next {
-            right: 30px;
-        }
-        
-        .lightbox-counter {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: #fff;
-            font-size: 1.1em;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px 20px;
-            border-radius: 20px;
-        }
     </style>
 </head>
 <body>
@@ -463,295 +434,27 @@
         <div class="gallery-header">
             <h1>Thunder Bay Thriller</h1>
             <p>Alpena, MI • September 14th, 2025</p>
-            <p class="photo-count">57 photos</p>
         </div>
         
-        <div class="photo-grid">
-            <div class="photo-card" onclick="openLightbox(0)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791715085_a8b283bab6_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(1)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791377611_adaa571208_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(2)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791715075_ba21f2573a_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(3)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791481029_0b6b473c90_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(4)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791572865_2717e864ec_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(5)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54790394092_7751c9903f_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(6)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791480749_f54d56b0ab_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(7)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791498868_6d3d043ccc_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(8)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791236571_63e6f8af79_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(9)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791236451_84bbe2a51a_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(10)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791498678_568c284a07_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(11)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791498658_18bc7774a4_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(12)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791572100_dd2981b6f6_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(13)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54790393502_a7ba91738a_b.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(14)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791480034_8c16dbdfdd_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(15)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791571920_2bf9105b10_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(16)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791498298_2fc0359087_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(17)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791479884_6d2fb1444b_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(18)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791235491_21ef8068ff_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(19)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791497923_02ed5b30be_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(20)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791235346_e64160da2a_b.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(21)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791497733_58bf7cf7be_b.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(22)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791479044_085317f47f_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(23)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791479254_9ff53b7634_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(24)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791478989_7387d44fd3_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(25)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54790392027_3d26e9dc9f_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(26)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791478514_3822100748_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(27)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791496908_2fef28804f_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(28)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791478319_b864ee2360_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(29)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791496623_7ec041c1da_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(30)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791477974_0d094f4174_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(31)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54790391212_de5d4359de_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(32)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791233546_b0914a7e07_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(33)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791496188_490844199e_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(34)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791233256_00e30b4fb7_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(35)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791569615_22ecbd10a4_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(36)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791477229_674f3f755a_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(37)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791477299_9ab245f107_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(38)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791232881_1e9292c071_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(39)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791232951_0b5384a2e4_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(40)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791232971_afbcf30e0d_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(41)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54790390357_a2da76de55_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(42)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791574965_0f690138dd_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(43)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791501278_588ad71b3b_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(44)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791483014_a88b277292_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(45)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791574710_5a2236a498_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(46)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791500923_5e7bda6ef7_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(47)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791482724_bf879ccfb5_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(48)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791574550_d5e0bc61fe_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(49)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791482029_aaa45bdfd7_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(50)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54790395107_85a22b9edd_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(51)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791573870_ddc8ccd693_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(52)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791573790_9ee646450d_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(53)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791237226_7dc697896a_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(54)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791481479_6967d4889d_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(55)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791481374_f9168f2368_h.jpg" alt="Race photo">
-                </div>
-            </div>
-            <div class="photo-card" onclick="openLightbox(56)">
-                <div class="photo-thumbnail">
-                    <img src="https://live.staticflickr.com/65535/54791499603_27569088ae_h.jpg" alt="Race photo">
-                </div>
-            </div>
+        <div class="search-box">
+            <label for="raceNumberSearch">Search by Race Number:</label>
+            <input type="text" id="raceNumberSearch" placeholder="Enter race number..." />
+        </div>
+        
+        <div id="photoGallery" class="photo-grid">
+            <!-- Photos will be inserted here by JavaScript -->
+        </div>
+        
+        <div id="pagination" class="pagination" style="display: none;">
+            <button id="prevPage" onclick="changePage(-1)">← Previous</button>
+            <span class="page-info" id="pageInfo">Page 1 of 1</span>
+            <input type="number" id="pageInput" class="page-input" min="1" onkeypress="if(event.key === 'Enter') goToPage()">
+            <button onclick="goToPage()">Go</button>
+            <button id="nextPage" onclick="changePage(1)">Next →</button>
+        </div>
+        
+        <div id="noResults" class="no-results" style="display: none;">
+            No photos found for that race number.
         </div>
     </section>
 
@@ -764,8 +467,7 @@
         </div>
         <button class="lightbox-nav lightbox-next" id="lightbox-next">&#8250;</button>
         <div class="lightbox-counter" id="lightbox-counter"></div>
-        <a id="lightbox-flickr" class="lightbox-flickr" href="" target="_blank">Link to Full Resolution</a>
-        <button id="lightbox-download" class="lightbox-download" onclick="downloadImage()">Download</button>
+        <button id="lightbox-download" class="lightbox-download" onclick="downloadImage()">View & Download</button>
     </div>
 
     <footer>
@@ -780,433 +482,1205 @@
     </footer>
 
     <script>
-        const photos = [
-        {
-                "number": 1,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791715085/in/album-72177720329056165",
-                "thumbnail": "https://live.staticflickr.com/65535/54791715085_a8b283bab6_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791715085_a8b283bab6_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791715085_a8b283bab6_h.jpg"
-        },
-        {
-                "number": 2,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791377611/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791377611_adaa571208_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791377611_adaa571208_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791377611_adaa571208_h.jpg"
-        },
-        {
-                "number": 3,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791715075/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791715075_ba21f2573a_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791715075_ba21f2573a_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791715075_ba21f2573a_h.jpg"
-        },
-        {
-                "number": 4,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791481029/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791481029_0b6b473c90_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791481029_0b6b473c90_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791481029_0b6b473c90_h.jpg"
-        },
-        {
-                "number": 5,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791572865/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791572865_2717e864ec_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791572865_2717e864ec_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791572865_2717e864ec_h.jpg"
-        },
-        {
-                "number": 6,
-                "url": "https://www.flickr.com/photos/acedeuce802/54790394092/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54790394092_7751c9903f_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54790394092_7751c9903f_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54790394092_7751c9903f_h.jpg"
-        },
-        {
-                "number": 7,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791480749/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791480749_f54d56b0ab_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791480749_f54d56b0ab_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791480749_f54d56b0ab_h.jpg"
-        },
-        {
-                "number": 8,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791498868/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791498868_6d3d043ccc_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791498868_6d3d043ccc_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791498868_6d3d043ccc_h.jpg"
-        },
-        {
-                "number": 9,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791236571/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791236571_63e6f8af79_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791236571_63e6f8af79_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791236571_63e6f8af79_h.jpg"
-        },
-        {
-                "number": 10,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791236451/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791236451_84bbe2a51a_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791236451_84bbe2a51a_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791236451_84bbe2a51a_h.jpg"
-        },
-        {
-                "number": 11,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791498678/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791498678_568c284a07_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791498678_568c284a07_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791498678_568c284a07_h.jpg"
-        },
-        {
-                "number": 12,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791498658/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791498658_18bc7774a4_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791498658_18bc7774a4_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791498658_18bc7774a4_h.jpg"
-        },
-        {
-                "number": 13,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791572100/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791572100_dd2981b6f6_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791572100_dd2981b6f6_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791572100_dd2981b6f6_h.jpg"
-        },
-        {
-                "number": 14,
-                "url": "https://www.flickr.com/photos/acedeuce802/54790393502/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54790393502_a7ba91738a_b.jpg",
-                "original": "https://live.staticflickr.com/65535/54790393502_a7ba91738a_b.jpg",
-                "download": "https://live.staticflickr.com/65535/54790393502_a7ba91738a_b.jpg"
-        },
-        {
-                "number": 15,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791480034/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791480034_8c16dbdfdd_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791480034_8c16dbdfdd_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791480034_8c16dbdfdd_h.jpg"
-        },
-        {
-                "number": 16,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791571920/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791571920_2bf9105b10_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791571920_2bf9105b10_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791571920_2bf9105b10_h.jpg"
-        },
-        {
-                "number": 17,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791498298/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791498298_2fc0359087_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791498298_2fc0359087_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791498298_2fc0359087_h.jpg"
-        },
-        {
-                "number": 18,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791479884/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791479884_6d2fb1444b_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791479884_6d2fb1444b_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791479884_6d2fb1444b_h.jpg"
-        },
-        {
-                "number": 19,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791235491/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791235491_21ef8068ff_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791235491_21ef8068ff_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791235491_21ef8068ff_h.jpg"
-        },
-        {
-                "number": 20,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791497923/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791497923_02ed5b30be_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791497923_02ed5b30be_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791497923_02ed5b30be_h.jpg"
-        },
-        {
-                "number": 21,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791235346/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791235346_e64160da2a_b.jpg",
-                "original": "https://live.staticflickr.com/65535/54791235346_e64160da2a_b.jpg",
-                "download": "https://live.staticflickr.com/65535/54791235346_e64160da2a_b.jpg"
-        },
-        {
-                "number": 22,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791497733/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791497733_58bf7cf7be_b.jpg",
-                "original": "https://live.staticflickr.com/65535/54791497733_58bf7cf7be_b.jpg",
-                "download": "https://live.staticflickr.com/65535/54791497733_58bf7cf7be_b.jpg"
-        },
-        {
-                "number": 23,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791479044/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791479044_085317f47f_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791479044_085317f47f_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791479044_085317f47f_h.jpg"
-        },
-        {
-                "number": 24,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791479254/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791479254_9ff53b7634_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791479254_9ff53b7634_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791479254_9ff53b7634_h.jpg"
-        },
-        {
-                "number": 25,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791478989/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791478989_7387d44fd3_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791478989_7387d44fd3_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791478989_7387d44fd3_h.jpg"
-        },
-        {
-                "number": 26,
-                "url": "https://www.flickr.com/photos/acedeuce802/54790392027/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54790392027_3d26e9dc9f_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54790392027_3d26e9dc9f_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54790392027_3d26e9dc9f_h.jpg"
-        },
-        {
-                "number": 27,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791478514/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791478514_3822100748_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791478514_3822100748_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791478514_3822100748_h.jpg"
-        },
-        {
-                "number": 28,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791496908/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791496908_2fef28804f_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791496908_2fef28804f_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791496908_2fef28804f_h.jpg"
-        },
-        {
-                "number": 29,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791478319/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791478319_b864ee2360_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791478319_b864ee2360_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791478319_b864ee2360_h.jpg"
-        },
-        {
-                "number": 30,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791496623/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791496623_7ec041c1da_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791496623_7ec041c1da_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791496623_7ec041c1da_h.jpg"
-        },
-        {
-                "number": 31,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791477974/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791477974_0d094f4174_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791477974_0d094f4174_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791477974_0d094f4174_h.jpg"
-        },
-        {
-                "number": 32,
-                "url": "https://www.flickr.com/photos/acedeuce802/54790391212/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54790391212_de5d4359de_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54790391212_de5d4359de_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54790391212_de5d4359de_h.jpg"
-        },
-        {
-                "number": 33,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791233546/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791233546_b0914a7e07_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791233546_b0914a7e07_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791233546_b0914a7e07_h.jpg"
-        },
-        {
-                "number": 34,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791496188/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791496188_490844199e_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791496188_490844199e_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791496188_490844199e_h.jpg"
-        },
-        {
-                "number": 35,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791233256/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791233256_00e30b4fb7_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791233256_00e30b4fb7_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791233256_00e30b4fb7_h.jpg"
-        },
-        {
-                "number": 36,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791569615/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791569615_22ecbd10a4_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791569615_22ecbd10a4_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791569615_22ecbd10a4_h.jpg"
-        },
-        {
-                "number": 37,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791477229/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791477229_674f3f755a_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791477229_674f3f755a_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791477229_674f3f755a_h.jpg"
-        },
-        {
-                "number": 38,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791477299/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791477299_9ab245f107_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791477299_9ab245f107_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791477299_9ab245f107_h.jpg"
-        },
-        {
-                "number": 39,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791232881/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791232881_1e9292c071_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791232881_1e9292c071_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791232881_1e9292c071_h.jpg"
-        },
-        {
-                "number": 40,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791232951/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791232951_0b5384a2e4_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791232951_0b5384a2e4_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791232951_0b5384a2e4_h.jpg"
-        },
-        {
-                "number": 41,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791232971/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791232971_afbcf30e0d_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791232971_afbcf30e0d_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791232971_afbcf30e0d_h.jpg"
-        },
-        {
-                "number": 42,
-                "url": "https://www.flickr.com/photos/acedeuce802/54790390357/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54790390357_a2da76de55_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54790390357_a2da76de55_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54790390357_a2da76de55_h.jpg"
-        },
-        {
-                "number": 43,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791574965/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791574965_0f690138dd_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791574965_0f690138dd_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791574965_0f690138dd_h.jpg"
-        },
-        {
-                "number": 44,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791501278/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791501278_588ad71b3b_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791501278_588ad71b3b_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791501278_588ad71b3b_h.jpg"
-        },
-        {
-                "number": 45,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791483014/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791483014_a88b277292_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791483014_a88b277292_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791483014_a88b277292_h.jpg"
-        },
-        {
-                "number": 46,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791574710/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791574710_5a2236a498_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791574710_5a2236a498_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791574710_5a2236a498_h.jpg"
-        },
-        {
-                "number": 47,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791500923/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791500923_5e7bda6ef7_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791500923_5e7bda6ef7_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791500923_5e7bda6ef7_h.jpg"
-        },
-        {
-                "number": 48,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791482724/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791482724_bf879ccfb5_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791482724_bf879ccfb5_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791482724_bf879ccfb5_h.jpg"
-        },
-        {
-                "number": 49,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791574550/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791574550_d5e0bc61fe_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791574550_d5e0bc61fe_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791574550_d5e0bc61fe_h.jpg"
-        },
-        {
-                "number": 50,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791482029/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791482029_aaa45bdfd7_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791482029_aaa45bdfd7_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791482029_aaa45bdfd7_h.jpg"
-        },
-        {
-                "number": 51,
-                "url": "https://www.flickr.com/photos/acedeuce802/54790395107/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54790395107_85a22b9edd_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54790395107_85a22b9edd_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54790395107_85a22b9edd_h.jpg"
-        },
-        {
-                "number": 52,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791573870/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791573870_ddc8ccd693_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791573870_ddc8ccd693_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791573870_ddc8ccd693_h.jpg"
-        },
-        {
-                "number": 53,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791573790/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791573790_9ee646450d_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791573790_9ee646450d_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791573790_9ee646450d_h.jpg"
-        },
-        {
-                "number": 54,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791237226/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791237226_7dc697896a_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791237226_7dc697896a_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791237226_7dc697896a_h.jpg"
-        },
-        {
-                "number": 55,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791481479/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791481479_6967d4889d_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791481479_6967d4889d_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791481479_6967d4889d_h.jpg"
-        },
-        {
-                "number": 56,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791481374/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791481374_f9168f2368_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791481374_f9168f2368_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791481374_f9168f2368_h.jpg"
-        },
-        {
-                "number": 57,
-                "url": "https://www.flickr.com/photos/acedeuce802/54791499603/in/album-72177720329056165/",
-                "thumbnail": "https://live.staticflickr.com/65535/54791499603_27569088ae_h.jpg",
-                "original": "https://live.staticflickr.com/65535/54791499603_27569088ae_h.jpg",
-                "download": "https://live.staticflickr.com/65535/54791499603_27569088ae_h.jpg"
-        }
-];
-        let currentLightboxIndex = 0;
+        // Photo data
+        const photosByRaceNumber = {
+            "300": [
+                        {
+                                    "number": "1",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5813.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5813.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5813.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5813.jpg",
+                                    "race_number": "300",
+                                    "all_race_numbers": "300"
+                        },
+                        {
+                                    "number": "2",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5814.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5814.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5814.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5814.jpg",
+                                    "race_number": "300",
+                                    "all_race_numbers": "300"
+                        },
+                        {
+                                    "number": "3",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5815.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5815.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5815.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5815.jpg",
+                                    "race_number": "300",
+                                    "all_race_numbers": "300"
+                        },
+                        {
+                                    "number": "4",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5817.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5817.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5817.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5817.jpg",
+                                    "race_number": "300",
+                                    "all_race_numbers": "300"
+                        }
+            ],
+            "204": [
+                        {
+                                    "number": "5",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5818.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5818.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5818.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5818.jpg",
+                                    "race_number": "204",
+                                    "all_race_numbers": "204"
+                        }
+            ],
+            "25": [
+                        {
+                                    "number": "6",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5821.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5821.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5821.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5821.jpg",
+                                    "race_number": "25",
+                                    "all_race_numbers": "25"
+                        },
+                        {
+                                    "number": "7",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5822.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5822.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5822.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5822.jpg",
+                                    "race_number": "25",
+                                    "all_race_numbers": "25"
+                        }
+            ],
+            "422": [
+                        {
+                                    "number": "8",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5824.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5824.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5824.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5824.jpg",
+                                    "race_number": "422",
+                                    "all_race_numbers": "422"
+                        },
+                        {
+                                    "number": "9",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5828.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5828.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5828.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5828.jpg",
+                                    "race_number": "422",
+                                    "all_race_numbers": "422"
+                        }
+            ],
+            "292": [
+                        {
+                                    "number": "10",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5836.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5836.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5836.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5836.jpg",
+                                    "race_number": "292",
+                                    "all_race_numbers": "292"
+                        }
+            ],
+            "76": [
+                        {
+                                    "number": "11",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5839.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5839.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5839.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5839.jpg",
+                                    "race_number": "76",
+                                    "all_race_numbers": "76"
+                        },
+                        {
+                                    "number": "12",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5840.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5840.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5840.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5840.jpg",
+                                    "race_number": "76",
+                                    "all_race_numbers": "76"
+                        }
+            ],
+            "79": [
+                        {
+                                    "number": "13",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5842.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5842.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5842.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5842.jpg",
+                                    "race_number": "79",
+                                    "all_race_numbers": "79"
+                        },
+                        {
+                                    "number": "14",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5845.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5845.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5845.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5845.jpg",
+                                    "race_number": "79",
+                                    "all_race_numbers": "79"
+                        }
+            ],
+            "56": [
+                        {
+                                    "number": "15",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5848.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5848.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5848.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5848.jpg",
+                                    "race_number": "56",
+                                    "all_race_numbers": "56"
+                        },
+                        {
+                                    "number": "16",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5849.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5849.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5849.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5849.jpg",
+                                    "race_number": "56",
+                                    "all_race_numbers": "56"
+                        }
+            ],
+            "71": [
+                        {
+                                    "number": "17",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5852.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5852.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5852.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5852.jpg",
+                                    "race_number": "71",
+                                    "all_race_numbers": "71"
+                        },
+                        {
+                                    "number": "18",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5854.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5854.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5854.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5854.jpg",
+                                    "race_number": "71",
+                                    "all_race_numbers": "71"
+                        }
+            ],
+            "19": [
+                        {
+                                    "number": "19",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5856.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5856.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5856.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5856.jpg",
+                                    "race_number": "19",
+                                    "all_race_numbers": "19"
+                        },
+                        {
+                                    "number": "20",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5857.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5857.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5857.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5857.jpg",
+                                    "race_number": "19",
+                                    "all_race_numbers": "19"
+                        },
+                        {
+                                    "number": "21",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5858.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5858.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5858.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5858.jpg",
+                                    "race_number": "19",
+                                    "all_race_numbers": "19"
+                        },
+                        {
+                                    "number": "22",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5860.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5860.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5860.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5860.jpg",
+                                    "race_number": "19",
+                                    "all_race_numbers": "19"
+                        }
+            ],
+            "66": [
+                        {
+                                    "number": "23",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5861.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5861.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5861.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5861.jpg",
+                                    "race_number": "66",
+                                    "all_race_numbers": "66"
+                        },
+                        {
+                                    "number": "24",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5862.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5862.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5862.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5862.jpg",
+                                    "race_number": "66",
+                                    "all_race_numbers": "66"
+                        },
+                        {
+                                    "number": "25",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5863.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5863.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5863.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5863.jpg",
+                                    "race_number": "66",
+                                    "all_race_numbers": "66"
+                        },
+                        {
+                                    "number": "26",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5864.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5864.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5864.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5864.jpg",
+                                    "race_number": "66",
+                                    "all_race_numbers": "66"
+                        },
+                        {
+                                    "number": "27",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5865.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5865.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5865.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5865.jpg",
+                                    "race_number": "66",
+                                    "all_race_numbers": "66"
+                        }
+            ],
+            "1": [
+                        {
+                                    "number": "28",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5868.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5868.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5868.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5868.jpg",
+                                    "race_number": "1",
+                                    "all_race_numbers": "1"
+                        },
+                        {
+                                    "number": "29",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5869.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5869.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5869.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5869.jpg",
+                                    "race_number": "1",
+                                    "all_race_numbers": "1"
+                        },
+                        {
+                                    "number": "30",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5870.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5870.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5870.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5870.jpg",
+                                    "race_number": "1",
+                                    "all_race_numbers": "1"
+                        },
+                        {
+                                    "number": "31",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5871.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5871.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5871.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5871.jpg",
+                                    "race_number": "1",
+                                    "all_race_numbers": "1"
+                        }
+            ],
+            "314": [
+                        {
+                                    "number": "32",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5875.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5875.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5875.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5875.jpg",
+                                    "race_number": "314",
+                                    "all_race_numbers": "314"
+                        }
+            ],
+            "214": [
+                        {
+                                    "number": "33",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5876.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5876.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5876.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5876.jpg",
+                                    "race_number": "214",
+                                    "all_race_numbers": "214"
+                        },
+                        {
+                                    "number": "34",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5880.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5880.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5880.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5880.jpg",
+                                    "race_number": "214",
+                                    "all_race_numbers": "214"
+                        }
+            ],
+            "33": [
+                        {
+                                    "number": "35",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5881.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5881.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5881.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5881.jpg",
+                                    "race_number": "33",
+                                    "all_race_numbers": "33"
+                        },
+                        {
+                                    "number": "36",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5884.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5884.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5884.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5884.jpg",
+                                    "race_number": "33",
+                                    "all_race_numbers": "33"
+                        }
+            ],
+            "39": [
+                        {
+                                    "number": "37",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5888.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5888.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5888.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5888.jpg",
+                                    "race_number": "39",
+                                    "all_race_numbers": "39"
+                        },
+                        {
+                                    "number": "38",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5889.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5889.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5889.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5889.jpg",
+                                    "race_number": "39",
+                                    "all_race_numbers": "39"
+                        }
+            ],
+            "301": [
+                        {
+                                    "number": "39",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5891.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5891.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5891.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5891.jpg",
+                                    "race_number": "301",
+                                    "all_race_numbers": "301"
+                        },
+                        {
+                                    "number": "40",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5894.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5894.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5894.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5894.jpg",
+                                    "race_number": "301",
+                                    "all_race_numbers": "301"
+                        }
+            ],
+            "215": [
+                        {
+                                    "number": "41",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5895.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5895.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5895.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5895.jpg",
+                                    "race_number": "215",
+                                    "all_race_numbers": "215"
+                        }
+            ],
+            "77": [
+                        {
+                                    "number": "42",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5899.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5899.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5899.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5899.jpg",
+                                    "race_number": "77",
+                                    "all_race_numbers": "77"
+                        },
+                        {
+                                    "number": "43",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5901.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5901.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5901.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5901.jpg",
+                                    "race_number": "77",
+                                    "all_race_numbers": "77"
+                        },
+                        {
+                                    "number": "44",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5902.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5902.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5902.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5902.jpg",
+                                    "race_number": "77",
+                                    "all_race_numbers": "77"
+                        }
+            ],
+            "208": [
+                        {
+                                    "number": "45",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5904.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5904.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5904.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5904.jpg",
+                                    "race_number": "208",
+                                    "all_race_numbers": "208"
+                        },
+                        {
+                                    "number": "46",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5907.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5907.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5907.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5907.jpg",
+                                    "race_number": "208",
+                                    "all_race_numbers": "208"
+                        }
+            ],
+            "207": [
+                        {
+                                    "number": "47",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5909.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5909.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5909.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5909.jpg",
+                                    "race_number": "207",
+                                    "all_race_numbers": "207"
+                        },
+                        {
+                                    "number": "48",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5910.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5910.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5910.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5910.jpg",
+                                    "race_number": "207",
+                                    "all_race_numbers": "207"
+                        }
+            ],
+            "40": [
+                        {
+                                    "number": "49",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5912.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5912.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5912.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5912.jpg",
+                                    "race_number": "40",
+                                    "all_race_numbers": "40"
+                        },
+                        {
+                                    "number": "50",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5913.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5913.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5913.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5913.jpg",
+                                    "race_number": "40",
+                                    "all_race_numbers": "40"
+                        },
+                        {
+                                    "number": "51",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5914.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5914.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5914.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5914.jpg",
+                                    "race_number": "40",
+                                    "all_race_numbers": "40"
+                        }
+            ],
+            "16": [
+                        {
+                                    "number": "52",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5917.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5917.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5917.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5917.jpg",
+                                    "race_number": "16",
+                                    "all_race_numbers": "16"
+                        },
+                        {
+                                    "number": "53",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5919.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5919.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5919.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5919.jpg",
+                                    "race_number": "16",
+                                    "all_race_numbers": "16"
+                        }
+            ],
+            "81": [
+                        {
+                                    "number": "54",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5922.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5922.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5922.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5922.jpg",
+                                    "race_number": "81",
+                                    "all_race_numbers": "81"
+                        },
+                        {
+                                    "number": "55",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5924.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5924.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5924.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5924.jpg",
+                                    "race_number": "81",
+                                    "all_race_numbers": "81"
+                        }
+            ],
+            "68": [
+                        {
+                                    "number": "56",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5927.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5927.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5927.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5927.jpg",
+                                    "race_number": "68",
+                                    "all_race_numbers": "68"
+                        },
+                        {
+                                    "number": "57",
+                                    "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5928.jpg",
+                                    "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5928.jpg",
+                                    "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5928.jpg",
+                                    "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5928.jpg",
+                                    "race_number": "68",
+                                    "all_race_numbers": "68"
+                        }
+            ]
+};
         
-        // Verify photos loaded
-        console.log('Total photos loaded:', photos.length);
-        if (photos.length > 0) {
-            console.log('First photo:', photos[0]);
+        // All photos (for showing all initially)
+        const allPhotos = [
+            {
+                        "number": "1",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5813.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5813.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5813.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5813.jpg",
+                        "race_number": "300",
+                        "all_race_numbers": "300"
+            },
+            {
+                        "number": "2",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5814.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5814.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5814.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5814.jpg",
+                        "race_number": "300",
+                        "all_race_numbers": "300"
+            },
+            {
+                        "number": "3",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5815.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5815.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5815.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5815.jpg",
+                        "race_number": "300",
+                        "all_race_numbers": "300"
+            },
+            {
+                        "number": "4",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5817.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5817.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5817.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5817.jpg",
+                        "race_number": "300",
+                        "all_race_numbers": "300"
+            },
+            {
+                        "number": "5",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5818.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5818.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5818.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5818.jpg",
+                        "race_number": "204",
+                        "all_race_numbers": "204"
+            },
+            {
+                        "number": "6",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5821.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5821.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5821.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5821.jpg",
+                        "race_number": "25",
+                        "all_race_numbers": "25"
+            },
+            {
+                        "number": "7",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5822.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5822.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5822.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5822.jpg",
+                        "race_number": "25",
+                        "all_race_numbers": "25"
+            },
+            {
+                        "number": "8",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5824.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5824.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5824.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5824.jpg",
+                        "race_number": "422",
+                        "all_race_numbers": "422"
+            },
+            {
+                        "number": "9",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5828.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5828.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5828.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5828.jpg",
+                        "race_number": "422",
+                        "all_race_numbers": "422"
+            },
+            {
+                        "number": "10",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5836.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5836.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5836.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5836.jpg",
+                        "race_number": "292",
+                        "all_race_numbers": "292"
+            },
+            {
+                        "number": "11",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5839.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5839.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5839.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5839.jpg",
+                        "race_number": "76",
+                        "all_race_numbers": "76"
+            },
+            {
+                        "number": "12",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5840.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5840.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5840.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5840.jpg",
+                        "race_number": "76",
+                        "all_race_numbers": "76"
+            },
+            {
+                        "number": "13",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5842.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5842.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5842.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5842.jpg",
+                        "race_number": "79",
+                        "all_race_numbers": "79"
+            },
+            {
+                        "number": "14",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5845.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5845.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5845.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5845.jpg",
+                        "race_number": "79",
+                        "all_race_numbers": "79"
+            },
+            {
+                        "number": "15",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5848.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5848.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5848.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5848.jpg",
+                        "race_number": "56",
+                        "all_race_numbers": "56"
+            },
+            {
+                        "number": "16",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5849.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5849.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5849.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5849.jpg",
+                        "race_number": "56",
+                        "all_race_numbers": "56"
+            },
+            {
+                        "number": "17",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5852.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5852.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5852.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5852.jpg",
+                        "race_number": "71",
+                        "all_race_numbers": "71"
+            },
+            {
+                        "number": "18",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5854.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5854.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5854.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5854.jpg",
+                        "race_number": "71",
+                        "all_race_numbers": "71"
+            },
+            {
+                        "number": "19",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5856.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5856.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5856.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5856.jpg",
+                        "race_number": "19",
+                        "all_race_numbers": "19"
+            },
+            {
+                        "number": "20",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5857.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5857.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5857.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5857.jpg",
+                        "race_number": "19",
+                        "all_race_numbers": "19"
+            },
+            {
+                        "number": "21",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5858.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5858.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5858.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5858.jpg",
+                        "race_number": "19",
+                        "all_race_numbers": "19"
+            },
+            {
+                        "number": "22",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5860.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5860.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5860.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5860.jpg",
+                        "race_number": "19",
+                        "all_race_numbers": "19"
+            },
+            {
+                        "number": "23",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5861.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5861.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5861.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5861.jpg",
+                        "race_number": "66",
+                        "all_race_numbers": "66"
+            },
+            {
+                        "number": "24",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5862.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5862.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5862.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5862.jpg",
+                        "race_number": "66",
+                        "all_race_numbers": "66"
+            },
+            {
+                        "number": "25",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5863.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5863.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5863.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5863.jpg",
+                        "race_number": "66",
+                        "all_race_numbers": "66"
+            },
+            {
+                        "number": "26",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5864.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5864.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5864.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5864.jpg",
+                        "race_number": "66",
+                        "all_race_numbers": "66"
+            },
+            {
+                        "number": "27",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5865.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5865.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5865.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5865.jpg",
+                        "race_number": "66",
+                        "all_race_numbers": "66"
+            },
+            {
+                        "number": "28",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5868.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5868.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5868.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5868.jpg",
+                        "race_number": "1",
+                        "all_race_numbers": "1"
+            },
+            {
+                        "number": "29",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5869.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5869.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5869.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5869.jpg",
+                        "race_number": "1",
+                        "all_race_numbers": "1"
+            },
+            {
+                        "number": "30",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5870.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5870.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5870.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5870.jpg",
+                        "race_number": "1",
+                        "all_race_numbers": "1"
+            },
+            {
+                        "number": "31",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5871.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5871.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5871.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5871.jpg",
+                        "race_number": "1",
+                        "all_race_numbers": "1"
+            },
+            {
+                        "number": "32",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5875.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5875.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5875.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5875.jpg",
+                        "race_number": "314",
+                        "all_race_numbers": "314"
+            },
+            {
+                        "number": "33",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5876.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5876.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5876.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5876.jpg",
+                        "race_number": "214",
+                        "all_race_numbers": "214"
+            },
+            {
+                        "number": "34",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5880.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5880.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5880.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5880.jpg",
+                        "race_number": "214",
+                        "all_race_numbers": "214"
+            },
+            {
+                        "number": "35",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5881.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5881.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5881.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5881.jpg",
+                        "race_number": "33",
+                        "all_race_numbers": "33"
+            },
+            {
+                        "number": "36",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5884.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5884.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5884.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5884.jpg",
+                        "race_number": "33",
+                        "all_race_numbers": "33"
+            },
+            {
+                        "number": "37",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5888.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5888.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5888.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5888.jpg",
+                        "race_number": "39",
+                        "all_race_numbers": "39"
+            },
+            {
+                        "number": "38",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5889.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5889.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5889.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5889.jpg",
+                        "race_number": "39",
+                        "all_race_numbers": "39"
+            },
+            {
+                        "number": "39",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5891.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5891.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5891.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5891.jpg",
+                        "race_number": "301",
+                        "all_race_numbers": "301"
+            },
+            {
+                        "number": "40",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5894.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5894.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5894.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5894.jpg",
+                        "race_number": "301",
+                        "all_race_numbers": "301"
+            },
+            {
+                        "number": "41",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5895.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5895.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5895.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5895.jpg",
+                        "race_number": "215",
+                        "all_race_numbers": "215"
+            },
+            {
+                        "number": "42",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5899.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5899.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5899.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5899.jpg",
+                        "race_number": "77",
+                        "all_race_numbers": "77"
+            },
+            {
+                        "number": "43",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5901.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5901.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5901.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5901.jpg",
+                        "race_number": "77",
+                        "all_race_numbers": "77"
+            },
+            {
+                        "number": "44",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5902.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5902.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5902.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5902.jpg",
+                        "race_number": "77",
+                        "all_race_numbers": "77"
+            },
+            {
+                        "number": "45",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5904.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5904.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5904.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5904.jpg",
+                        "race_number": "208",
+                        "all_race_numbers": "208"
+            },
+            {
+                        "number": "46",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5907.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5907.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5907.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5907.jpg",
+                        "race_number": "208",
+                        "all_race_numbers": "208"
+            },
+            {
+                        "number": "47",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5909.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5909.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5909.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5909.jpg",
+                        "race_number": "207",
+                        "all_race_numbers": "207"
+            },
+            {
+                        "number": "48",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5910.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5910.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5910.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5910.jpg",
+                        "race_number": "207",
+                        "all_race_numbers": "207"
+            },
+            {
+                        "number": "49",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5912.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5912.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5912.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5912.jpg",
+                        "race_number": "40",
+                        "all_race_numbers": "40"
+            },
+            {
+                        "number": "50",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5913.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5913.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5913.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5913.jpg",
+                        "race_number": "40",
+                        "all_race_numbers": "40"
+            },
+            {
+                        "number": "51",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5914.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5914.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5914.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5914.jpg",
+                        "race_number": "40",
+                        "all_race_numbers": "40"
+            },
+            {
+                        "number": "52",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5917.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5917.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5917.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5917.jpg",
+                        "race_number": "16",
+                        "all_race_numbers": "16"
+            },
+            {
+                        "number": "53",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5919.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5919.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5919.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5919.jpg",
+                        "race_number": "16",
+                        "all_race_numbers": "16"
+            },
+            {
+                        "number": "54",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5922.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5922.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5922.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5922.jpg",
+                        "race_number": "81",
+                        "all_race_numbers": "81"
+            },
+            {
+                        "number": "55",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5924.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5924.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5924.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5924.jpg",
+                        "race_number": "81",
+                        "all_race_numbers": "81"
+            },
+            {
+                        "number": "56",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5927.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5927.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5927.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5927.jpg",
+                        "race_number": "68",
+                        "all_race_numbers": "68"
+            },
+            {
+                        "number": "57",
+                        "url": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5928.jpg",
+                        "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/thumbnails/_75A5928.jpg",
+                        "original": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5928.jpg",
+                        "download": "https://f005.backblazeb2.com/file/race-photos-public/2025/20250914_thunderbaythriller/originals/_75A5928.jpg",
+                        "race_number": "68",
+                        "all_race_numbers": "68"
+            }
+];
+        
+        const searchInput = document.getElementById('raceNumberSearch');
+        const gallery = document.getElementById('photoGallery');
+        const noResults = document.getElementById('noResults');
+        const pagination = document.getElementById('pagination');
+        const pageInfo = document.getElementById('pageInfo');
+        const prevButton = document.getElementById('prevPage');
+        const nextButton = document.getElementById('nextPage');
+        
+        let currentPage = 1;
+        let photosPerPage = 100;
+        let currentPhotos = [];
+        
+        function displayPhotos(photos) {
+            currentPhotos = photos;
+            currentPage = 1;  // Reset to first page
+            renderPage();
         }
+        
+        function renderPage() {
+            const photos = currentPhotos;
+            
+            if (photos.length === 0) {
+                gallery.innerHTML = '';
+                noResults.style.display = 'block';
+                pagination.style.display = 'none';
+                return;
+            }
+            
+            noResults.style.display = 'none';
+            
+            // Calculate pagination
+            const totalPages = Math.ceil(photos.length / photosPerPage);
+            const startIndex = (currentPage - 1) * photosPerPage;
+            const endIndex = Math.min(startIndex + photosPerPage, photos.length);
+            const pagePhotos = photos.slice(startIndex, endIndex);
+            
+            // Update page info
+            pageInfo.textContent = `Page ${currentPage} of ${totalPages} (${photos.length} photos)`;
+            prevButton.disabled = currentPage === 1;
+            nextButton.disabled = currentPage === totalPages;
+            
+            // Show/hide pagination
+            pagination.style.display = totalPages > 1 ? 'flex' : 'none';
+            
+            // Render photos for current page
+            gallery.innerHTML = pagePhotos.map((photo, index) => {
+                const actualIndex = startIndex + index;  // Global index for lightbox
+                return `
+                <div class="photo-card" onclick="openLightbox(${actualIndex})">
+                    <div class="photo-thumbnail">
+                        ${photo.thumbnail ? `<img src="${photo.thumbnail}" alt="Race photo">` : '📷'}
+                    </div>
+                </div>
+                `;
+            }).join('');
+            
+            // Scroll to top of gallery
+            document.querySelector('.gallery-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        function changePage(direction) {
+            currentPage += direction;
+            renderPage();
+        }
+        
+        function goToPage() {
+            const input = document.getElementById('pageInput');
+            const pageNum = parseInt(input.value);
+            const totalPages = Math.ceil(currentPhotos.length / photosPerPage);
+            
+            if (pageNum && pageNum >= 1 && pageNum <= totalPages) {
+                currentPage = pageNum; // currentPage is 1-based, so use pageNum directly
+                renderPage();
+                input.value = ''; // Clear input after navigating
+            } else {
+                alert(`Please enter a page number between 1 and ${totalPages}`);
+            }
+        }
+        
+        // Search functionality
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.trim();
+            
+            if (!searchTerm) {
+                // Show all photos
+                displayPhotos(allPhotos);
+                return;
+            }
+            
+            // Find matching photos
+            const matches = photosByRaceNumber[searchTerm] || [];
+            displayPhotos(matches);
+        });
+        
+        // Show all photos initially
+        displayPhotos(allPhotos);
+        
+        // Lightbox functionality
+        let currentLightboxIndex = 0;
+        // currentPhotos already declared above for pagination
         
         function openLightbox(index) {
-            console.log('Opening lightbox for photo', index);
             currentLightboxIndex = index;
-            const photo = photos[index];
-            console.log('Photo data:', photo);
+            currentPhotos = searchInput.value.trim() ? 
+                (photosByRaceNumber[searchInput.value.trim()] || []) : 
+                allPhotos;
+            
+            const photo = currentPhotos[index];
             const lightbox = document.getElementById('lightbox');
             const lightboxImage = document.getElementById('lightbox-image');
             const counter = document.getElementById('lightbox-counter');
-            const download = document.getElementById('lightbox-download');
-            const flickrLink = document.getElementById('lightbox-flickr');
             
-            // Use original image URL if available
-            const imageUrl = photo.original || photo.url;
-            console.log('Image URL:', imageUrl);
-            lightboxImage.src = imageUrl;
-            counter.textContent = `${index + 1} / ${photos.length}`;
-            download.href = photo.download || imageUrl;
-            flickrLink.href = photo.url;
+            // Display large image (_h), download original (_o)
+            lightboxImage.src = photo.original || photo.url;
+            counter.textContent = `${index + 1} / ${currentPhotos.length}`;
             
             lightbox.classList.add('active');
         }
@@ -1219,22 +1693,17 @@
             currentLightboxIndex += direction;
             
             if (currentLightboxIndex < 0) {
-                currentLightboxIndex = photos.length - 1;
-            } else if (currentLightboxIndex >= photos.length) {
+                currentLightboxIndex = currentPhotos.length - 1;
+            } else if (currentLightboxIndex >= currentPhotos.length) {
                 currentLightboxIndex = 0;
             }
             
-            const photo = photos[currentLightboxIndex];
+            const photo = currentPhotos[currentLightboxIndex];
             const lightboxImage = document.getElementById('lightbox-image');
             const counter = document.getElementById('lightbox-counter');
-            const download = document.getElementById('lightbox-download');
-            const flickrLink = document.getElementById('lightbox-flickr');
             
-            const imageUrl = photo.original || photo.url;
-            lightboxImage.src = imageUrl;
-            counter.textContent = `${currentLightboxIndex + 1} / ${photos.length}`;
-            download.href = photo.download || imageUrl;
-            flickrLink.href = photo.url;
+            lightboxImage.src = photo.original || photo.url;
+            counter.textContent = `${currentLightboxIndex + 1} / ${currentPhotos.length}`;
         }
         
         // Event listeners
@@ -1244,7 +1713,7 @@
         
         // Download function - force download instead of opening in tab
         function downloadImage() {
-            const photo = photos[currentLightboxIndex];
+            const photo = currentPhotos[currentLightboxIndex];
             const imageUrl = photo.download || photo.original || photo.url;
             
             // Fetch the image and trigger download
@@ -1254,7 +1723,7 @@
                     const url = window.URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = url;
-                    a.download = `photo-${currentLightboxIndex + 1}.jpg`;
+                    a.download = `race-photo-${photo.race_number}.jpg`;
                     document.body.appendChild(a);
                     a.click();
                     window.URL.revokeObjectURL(url);
@@ -1276,6 +1745,7 @@
             }
         });
         
+        // Close when clicking background
         document.getElementById('lightbox').addEventListener('click', (e) => {
             if (e.target.id === 'lightbox') closeLightbox();
         });
