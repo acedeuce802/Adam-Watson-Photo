@@ -102,7 +102,21 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
         by_race_number[rn].append(photo)
     
     print(f"Found {len(by_race_number)} unique race numbers")
-    
+
+    # Dedupe for the "all photos" view: multi-person shots have one entry
+    # per race_number in `photos`, but each physical jpg should appear once.
+    # Keep the first occurrence and set race_number to the full combined list.
+    all_photos_unique = []
+    seen_photo_keys = set()
+    for photo in photos:
+        key = photo.get('url') or photo.get('filename') or photo['number']
+        if key in seen_photo_keys:
+            continue
+        seen_photo_keys.add(key)
+        all_photos_unique.append({**photo, 'race_number': photo['all_race_numbers']})
+
+    print(f"  ({len(all_photos_unique)} unique photos for the all-photos view, deduped from {len(photos)} entries)")
+
     # Breadcrumb based on discipline
     if discipline:
         breadcrumb = f'''    <div class="breadcrumb">
