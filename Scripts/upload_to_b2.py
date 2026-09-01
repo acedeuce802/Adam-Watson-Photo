@@ -5,28 +5,45 @@ Supports both public (watermarked) and private (full-res) buckets
 """
 
 import os
+import re
 import sys
 from pathlib import Path
 from b2sdk.v2 import B2Api, InMemoryAccountInfo
+
+_DATE_SEQ_RE = re.compile(r'^(\d{4,})-(\d+)(?:-(\d+))?\.(\w+)$', re.I)
+
+def natural_sort_key(name):
+    """Must produce the same order as generate_csv_from_images.py's copy of
+    this function -- merge_flickr_urls.py / merge_b2_thumbnails.py can fall
+    back to joining the CSV to these uploaded URLs by position (photo_number)
+    when neither side has a filename, so if this ever drifts out of sync
+    with that script's sort, tags silently attach to the wrong photo instead
+    of just displaying out of order."""
+    m = _DATE_SEQ_RE.match(name)
+    if m:
+        date, seq, variant, ext = m.groups()
+        return (0, date, int(seq), int(variant) if variant else 0, ext.lower())
+    return (1, [int(chunk) if chunk.isdigit() else chunk.lower()
+                for chunk in re.split(r'(\d+)', name)])
 
 def upload_to_b2(photos_dir, bucket_name, key_id, app_key, public=True, subfolder=None):
     """
     Upload photos to B2 bucket
     subfolder: Optional folder prefix (e.g., 'watermarked', 'iceman-2024/watermarked')
     """
-    
+
     photos_path = Path(photos_dir)
     if not photos_path.exists():
         print(f"✗ Error: Directory not found: {photos_dir}")
         return
-    
+
     # Find all images (avoid duplicates)
     image_files = set()
     for ext in ['*.jpg', '*.JPG', '*.jpeg', '*.JPEG']:
         image_files.update(photos_path.glob(ext))
-    
-    # Sort by filename
-    image_files = sorted(image_files, key=lambda x: x.name)
+
+    # Sort in natural (numeric) filename order -- see natural_sort_key docstring
+    image_files = sorted(image_files, key=lambda x: natural_sort_key(x.name))
     
     if not image_files:
         print(f"✗ No images found in {photos_dir}")
@@ -115,9 +132,10 @@ def upload_to_b2(photos_dir, bucket_name, key_id, app_key, public=True, subfolde
                 full_path = file_name
             
             download_url = f"{download_url_base}/file/{bucket_name}/{full_path}"
-            
+
             photos_json.append({
                 'photo_number': str(idx),
+                'filename': file_name,
                 'photo_url': download_url,
                 'thumbnail_url': download_url,  # Same for now
                 'large_url': download_url,

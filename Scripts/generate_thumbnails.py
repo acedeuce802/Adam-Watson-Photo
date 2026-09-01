@@ -4,9 +4,22 @@ Generate thumbnails for race photos
 Creates optimized thumbnails (300px width) for fast gallery loading
 """
 
+import re
 import sys
 from pathlib import Path
 from PIL import Image
+
+_DATE_SEQ_RE = re.compile(r'^(\d{4,})-(\d+)(?:-(\d+))?\.(\w+)$', re.I)
+
+def natural_sort_key(name):
+    """Same natural (numeric) sort used across the pipeline scripts, so
+    processing order matches the tagging CSV and upload order."""
+    m = _DATE_SEQ_RE.match(name)
+    if m:
+        date, seq, variant, ext = m.groups()
+        return (0, date, int(seq), int(variant) if variant else 0, ext.lower())
+    return (1, [int(chunk) if chunk.isdigit() else chunk.lower()
+                for chunk in re.split(r'(\d+)', name)])
 
 def generate_thumbnails(source_dir, output_dir='thumbnails', width=300, quality=85):
     """
@@ -35,7 +48,7 @@ def generate_thumbnails(source_dir, output_dir='thumbnails', width=300, quality=
     for ext in ['*.jpg', '*.JPG', '*.jpeg', '*.JPEG']:
         image_files.update(source_path.glob(ext))
     
-    image_files = sorted(image_files, key=lambda x: x.name)
+    image_files = sorted(image_files, key=lambda x: natural_sort_key(x.name))
     
     if not image_files:
         print(f"✗ No images found in {source_dir}")

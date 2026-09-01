@@ -27,37 +27,47 @@ def merge_b2_urls(csv_file, thumbnails_json, originals_json, output_csv=None):
     
     print(f"Loaded {len(original_photos)} originals from {originals_json}")
     
-    # Create lookups by photo number
-    thumbnail_lookup = {str(p['photo_number']): p for p in thumbnail_photos}
-    original_lookup = {str(p['photo_number']): p for p in original_photos}
-    
+    # Prefer matching by filename -- it's what actually identifies a photo.
+    # photo_number is just a position assigned independently by whichever
+    # script built each side (the tagging CSV vs. each upload run), so if
+    # their sort orders ever drift apart, a photo_number match silently
+    # pairs a row with the WRONG photo's URLs instead of just being out of
+    # order. Fall back to photo_number for older JSONs with no filename.
+    thumbnail_by_filename = {p['filename']: p for p in thumbnail_photos if p.get('filename')}
+    thumbnail_by_number = {str(p['photo_number']): p for p in thumbnail_photos}
+    original_by_filename = {p['filename']: p for p in original_photos if p.get('filename')}
+    original_by_number = {str(p['photo_number']): p for p in original_photos}
+
     # Read CSV
     rows = []
     with open(csv_file, 'r', encoding='utf-8') as f:
         reader = csv.DictReader(f)
         fieldnames = reader.fieldnames
-        
+
         # Add new columns if they don't exist
         new_fieldnames = list(fieldnames)
         for col in ['photo_url', 'thumbnail_url', 'large_url', 'original_url']:
             if col not in new_fieldnames:
                 new_fieldnames.append(col)
-        
+
         for row in reader:
+            filename = row.get('filename', '').strip()
             photo_num = str(row['photo_number'])
-            
-            # Get thumbnail URL
-            if photo_num in thumbnail_lookup:
-                thumb_data = thumbnail_lookup[photo_num]
+
+            thumb_data = thumbnail_by_filename.get(filename) if filename else None
+            if thumb_data is None:
+                thumb_data = thumbnail_by_number.get(photo_num)
+            if thumb_data:
                 row['thumbnail_url'] = thumb_data.get('photo_url', '')
-            
-            # Get original URLs
-            if photo_num in original_lookup:
-                orig_data = original_lookup[photo_num]
+
+            orig_data = original_by_filename.get(filename) if filename else None
+            if orig_data is None:
+                orig_data = original_by_number.get(photo_num)
+            if orig_data:
                 row['photo_url'] = orig_data.get('photo_url', '')  # For clicking
                 row['large_url'] = orig_data.get('photo_url', '')  # For lightbox
                 row['original_url'] = orig_data.get('photo_url', '')  # For download
-            
+
             rows.append(row)
     
     # Write merged CSV

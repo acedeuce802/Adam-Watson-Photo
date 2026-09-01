@@ -4,10 +4,37 @@ Generate searchable race gallery HTML from tagged CSV
 """
 
 import csv
+import re
 import sys
 import json
 import argparse
 from datetime import datetime
+
+_DATE_SEQ_RE = re.compile(r'^(\d{4,})-(\d+)(?:-(\d+))?\.(\w+)$', re.I)
+
+def _filename_sort_key(name):
+    """Order filenames by their numeric sequence (e.g. ...-9717.jpg before
+    ...-10001.jpg), not by plain string sort. Filenames matching the
+    "<date>-<sequence>(-<variant>).jpg" convention (e.g. a re-edited crop
+    saved as "...-9507-2.jpg") sort the variant immediately after its base
+    photo; anything else falls back to a generic digit-aware sort."""
+    m = _DATE_SEQ_RE.match(name)
+    if m:
+        date, seq, variant, ext = m.groups()
+        return (0, date, int(seq), int(variant) if variant else 0, ext.lower())
+    return (1, [int(chunk) if chunk.isdigit() else chunk.lower()
+                for chunk in re.split(r'(\d+)', name)])
+
+def _natural_sort_key(photo):
+    """Sort key for a photo dict -- see _filename_sort_key. Falls back to
+    the photo's URL or CSV row number when no filename is available."""
+    name = photo.get('filename') or ''
+    if not name:
+        src = photo.get('url') or photo.get('original') or photo.get('guest_pass_url') or ''
+        name = src.rsplit('/', 1)[-1] if src else ''
+    if not name:
+        name = str(photo.get('number', ''))
+    return _filename_sort_key(name)
 
 def generate_race_gallery(csv_file, race_name, race_date, location, output_file, discipline=None):
     """
@@ -33,19 +60,32 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
                     col_name = f'race_number_{i}'
                     if col_name in row and row[col_name].strip():
                         race_numbers.append(row[col_name].strip())
-                
-                # Create one entry per race number (multi-person support)
-                for race_num in race_numbers:
+
+                if race_numbers:
+                    # Create one entry per race number (multi-person support)
+                    for race_num in race_numbers:
+                        photos.append({
+                            'number': row['photo_number'],
+                            'url': row.get('photo_url', ''),
+                            'thumbnail': row.get('thumbnail_url', ''),
+                            'original': row.get('large_url', ''),  # Use large_url for lightbox
+                            'download': row.get('original_url', ''),  # Use original_url for download
+                            'race_number': race_num,
+                            'all_race_numbers': ','.join(race_numbers)
+                        })
+                else:
+                    # No race numbers tagged on this photo -- still include it so it
+                    # shows up in the "all photos" view, just not in any bib search.
                     photos.append({
                         'number': row['photo_number'],
                         'url': row.get('photo_url', ''),
                         'thumbnail': row.get('thumbnail_url', ''),
-                        'original': row.get('large_url', ''),  # Use large_url for lightbox
-                        'download': row.get('original_url', ''),  # Use original_url for download
-                        'race_number': race_num,
-                        'all_race_numbers': ','.join(race_numbers)
+                        'original': row.get('large_url', ''),
+                        'download': row.get('original_url', ''),
+                        'race_number': '',
+                        'all_race_numbers': ''
                     })
-                
+
             elif 'filename' in row:
                 # LOCAL IMAGES format (generated from local files BEFORE Flickr upload)
                 # Has filename and race_number_1 through race_number_10 but NO URLs yet
@@ -56,20 +96,34 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
                     col_name = f'race_number_{i}'
                     if col_name in row and row[col_name].strip():
                         race_numbers.append(row[col_name].strip())
-                
-                # Create one entry per race number (multi-person support)
-                for race_num in race_numbers:
+
+                if race_numbers:
+                    # Create one entry per race number (multi-person support)
+                    for race_num in race_numbers:
+                        photos.append({
+                            'number': row['photo_number'],
+                            'filename': row['filename'],
+                            'url': '',  # Will be filled after Flickr upload
+                            'thumbnail': '',  # Will be filled after Flickr upload
+                            'original': '',
+                            'download': '',
+                            'race_number': race_num,
+                            'all_race_numbers': ','.join(race_numbers)
+                        })
+                else:
+                    # No race numbers tagged on this photo -- still include it so it
+                    # shows up in the "all photos" view, just not in any bib search.
                     photos.append({
                         'number': row['photo_number'],
                         'filename': row['filename'],
-                        'url': '',  # Will be filled after Flickr upload
-                        'thumbnail': '',  # Will be filled after Flickr upload
+                        'url': '',
+                        'thumbnail': '',
                         'original': '',
                         'download': '',
-                        'race_number': race_num,
-                        'all_race_numbers': ','.join(race_numbers)
+                        'race_number': '',
+                        'all_race_numbers': ''
                     })
-                
+
             elif 'race_number' in row and row['race_number'].strip():
                 # PRIVATE PHOTOS format (guest pass) - single race number only
                 photos.append({
@@ -83,7 +137,11 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
                 })
     
     print(f"Loaded {len(photos)} photo entries from CSV")
-    
+
+    # Sort into true chronological order (see _natural_sort_key) -- fixes
+    # display order regardless of what order the CSV rows happen to be in.
+    photos.sort(key=_natural_sort_key)
+
     # Count unique photos
     unique_photos = len(set(p['number'] for p in photos))
     print(f"  ({unique_photos} unique photos, some may appear multiple times for multi-person shots)")
@@ -93,10 +151,13 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
         print(f"Sample photo data: {photos[0]}")
     
     
-    # Group by race number
+    # Group by race number (skip untagged photos -- they have no bib to search by,
+    # but still appear in the "all photos" view via all_photos_unique below)
     by_race_number = {}
     for photo in photos:
         rn = photo['race_number']
+        if not rn:
+            continue
         if rn not in by_race_number:
             by_race_number[rn] = []
         by_race_number[rn].append(photo)
@@ -132,7 +193,29 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
         <span>›</span>
         <span>{race_name}</span>
     </div>'''
-    
+
+    # Open Graph / Twitter card data, so links shared on Facebook etc. show
+    # the site's wordmark instead of falling back to a random page image.
+    import os
+    site_url = "https://adamwatsonphoto.com"
+    page_title = f"{race_name} Photos | Adam Watson Photo"
+    page_description = f"{race_name} -- race photos from {location} • {race_date}."
+    page_url = f"{site_url}/{os.path.basename(output_file)}"
+    og_image = f"{site_url}/images/og-logo.jpg"
+
+    og_tags = f'''    <meta property="og:type" content="website">
+    <meta property="og:url" content="{page_url}">
+    <meta property="og:site_name" content="Adam Watson Photo">
+    <meta property="og:title" content="{page_title}">
+    <meta property="og:description" content="{page_description}">
+    <meta property="og:image" content="{og_image}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{page_title}">
+    <meta name="twitter:description" content="{page_description}">
+    <meta name="twitter:image" content="{og_image}">'''
+
     # Generate HTML
     html = f'''<!DOCTYPE html>
 <html lang="en">
@@ -140,6 +223,7 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{race_name} Photos | Adam Watson Photo</title>
+{og_tags}
     <style>
         * {{
             margin: 0;
@@ -616,7 +700,7 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
         const photosByRaceNumber = {json.dumps(by_race_number, indent=12)};
         
         // All photos (for showing all initially)
-        const allPhotos = {json.dumps(photos, indent=12)};
+        const allPhotos = {json.dumps(all_photos_unique, indent=12)};
         
         const searchInput = document.getElementById('raceNumberSearch');
         const gallery = document.getElementById('photoGallery');
@@ -812,6 +896,7 @@ def generate_race_gallery(csv_file, race_name, race_date, location, output_file,
     print(f"\n✓ Generated: {output_file}")
     print(f"\nGallery stats:")
     print(f"  - Total photos with race numbers: {len(photos)}")
+    print(f"  - Unique photos (allPhotos view): {len(all_photos_unique)}")
     print(f"  - Unique race numbers: {len(by_race_number)}")
     print(f"\nUpload to your website and test the search!")
 

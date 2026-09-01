@@ -5,26 +5,48 @@ Use this BEFORE uploading to Flickr
 """
 
 import csv
+import re
 import sys
 from pathlib import Path
+
+_DATE_SEQ_RE = re.compile(r'^(\d{4,})-(\d+)(?:-(\d+))?\.(\w+)$', re.I)
+
+def natural_sort_key(name):
+    """Order filenames by their numeric sequence (e.g. ...-9717.jpg before
+    ...-10001.jpg), not by plain string sort. Filenames matching the
+    "<date>-<sequence>(-<variant>).jpg" convention (e.g. a re-edited crop
+    saved as "...-9507-2.jpg") sort the variant immediately after its base
+    photo; anything else falls back to a generic digit-aware sort.
+
+    IMPORTANT: this must produce the same order as upload_to_b2.py's copy
+    of this function -- merge_flickr_urls.py / merge_b2_thumbnails.py can
+    fall back to joining CSV rows to uploaded URLs by position when neither
+    side has a filename, and a mismatch there silently attaches a tag to
+    the wrong photo instead of just displaying out of order."""
+    m = _DATE_SEQ_RE.match(name)
+    if m:
+        date, seq, variant, ext = m.groups()
+        return (0, date, int(seq), int(variant) if variant else 0, ext.lower())
+    return (1, [int(chunk) if chunk.isdigit() else chunk.lower()
+                for chunk in re.split(r'(\d+)', name)])
 
 def generate_csv_from_images(photos_dir, output_csv='race_tagging.csv'):
     """
     Generate CSV with 10 race number columns from local image files
     """
-    
+
     photos_path = Path(photos_dir)
     if not photos_path.exists():
         print(f"✗ Error: Directory not found: {photos_dir}")
         return
-    
+
     # Find all image files (avoid duplicates)
     image_files = set()
     for ext in ['*.jpg', '*.JPG', '*.jpeg', '*.JPEG']:
         image_files.update(photos_path.glob(ext))
-    
-    # Sort by filename
-    image_files = sorted(image_files, key=lambda x: x.name)
+
+    # Sort in natural (numeric) filename order
+    image_files = sorted(image_files, key=lambda x: natural_sort_key(x.name))
     
     if not image_files:
         print(f"✗ No image files found in {photos_dir}")
