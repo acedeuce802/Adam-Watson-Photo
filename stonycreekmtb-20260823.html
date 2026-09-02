@@ -232,6 +232,46 @@
             color: #fff;
         }
 
+        .tip-line {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .tip-line a {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            color: #999;
+            text-decoration: none;
+            font-size: 0.85em;
+            padding: 4px 2px;
+            border-bottom: 1px solid transparent;
+            transition: color 0.15s, border-color 0.15s;
+        }
+
+        .tip-line a:hover {
+            color: #cfe6fb;
+            border-color: #3a7bb0;
+        }
+
+        .venmo-mark {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            background: #4c9fe0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .venmo-mark svg {
+            width: 10px;
+            height: 10px;
+            display: block;
+        }
+
         .copyright {
             text-align: center;
             color: #666;
@@ -309,6 +349,12 @@
 			<li><a href="contact.html">Contact</a></li>
             <li><a href="https://www.instagram.com/adamwatson.photo/" target="_blank" class="instagram-link"><img src="images/instagram-icon.png" alt="Instagram" class="instagram-icon"></a></li>
         </ul>
+        <div class="tip-line">
+            <a href="https://venmo.com/u/wats0252" target="_blank" rel="noopener">
+                <span class="venmo-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M17.5 3.5c1.2 2 1.4 4.7.6 7.7-1.4 5.3-6.2 10-11 12l-2.6-15.7 4.2-.4.9 8.6c2.3-2 4.4-6.4 3.2-9.4-.6-1.5-1.8-2.3-1.8-2.3l4.5-1.1c.6.3 1.4.9 2 1.6z" fill="white"/></svg></span>
+                Buy me a trail snack &mdash; Venmo
+            </a>
+        </div>
         <p class="copyright">&copy; 2026 Adam Watson Photo. All rights reserved.</p>
     </footer>
 </body>
