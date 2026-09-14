@@ -724,8 +724,27 @@ _SHARED_STYLE = '''        * {
         }
 
         @media (max-width: 640px) {
+            .lightbox-counter {
+                top: 20px;
+                bottom: auto;
+                left: 50%;
+                right: auto;
+                transform: translateX(-50%);
+            }
+
             .lightbox-flickr {
-                display: none;
+                left: 20px;
+                right: 20px;
+                bottom: 90px;
+                justify-content: center;
+                text-align: center;
+            }
+
+            .lightbox-download {
+                left: 20px;
+                right: 20px;
+                bottom: 20px;
+                justify-content: center;
             }
 
             .lightbox-purchase-actions {
@@ -1273,7 +1292,7 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
         </div>
         <button class="lightbox-nav lightbox-next" id="lightbox-next">&#8250;</button>
         <div class="lightbox-counter" id="lightbox-counter"></div>
-        <a id="lightbox-flickr" class="lightbox-flickr" href="" target="_blank">Link to Full Resolution</a>
+{'' if paywall else '        <a id="lightbox-flickr" class="lightbox-flickr" href="" target="_blank">Link to Full Resolution</a>'}
 {_lightbox_buy_button_html() if paywall else '        <button id="lightbox-download" class="lightbox-download" onclick="downloadImage()">Download</button>'}
     </div>
 
@@ -1347,7 +1366,7 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
             lightboxImage.src = imageUrl;
             counter.textContent = `${{index + 1}} / ${{photos.length}}`;
             if (download) download.href = photo.download || imageUrl;
-            flickrLink.href = photo.url;
+            if (flickrLink) flickrLink.href = photo.url;
 
             lightbox.classList.add('active');
         }}
@@ -1375,7 +1394,7 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
             lightboxImage.src = imageUrl;
             counter.textContent = `${{currentLightboxIndex + 1}} / ${{photos.length}}`;
             if (download) download.href = photo.download || imageUrl;
-            flickrLink.href = photo.url;
+            if (flickrLink) flickrLink.href = photo.url;
         }}
 
         document.getElementById('lightbox-close').addEventListener('click', closeLightbox);

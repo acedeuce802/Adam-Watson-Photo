@@ -597,8 +597,27 @@
         }
 
         @media (max-width: 640px) {
+            .lightbox-counter {
+                top: 20px;
+                bottom: auto;
+                left: 50%;
+                right: auto;
+                transform: translateX(-50%);
+            }
+
             .lightbox-flickr {
-                display: none;
+                left: 20px;
+                right: 20px;
+                bottom: 90px;
+                justify-content: center;
+                text-align: center;
+            }
+
+            .lightbox-download {
+                left: 20px;
+                right: 20px;
+                bottom: 20px;
+                justify-content: center;
             }
 
             .lightbox-purchase-actions {
@@ -667,7 +686,6 @@
         </div>
         <button class="lightbox-nav lightbox-next" id="lightbox-next">&#8250;</button>
         <div class="lightbox-counter" id="lightbox-counter"></div>
-        <a id="lightbox-flickr" class="lightbox-flickr" href="" target="_blank">Link to Full Resolution</a>
         <div class="lightbox-purchase-actions">
             <button id="lightbox-add-cart" class="lightbox-buy lightbox-add-cart" onclick="addToCart()">Add to Cart</button>
             <button id="lightbox-buy" class="lightbox-buy" onclick="buyPhoto()">Buy Full-Res</button>
@@ -953,7 +971,7 @@
             lightboxImage.src = imageUrl;
             counter.textContent = `${index + 1} / ${photos.length}`;
             if (download) download.href = photo.download || imageUrl;
-            flickrLink.href = photo.url;
+            if (flickrLink) flickrLink.href = photo.url;
 
             lightbox.classList.add('active');
         }
@@ -981,7 +999,7 @@
             lightboxImage.src = imageUrl;
             counter.textContent = `${currentLightboxIndex + 1} / ${photos.length}`;
             if (download) download.href = photo.download || imageUrl;
-            flickrLink.href = photo.url;
+            if (flickrLink) flickrLink.href = photo.url;
         }
 
         document.getElementById('lightbox-close').addEventListener('click', closeLightbox);

@@ -330,6 +330,7 @@ async function sendDownloadEmail(toEmail, downloads, env) {
     .map((d) => `<p><a href="${d.url}">${escapeHtml(d.filename)}</a></p>`)
     .join('');
   const expiresHours = Math.round(parseInt(env.B2_DOWNLOAD_VALID_SECONDS || '172800', 10) / 3600);
+  const supportEmail = env.SUPPORT_EMAIL;
 
   const resp = await fetch('https://api.resend.com/emails', {
     method: 'POST',
@@ -340,11 +341,15 @@ async function sendDownloadEmail(toEmail, downloads, env) {
     body: JSON.stringify({
       from: env.RESEND_FROM_EMAIL,
       to: toEmail,
+      reply_to: supportEmail,
       subject,
       html: `
         <p>Thanks for your purchase! Click below to download your full-resolution photo${plural ? 's' : ''}:</p>
         ${linksHtml}
-        <p>These links expire in about ${expiresHours} hours.</p>
+        <p>These links expire in about ${expiresHours} hours. If they expire before you get to them, just forward
+        this email to <a href="mailto:${supportEmail}">${supportEmail}</a> as proof of purchase and I'll send
+        the photos directly.</p>
+        <p>Thank you!<br>Adam Watson</p>
       `,
     }),
   });
