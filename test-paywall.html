@@ -179,16 +179,104 @@
             border-radius: 8px;
             overflow: hidden;
             border: 1px solid #222;
-            transition: transform 0.3s;
+            transition: transform 0.3s, border-color 0.3s;
             display: block;
             text-decoration: none;
             color: inherit;
             cursor: pointer;
+            position: relative;
         }
 
         .photo-card:hover {
             transform: translateY(-5px);
             border-color: #444;
+        }
+
+        .photo-card.selected {
+            border-color: #d4a017;
+        }
+
+        .select-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.4);
+            color: #fff;
+            font-size: 1.1em;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 5;
+            transition: all 0.2s;
+        }
+
+        .select-toggle:hover {
+            border-color: #fff;
+            background: rgba(0,0,0,0.8);
+        }
+
+        .photo-card.selected .select-toggle {
+            background: #d4a017;
+            border-color: #d4a017;
+        }
+
+        .cart-bar {
+            position: fixed;
+            left: 30px;
+            bottom: 30px;
+            background: rgba(15,15,15,0.95);
+            border: 1px solid #d4a017;
+            border-radius: 25px;
+            padding: 10px 12px 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            z-index: 9000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .cart-bar-text {
+            color: #e0e0e0;
+            font-size: 0.95em;
+            white-space: nowrap;
+        }
+
+        .cart-bar button {
+            font-family: inherit;
+            font-size: 0.95em;
+            border-radius: 20px;
+            padding: 8px 18px;
+            cursor: pointer;
+            border: none;
+            white-space: nowrap;
+        }
+
+        .cart-bar .cart-checkout {
+            background: #d4a017;
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        .cart-bar .cart-checkout:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+
+        .cart-bar .cart-clear {
+            background: transparent;
+            color: #999;
+            border: 1px solid #444;
+        }
+
+        .cart-bar .cart-clear:hover {
+            color: #fff;
+            border-color: #999;
         }
 
         .photo-thumbnail {
@@ -450,10 +538,16 @@
             border-color: #999;
         }
 
-        .lightbox-buy {
+        .lightbox-purchase-actions {
             position: fixed;
             bottom: 30px;
             right: 30px;
+            display: flex;
+            gap: 12px;
+            z-index: 10000;
+        }
+
+        .lightbox-buy {
             background: #b8860b;
             color: #fff;
             padding: 12px 24px;
@@ -468,8 +562,18 @@
             align-items: center;
             box-sizing: border-box;
             transition: all 0.3s;
-            z-index: 10000;
             cursor: pointer;
+        }
+
+        .lightbox-add-cart {
+            background: rgba(0,0,0,0.7);
+            border: 1px solid #666;
+            font-weight: 500;
+        }
+
+        .lightbox-add-cart:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: #999;
         }
 
         .lightbox-buy:hover {
@@ -490,6 +594,22 @@
             z-index: 10000;
             max-width: 260px;
             text-align: right;
+        }
+
+        @media (max-width: 640px) {
+            .lightbox-flickr {
+                display: none;
+            }
+
+            .lightbox-purchase-actions {
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 8px;
+            }
+
+            .watermark-note {
+                bottom: 150px;
+            }
         }
     </style>
 </head>
@@ -532,6 +652,12 @@
         </div>
     </section>
 
+    <div id="cart-bar" class="cart-bar" style="display: none;">
+        <span id="cart-bar-text" class="cart-bar-text"></span>
+        <button class="cart-clear" onclick="clearCart()">Clear</button>
+        <button id="cart-checkout-btn" class="cart-checkout" onclick="checkoutCart()">Checkout</button>
+    </div>
+
     <!-- Lightbox -->
     <div id="lightbox" class="lightbox">
         <button class="lightbox-close" id="lightbox-close">&times;</button>
@@ -542,7 +668,10 @@
         <button class="lightbox-nav lightbox-next" id="lightbox-next">&#8250;</button>
         <div class="lightbox-counter" id="lightbox-counter"></div>
         <a id="lightbox-flickr" class="lightbox-flickr" href="" target="_blank">Link to Full Resolution</a>
-        <button id="lightbox-buy" class="lightbox-buy" onclick="buyPhoto()">Buy Full-Res</button>
+        <div class="lightbox-purchase-actions">
+            <button id="lightbox-add-cart" class="lightbox-buy lightbox-add-cart" onclick="addToCart()">Add to Cart</button>
+            <button id="lightbox-buy" class="lightbox-buy" onclick="buyPhoto()">Buy Full-Res</button>
+        </div>
         <div class="watermark-note">Preview is watermarked &amp; reduced resolution</div>
     </div>
 
@@ -643,6 +772,122 @@
         const prevButton = document.getElementById('prevPage');
         const nextButton = document.getElementById('nextPage');
 
+        const WORKER_BASE_URL = "https://adam-watson-photo-paywall.adamwatsonphoto.workers.dev";
+        const RACE_SLUG = "test-paywall";
+        const PRICE_DISPLAY = "$10.00";
+        const PRICE_CENTS = 1000;
+        const CART_STORAGE_KEY = `cart_${RACE_SLUG}`;
+
+        let cart = new Set();
+        try {
+            const saved = sessionStorage.getItem(CART_STORAGE_KEY);
+            if (saved) cart = new Set(JSON.parse(saved));
+        } catch (e) { /* sessionStorage unavailable -- cart just won't persist across a refresh */ }
+
+        function saveCart() {
+            try { sessionStorage.setItem(CART_STORAGE_KEY, JSON.stringify([...cart])); } catch (e) {}
+            updateCartBar();
+        }
+
+        function updateCartBar() {
+            const bar = document.getElementById('cart-bar');
+            const text = document.getElementById('cart-bar-text');
+            if (!bar || !text) return;
+
+            if (cart.size === 0) {
+                bar.style.display = 'none';
+                return;
+            }
+
+            const total = (cart.size * PRICE_CENTS / 100).toFixed(2);
+            text.textContent = `${cart.size} photo${cart.size === 1 ? '' : 's'} selected · $${total}`;
+            bar.style.display = 'flex';
+        }
+
+        function toggleCartItem(privateKey) {
+            if (cart.has(privateKey)) {
+                cart.delete(privateKey);
+            } else {
+                cart.add(privateKey);
+            }
+            saveCart();
+            renderPage();
+        }
+
+        function clearCart() {
+            cart.clear();
+            saveCart();
+            renderPage();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const buyButton = document.getElementById('lightbox-buy');
+            if (buyButton) buyButton.textContent = `Buy Full-Res – ${PRICE_DISPLAY}`;
+            updateCartBar();
+        });
+
+        async function startCheckout(privateKeys, buttonEl, resetLabel) {
+            if (!privateKeys.length) return;
+
+            if (buttonEl) {
+                buttonEl.disabled = true;
+                buttonEl.textContent = 'Redirecting to checkout...';
+            }
+
+            try {
+                const response = await fetch(`${WORKER_BASE_URL}/checkout`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ private_keys: privateKeys, race: RACE_SLUG })
+                });
+
+                if (!response.ok) throw new Error(`Checkout request failed (${response.status})`);
+
+                const data = await response.json();
+                if (!data.url) throw new Error('No checkout URL returned');
+
+                try { sessionStorage.removeItem(CART_STORAGE_KEY); } catch (e) {}
+                window.location.href = data.url;
+            } catch (error) {
+                console.error('Checkout failed:', error);
+                alert('Sorry, checkout could not be started. Please try again in a moment.');
+                if (buttonEl) {
+                    buttonEl.disabled = false;
+                    buttonEl.textContent = resetLabel;
+                }
+            }
+        }
+
+        async function buyPhoto() {
+            const photo = photos[currentLightboxIndex];
+            if (!photo || !photo.private_key) {
+                alert('This photo is not available for purchase yet.');
+                return;
+            }
+            await startCheckout([photo.private_key], document.getElementById('lightbox-buy'), `Buy Full-Res – ${PRICE_DISPLAY}`);
+        }
+
+        function addToCart() {
+            const photo = photos[currentLightboxIndex];
+            if (!photo || !photo.private_key) {
+                alert('This photo is not available for purchase yet.');
+                return;
+            }
+            cart.add(photo.private_key);
+            saveCart();
+            renderPage();
+            const addButton = document.getElementById('lightbox-add-cart');
+            if (addButton) {
+                const original = addButton.textContent;
+                addButton.textContent = 'Added ✓';
+                setTimeout(() => { addButton.textContent = original; }, 1200);
+            }
+        }
+
+        async function checkoutCart() {
+            await startCheckout([...cart], document.getElementById('cart-checkout-btn'), 'Checkout');
+        }
+
         let currentPage = 1;
         let photosPerPage = 100;
         let currentLightboxIndex = 0;
@@ -661,11 +906,11 @@
 
             gallery.innerHTML = pagePhotos.map((photo, index) => {
                 const actualIndex = startIndex + index;
-                const thumbnail = photo.thumbnail || '';
                 return `
-                <div class="photo-card" onclick="openLightbox(${actualIndex})">
+                <div class="photo-card ${photo.private_key && cart.has(photo.private_key) ? 'selected' : ''}" onclick="openLightbox(${actualIndex})">
+                    ${photo.private_key ? `<button class="select-toggle" onclick="event.stopPropagation(); toggleCartItem('${photo.private_key}')">${cart.has(photo.private_key) ? '✓' : '+'}</button>` : ''}
                     <div class="photo-thumbnail">
-                        ${thumbnail ? `<img src="${thumbnail}" alt="Race photo">` : '📷'}
+                        ${photo.thumbnail ? `<img src="${photo.thumbnail}" alt="Race photo">` : '📷'}
                     </div>
                 </div>
                 `;
@@ -776,49 +1021,6 @@
         document.getElementById('lightbox').addEventListener('click', (e) => {
             if (e.target.id === 'lightbox') closeLightbox();
         });
-
-        const WORKER_BASE_URL = "https://adam-watson-photo-paywall.adamwatsonphoto.workers.dev";
-        const RACE_SLUG = "test-paywall";
-        const PRICE_DISPLAY = "$10.00";
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const buyButton = document.getElementById('lightbox-buy');
-            if (buyButton) buyButton.textContent = `Buy Full-Res – ${PRICE_DISPLAY}`;
-        });
-
-        async function buyPhoto() {
-            const photo = photos[currentLightboxIndex];
-            const buyButton = document.getElementById('lightbox-buy');
-
-            if (!photo || !photo.private_key) {
-                alert('This photo is not available for purchase yet.');
-                return;
-            }
-
-            buyButton.disabled = true;
-            buyButton.textContent = 'Redirecting to checkout...';
-
-            try {
-                const response = await fetch(`${WORKER_BASE_URL}/checkout`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ private_key: photo.private_key, race: RACE_SLUG })
-                });
-
-                if (!response.ok) throw new Error(`Checkout request failed (${response.status})`);
-
-                const data = await response.json();
-                if (!data.url) throw new Error('No checkout URL returned');
-
-                window.location.href = data.url;
-            } catch (error) {
-                console.error('Checkout failed:', error);
-                alert('Sorry, checkout could not be started. Please try again in a moment.');
-                buyButton.disabled = false;
-                buyButton.textContent = `Buy Full-Res – ${PRICE_DISPLAY}`;
-            }
-        }
-
     </script>
 </body>
 </html>
