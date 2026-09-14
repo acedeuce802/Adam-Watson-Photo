@@ -1196,6 +1196,7 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
         function downloadImage() {{
             const photo = currentPhotos[currentLightboxIndex];
             const imageUrl = photo.download || photo.original || photo.url;
+            const filename = photo.filename || decodeURIComponent(imageUrl.split('/').pop().split('?')[0]) || 'photo.jpg';
 
             fetch(imageUrl)
                 .then(response => response.blob())
@@ -1203,7 +1204,7 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
                     const url = window.URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = url;
-                    a.download = `race-photo-${{photo.race_number}}.jpg`;
+                    a.download = filename;
                     document.body.appendChild(a);
                     a.click();
                     window.URL.revokeObjectURL(url);
@@ -1404,6 +1405,7 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
         function downloadImage() {{
             const photo = photos[currentLightboxIndex];
             const imageUrl = photo.download || photo.original || photo.url;
+            const filename = photo.filename || decodeURIComponent(imageUrl.split('/').pop().split('?')[0]) || 'photo.jpg';
 
             fetch(imageUrl)
                 .then(response => response.blob())
@@ -1411,7 +1413,7 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
                     const url = window.URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = url;
-                    a.download = `photo-${{currentLightboxIndex + 1}}.jpg`;
+                    a.download = filename;
                     document.body.appendChild(a);
                     a.click();
                     window.URL.revokeObjectURL(url);

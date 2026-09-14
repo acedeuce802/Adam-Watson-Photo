@@ -7118,6 +7118,7 @@
         function downloadImage() {
             const photo = currentPhotos[currentLightboxIndex];
             const imageUrl = photo.download || photo.original || photo.url;
+            const filename = photo.filename || decodeURIComponent(imageUrl.split('/').pop().split('?')[0]) || 'photo.jpg';
             
             // Fetch the image and trigger download
             fetch(imageUrl)
@@ -7126,7 +7127,7 @@
                     const url = window.URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = url;
-                    a.download = `race-photo-${photo.race_number}.jpg`;
+                    a.download = filename;
                     document.body.appendChild(a);
                     a.click();
                     window.URL.revokeObjectURL(url);
