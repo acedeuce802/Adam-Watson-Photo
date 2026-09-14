@@ -1,0 +1,12 @@
+name = "adam-watson-photo-paywall"
+main = "src/index.js"
+compatibility_date = "2024-11-01"
+
+# Non-secret config. Secrets (Stripe keys, B2 keys, Resend key) are set with
+# `wrangler secret put <NAME>` -- see README.md -- and never live in this file.
+[vars]
+ALLOWED_ORIGIN = "https://adamwatsonphoto.com"
+SITE_BASE_URL = "https://adamwatsonphoto.com"
+B2_PRIVATE_BUCKET_NAME = "race-photos-private"
+B2_DOWNLOAD_VALID_SECONDS = "172800"
+RESEND_FROM_EMAIL = "orders@adamwatsonphoto.com"

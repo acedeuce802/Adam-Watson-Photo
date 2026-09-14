@@ -77,7 +77,7 @@ def merge_flickr_urls(csv_file, json_file, output_csv=None):
     print(f"\n✓ Created: {output_csv}")
     print(f"  Merged Flickr URLs for {len(rows)} photos")
     print(f"\nNext step:")
-    print(f"  python generate_race_gallery.py --csv {output_csv} ...")
+    print(f"  python generate_gallery.py --csv {output_csv} ...")
 
 
 if __name__ == '__main__':

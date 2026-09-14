@@ -167,7 +167,7 @@ def upload_to_b2(photos_dir, bucket_name, key_id, app_key, public=True, subfolde
     if public:
         print("\nNext steps:")
         print("  1. python merge_flickr_urls.py race_tagging.csv b2_photos.json")
-        print("  2. python generate_race_gallery.py --csv race_tagging.csv ...")
+        print("  2. python generate_gallery.py --csv race_tagging.csv ...")
     else:
         print("\nNext steps:")
         print("  Use generate_presigned_urls.py to create download links for paid customers")

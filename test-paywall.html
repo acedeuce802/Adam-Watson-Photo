@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paywall Test Photos | Adam Watson Photo</title>
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://adamwatsonphoto.com/test-paywall.html">
+    <meta property="og:site_name" content="Adam Watson Photo">
+    <meta property="og:title" content="Paywall Test Photos | Adam Watson Photo">
+    <meta property="og:description" content="Paywall Test -- race photos from Testville • Jan 1, 2026.">
+    <meta property="og:image" content="https://adamwatsonphoto.com/images/og-logo.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Paywall Test Photos | Adam Watson Photo">
+    <meta name="twitter:description" content="Paywall Test -- race photos from Testville • Jan 1, 2026.">
+    <meta name="twitter:image" content="https://adamwatsonphoto.com/images/og-logo.jpg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        nav {
+            background: #0a0a0a;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1.1em;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        .instagram-link {
+            color: #888;
+            transition: opacity 0.3s;
+            display: inline-flex;
+            align-items: center;
+            outline: none;
+            border: none;
+        }
+
+        .instagram-link:focus {
+            outline: none;
+        }
+
+        .instagram-icon {
+            width: 24px;
+            height: 24px;
+            filter: brightness(0.6);
+            display: block;
+            outline: none;
+            border: none;
+        }
+
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 30px auto 0;
+            padding: 0 20px;
+        }
+
+        .breadcrumb a {
+            color: #888;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: #fff;
+        }
+
+        .breadcrumb span {
+            color: #555;
+            margin: 0 10px;
+        }
+
+        .gallery-section {
+            max-width: 1200px;
+            margin: 50px auto 80px;
+            padding: 0 20px;
+        }
+
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .gallery-header h1 {
+            font-size: 3em;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .gallery-header p {
+            font-size: 1.2em;
+            color: #999;
+            margin-bottom: 5px;
+        }
+
+        .photo-count {
+            font-size: 1em;
+            color: #666;
+        }
+
+        .search-box {
+            max-width: 500px;
+            margin: 0 auto 50px;
+            text-align: center;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1.2em;
+            background: #0f0f0f;
+            border: 2px solid #333;
+            border-radius: 8px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #555;
+        }
+
+        .search-box label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            color: #aaa;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .photo-card {
+            background: #0f0f0f;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #222;
+            transition: transform 0.3s;
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-5px);
+            border-color: #444;
+        }
+
+        .photo-thumbnail {
+            width: 100%;
+            height: 250px;
+            background: #2a2a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 3em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .photo-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+            font-size: 1.2em;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 40px 0;
+            padding: 20px;
+        }
+
+        .pagination button {
+            background: #2a2a2a;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .pagination button:hover:not(:disabled) {
+            background: #3a3a3a;
+            border-color: #666;
+        }
+
+        .pagination button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .pagination .page-info {
+            color: #999;
+            font-size: 1em;
+            margin: 0 15px;
+        }
+
+        .page-input {
+            background: #2a2a2a;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 10px 12px;
+            border-radius: 5px;
+            font-size: 1em;
+            width: 70px;
+            text-align: center;
+        }
+
+        .page-input:focus {
+            outline: none;
+            border-color: #666;
+        }
+
+        .page-input::-webkit-inner-spin-button,
+        .page-input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .page-input {
+            -moz-appearance: textfield;
+        }
+
+        footer {
+            background: #0a0a0a;
+            padding: 40px 20px;
+            border-top: 1px solid #222;
+        }
+
+        .footer-nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .footer-nav a {
+            color: #888;
+            text-decoration: none;
+        }
+
+        .copyright {
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+        }
+
+        .lightbox.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-content {
+            max-width: 95%;
+            max-height: 95%;
+            position: relative;
+        }
+
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 95vh;
+            object-fit: contain;
+            display: block;
+        }
+
+        .lightbox-close {
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            font-size: 50px;
+            color: #fff;
+            cursor: pointer;
+            background: rgba(0,0,0,0.7);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+            z-index: 10000;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .lightbox-nav {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 50px;
+            color: #fff;
+            cursor: pointer;
+            background: rgba(0,0,0,0.7);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+            z-index: 10000;
+        }
+
+        .lightbox-nav:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .lightbox-prev { left: 30px; }
+        .lightbox-next { right: 30px; }
+
+        .lightbox-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            z-index: 10000;
+        }
+
+        .lightbox-download {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 25px;
+            border: 1px solid #666;
+            font-size: 1em;
+            font-family: inherit;
+            line-height: 1.5;
+            height: 48px;
+            display: inline-flex;
+            align-items: center;
+            box-sizing: border-box;
+            transition: all 0.3s;
+            z-index: 10000;
+            cursor: pointer;
+        }
+
+        .lightbox-download:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: #999;
+        }
+
+        .lightbox-flickr {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 25px;
+            border: 1px solid #666;
+            text-decoration: none;
+            font-size: 1em;
+            line-height: 1.5;
+            height: 48px;
+            display: inline-flex;
+            align-items: center;
+            box-sizing: border-box;
+            white-space: nowrap;
+            transition: all 0.3s;
+            z-index: 10000;
+        }
+
+        .lightbox-flickr:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: #999;
+        }
+
+        .lightbox-buy {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #b8860b;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 25px;
+            border: 1px solid #d4a017;
+            font-size: 1em;
+            font-family: inherit;
+            font-weight: 600;
+            line-height: 1.5;
+            height: 48px;
+            display: inline-flex;
+            align-items: center;
+            box-sizing: border-box;
+            transition: all 0.3s;
+            z-index: 10000;
+            cursor: pointer;
+        }
+
+        .lightbox-buy:hover {
+            background: #d4a017;
+        }
+
+        .lightbox-buy:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+
+        .watermark-note {
+            position: fixed;
+            bottom: 88px;
+            right: 30px;
+            color: #999;
+            font-size: 0.85em;
+            z-index: 10000;
+            max-width: 260px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="albums.html">Albums</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="https://www.instagram.com/adamwatson.photo/" target="_blank" class="instagram-link"><img src="images/instagram-icon.png" alt="Instagram" class="instagram-icon"></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="breadcrumb">
+        <a href="albums.html">Albums</a>
+        <span>›</span>
+        <span>Paywall Test</span>
+    </div>
+
+    <section class="gallery-section">
+        <div class="gallery-header">
+            <h1>Paywall Test</h1>
+            <p>Testville • Jan 1, 2026</p>
+            <p class="photo-count">7 photos</p>
+        </div>
+
+        <div id="photoGallery" class="photo-grid">
+            <!-- Photos will be inserted here by JavaScript -->
+        </div>
+
+        <div id="pagination" class="pagination" style="display: none;">
+            <button id="prevPage" onclick="changePage(-1)">← Previous</button>
+            <span class="page-info" id="pageInfo">Page 1 of 1</span>
+            <input type="number" id="pageInput" class="page-input" min="1" onkeypress="if(event.key === 'Enter') goToPage()">
+            <button onclick="goToPage()">Go</button>
+            <button id="nextPage" onclick="changePage(1)">Next →</button>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <button class="lightbox-close" id="lightbox-close">&times;</button>
+        <button class="lightbox-nav lightbox-prev" id="lightbox-prev">&#8249;</button>
+        <div class="lightbox-content">
+            <img id="lightbox-image" class="lightbox-image" src="" alt="Full resolution photo">
+        </div>
+        <button class="lightbox-nav lightbox-next" id="lightbox-next">&#8250;</button>
+        <div class="lightbox-counter" id="lightbox-counter"></div>
+        <a id="lightbox-flickr" class="lightbox-flickr" href="" target="_blank">Link to Full Resolution</a>
+        <button id="lightbox-buy" class="lightbox-buy" onclick="buyPhoto()">Buy Full-Res</button>
+        <div class="watermark-note">Preview is watermarked &amp; reduced resolution</div>
+    </div>
+
+    <footer>
+        <ul class="footer-nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="albums.html">Albums</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="https://www.instagram.com/adamwatson.photo/" target="_blank" class="instagram-link"><img src="images/instagram-icon.png" alt="Instagram" class="instagram-icon"></a></li>
+        </ul>
+        <p class="copyright">&copy; 2025 Adam Watson Photo. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const photos = [
+        {
+                "number": "1",
+                "filename": "_MG_3131-Enhanced-NR.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/test-paywall/watermarked/_MG_3131-Enhanced-NR.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/test-paywall/thumbnails/_MG_3131-Enhanced-NR.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/test-paywall/watermarked/_MG_3131-Enhanced-NR.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/test-paywall/watermarked/_MG_3131-Enhanced-NR.jpg",
+                "private_key": "test-paywall/_MG_3131-Enhanced-NR.jpg",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "2",
+                "filename": "_MG_3356-Enhanced-NR.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/test-paywall/watermarked/_MG_3356-Enhanced-NR.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/test-paywall/thumbnails/_MG_3356-Enhanced-NR.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/test-paywall/watermarked/_MG_3356-Enhanced-NR.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/test-paywall/watermarked/_MG_3356-Enhanced-NR.jpg",
+                "private_key": "test-paywall/_MG_3356-Enhanced-NR.jpg",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "3",
+                "filename": "_MG_3552-Enhanced-NR.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/test-paywall/watermarked/_MG_3552-Enhanced-NR.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/test-paywall/thumbnails/_MG_3552-Enhanced-NR.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/test-paywall/watermarked/_MG_3552-Enhanced-NR.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/test-paywall/watermarked/_MG_3552-Enhanced-NR.jpg",
+                "private_key": "test-paywall/_MG_3552-Enhanced-NR.jpg",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "4",
+                "filename": "_MG_3673-Enhanced-NR.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/test-paywall/watermarked/_MG_3673-Enhanced-NR.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/test-paywall/thumbnails/_MG_3673-Enhanced-NR.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/test-paywall/watermarked/_MG_3673-Enhanced-NR.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/test-paywall/watermarked/_MG_3673-Enhanced-NR.jpg",
+                "private_key": "test-paywall/_MG_3673-Enhanced-NR.jpg",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "5",
+                "filename": "_MG_3780-Enhanced-NR.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/test-paywall/watermarked/_MG_3780-Enhanced-NR.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/test-paywall/thumbnails/_MG_3780-Enhanced-NR.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/test-paywall/watermarked/_MG_3780-Enhanced-NR.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/test-paywall/watermarked/_MG_3780-Enhanced-NR.jpg",
+                "private_key": "test-paywall/_MG_3780-Enhanced-NR.jpg",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "6",
+                "filename": "_MG_3824-Enhanced-NR.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/test-paywall/watermarked/_MG_3824-Enhanced-NR.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/test-paywall/thumbnails/_MG_3824-Enhanced-NR.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/test-paywall/watermarked/_MG_3824-Enhanced-NR.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/test-paywall/watermarked/_MG_3824-Enhanced-NR.jpg",
+                "private_key": "test-paywall/_MG_3824-Enhanced-NR.jpg",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "7",
+                "filename": "_MG_3863-Enhanced-NR.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/test-paywall/watermarked/_MG_3863-Enhanced-NR.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/test-paywall/thumbnails/_MG_3863-Enhanced-NR.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/test-paywall/watermarked/_MG_3863-Enhanced-NR.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/test-paywall/watermarked/_MG_3863-Enhanced-NR.jpg",
+                "private_key": "test-paywall/_MG_3863-Enhanced-NR.jpg",
+                "race_number": "",
+                "all_race_numbers": ""
+        }
+];
+        const gallery = document.getElementById('photoGallery');
+        const pagination = document.getElementById('pagination');
+        const pageInfo = document.getElementById('pageInfo');
+        const prevButton = document.getElementById('prevPage');
+        const nextButton = document.getElementById('nextPage');
+
+        let currentPage = 1;
+        let photosPerPage = 100;
+        let currentLightboxIndex = 0;
+
+        function renderPage() {
+            const totalPages = Math.ceil(photos.length / photosPerPage);
+            const startIndex = (currentPage - 1) * photosPerPage;
+            const endIndex = Math.min(startIndex + photosPerPage, photos.length);
+            const pagePhotos = photos.slice(startIndex, endIndex);
+
+            pageInfo.textContent = `Page ${currentPage} of ${totalPages} (${photos.length} photos)`;
+            prevButton.disabled = currentPage === 1;
+            nextButton.disabled = currentPage === totalPages;
+
+            pagination.style.display = totalPages > 1 ? 'flex' : 'none';
+
+            gallery.innerHTML = pagePhotos.map((photo, index) => {
+                const actualIndex = startIndex + index;
+                const thumbnail = photo.thumbnail || '';
+                return `
+                <div class="photo-card" onclick="openLightbox(${actualIndex})">
+                    <div class="photo-thumbnail">
+                        ${thumbnail ? `<img src="${thumbnail}" alt="Race photo">` : '📷'}
+                    </div>
+                </div>
+                `;
+            }).join('');
+
+            document.querySelector('.gallery-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function changePage(direction) {
+            currentPage += direction;
+            renderPage();
+        }
+
+        function goToPage() {
+            const input = document.getElementById('pageInput');
+            const pageNum = parseInt(input.value);
+            const totalPages = Math.ceil(photos.length / photosPerPage);
+
+            if (pageNum && pageNum >= 1 && pageNum <= totalPages) {
+                currentPage = pageNum;
+                renderPage();
+                input.value = '';
+            } else {
+                alert(`Please enter a page number between 1 and ${totalPages}`);
+            }
+        }
+
+        renderPage();
+
+        function openLightbox(index) {
+            currentLightboxIndex = index;
+            const photo = photos[index];
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const counter = document.getElementById('lightbox-counter');
+            const download = document.getElementById('lightbox-download');
+            const flickrLink = document.getElementById('lightbox-flickr');
+
+            const imageUrl = photo.original || photo.url;
+            lightboxImage.src = imageUrl;
+            counter.textContent = `${index + 1} / ${photos.length}`;
+            download.href = photo.download || imageUrl;
+            flickrLink.href = photo.url;
+
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        function navigateLightbox(direction) {
+            currentLightboxIndex += direction;
+
+            if (currentLightboxIndex < 0) {
+                currentLightboxIndex = photos.length - 1;
+            } else if (currentLightboxIndex >= photos.length) {
+                currentLightboxIndex = 0;
+            }
+
+            const photo = photos[currentLightboxIndex];
+            const lightboxImage = document.getElementById('lightbox-image');
+            const counter = document.getElementById('lightbox-counter');
+            const download = document.getElementById('lightbox-download');
+            const flickrLink = document.getElementById('lightbox-flickr');
+
+            const imageUrl = photo.original || photo.url;
+            lightboxImage.src = imageUrl;
+            counter.textContent = `${currentLightboxIndex + 1} / ${photos.length}`;
+            download.href = photo.download || imageUrl;
+            flickrLink.href = photo.url;
+        }
+
+        document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+        document.getElementById('lightbox-prev').addEventListener('click', () => navigateLightbox(-1));
+        document.getElementById('lightbox-next').addEventListener('click', () => navigateLightbox(1));
+
+        function downloadImage() {
+            const photo = photos[currentLightboxIndex];
+            const imageUrl = photo.download || photo.original || photo.url;
+
+            fetch(imageUrl)
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `photo-${currentLightboxIndex + 1}.jpg`;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                })
+                .catch(error => {
+                    console.error('Download failed:', error);
+                    window.open(imageUrl, '_blank');
+                });
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('lightbox').classList.contains('active')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') navigateLightbox(-1);
+                if (e.key === 'ArrowRight') navigateLightbox(1);
+            }
+        });
+
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target.id === 'lightbox') closeLightbox();
+        });
+
+        const WORKER_BASE_URL = "https://adam-watson-photo-paywall.adamwatsonphoto.workers.dev";
+        const RACE_SLUG = "test-paywall";
+        const PRICE_DISPLAY = "$8.00";
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const buyButton = document.getElementById('lightbox-buy');
+            if (buyButton) buyButton.textContent = `Buy Full-Res – ${PRICE_DISPLAY}`;
+        });
+
+        async function buyPhoto() {
+            const photo = photos[currentLightboxIndex];
+            const buyButton = document.getElementById('lightbox-buy');
+
+            if (!photo || !photo.private_key) {
+                alert('This photo is not available for purchase yet.');
+                return;
+            }
+
+            buyButton.disabled = true;
+            buyButton.textContent = 'Redirecting to checkout...';
+
+            try {
+                const response = await fetch(`${WORKER_BASE_URL}/checkout`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ private_key: photo.private_key, race: RACE_SLUG })
+                });
+
+                if (!response.ok) throw new Error(`Checkout request failed (${response.status})`);
+
+                const data = await response.json();
+                if (!data.url) throw new Error('No checkout URL returned');
+
+                window.location.href = data.url;
+            } catch (error) {
+                console.error('Checkout failed:', error);
+                alert('Sorry, checkout could not be started. Please try again in a moment.');
+                buyButton.disabled = false;
+                buyButton.textContent = `Buy Full-Res – ${PRICE_DISPLAY}`;
+            }
+        }
+
+    </script>
+</body>
+</html>

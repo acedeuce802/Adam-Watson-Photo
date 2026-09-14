@@ -221,6 +221,6 @@ if __name__ == "__main__":
         print("\nNext steps:")
         print("  1. python generate_csv_for_tagging.py public_photos.json")
         print("  2. Fill in race numbers in CSV")
-        print("  3. python generate_race_gallery.py --csv race_tagging.csv ...")
+        print("  3. python generate_gallery.py --csv race_tagging.csv ...")
     else:
         print("\n✗ No photos scraped")
