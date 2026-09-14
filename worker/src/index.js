@@ -346,9 +346,8 @@ async function sendDownloadEmail(toEmail, downloads, env) {
       html: `
         <p>Thanks for your purchase! Click below to download your full-resolution photo${plural ? 's' : ''}:</p>
         ${linksHtml}
-        <p>These links expire in about ${expiresHours} hours. If they expire before you get to them, just forward
-        this email to <a href="mailto:${supportEmail}">${supportEmail}</a> as proof of purchase and I'll send
-        the photos directly.</p>
+        <p>These links expire in about ${expiresHours} hours. If they expire before you get to them, just reply
+        to this email as proof of purchase and I'll send the photos directly.</p>
         <p>Thank you!<br>Adam Watson</p>
       `,
     }),

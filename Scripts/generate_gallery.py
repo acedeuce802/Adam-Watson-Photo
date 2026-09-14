@@ -1053,7 +1053,7 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
         </div>
         <button class="lightbox-nav lightbox-next" id="lightbox-next">&#8250;</button>
         <div class="lightbox-counter" id="lightbox-counter"></div>
-{_lightbox_buy_button_html() if paywall else '        <button id="lightbox-download" class="lightbox-download" onclick="downloadImage()">View & Download</button>'}
+{_lightbox_buy_button_html() if paywall else '        <button id="lightbox-download" class="lightbox-download" onclick="downloadImage()">Download</button>'}
     </div>
 
 {_FOOTER_HTML}
