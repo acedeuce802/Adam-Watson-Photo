@@ -4,19 +4,23 @@
  * Three routes, no npm dependencies (talks to Stripe/B2/Resend over plain
  * fetch, verifies Stripe's webhook signature with Web Crypto):
  *
- *   POST /checkout            { private_key, race } -> { url }
- *     Creates a Stripe Checkout Session with a dynamic price (no
- *     pre-created Stripe product needed per photo) and returns the
- *     Checkout URL for the browser to redirect to.
+ *   POST /checkout            { private_keys: [...], race } -> { url }
+ *     Creates ONE Stripe Checkout Session with one line item per photo
+ *     (dynamic price, no pre-created Stripe product needed) and returns
+ *     the Checkout URL for the browser to redirect to -- covers both an
+ *     instant single-photo buy (array of one) and a cart checkout (array
+ *     of many) the same way. `private_key` (singular) is still accepted
+ *     for backward compatibility with any already-generated gallery page.
  *
  *   POST /webhook              (called by Stripe, not the browser)
  *     On checkout.session.completed: mints a time-limited B2 download
- *     authorization for the purchased photo and emails it to the buyer.
+ *     authorization for every purchased photo and emails the buyer the
+ *     full list.
  *
- *   GET  /download?session_id= -> { url }
+ *   GET  /download?session_id= -> { downloads: [{filename, url}, ...] }
  *     Used by download.html right after Stripe redirects back. Verifies
  *     the session server-side (payment_status === 'paid') and mints the
- *     same kind of signed B2 URL, independent of whether the webhook has
+ *     same kind of signed B2 URLs, independent of whether the webhook has
  *     already run.
  *
  * See ../README.md for the required secrets and deploy steps.
@@ -59,9 +63,15 @@ async function handleCheckout(request, env) {
     return jsonResponse({ error: 'Invalid JSON body' }, 400);
   }
 
-  const { private_key: privateKey, race } = body || {};
-  if (!privateKey || typeof privateKey !== 'string') {
-    return jsonResponse({ error: 'Missing private_key' }, 400);
+  let privateKeys = body && body.private_keys;
+  if (!Array.isArray(privateKeys) && body && typeof body.private_key === 'string') {
+    privateKeys = [body.private_key]; // backward compat: older gallery pages send one key
+  }
+  if (!Array.isArray(privateKeys)) privateKeys = [];
+  privateKeys = [...new Set(privateKeys.filter((k) => typeof k === 'string' && k))];
+
+  if (privateKeys.length === 0) {
+    return jsonResponse({ error: 'Missing private_keys' }, 400);
   }
 
   const priceCents = parseInt(env.PRICE_CENTS, 10);
@@ -69,19 +79,27 @@ async function handleCheckout(request, env) {
     return jsonResponse({ error: 'Server misconfigured: bad PRICE_CENTS' }, 500);
   }
 
-  const productName = race ? `Full-resolution photo – ${race}` : 'Full-resolution photo';
+  const race = body.race || '';
 
   const params = new URLSearchParams({
     mode: 'payment',
     success_url: `${env.SITE_BASE_URL}/download.html?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${env.SITE_BASE_URL}/`,
-    'line_items[0][quantity]': '1',
-    'line_items[0][price_data][currency]': 'usd',
-    'line_items[0][price_data][unit_amount]': String(priceCents),
-    'line_items[0][price_data][product_data][name]': productName,
-    'metadata[private_key]': privateKey,
-    'metadata[race]': race || '',
   });
+
+  privateKeys.forEach((key, i) => {
+    const filename = key.split('/').pop();
+    const productName = race ? `Full-resolution photo – ${filename} (${race})` : `Full-resolution photo – ${filename}`;
+    params.set(`line_items[${i}][quantity]`, '1');
+    params.set(`line_items[${i}][price_data][currency]`, 'usd');
+    params.set(`line_items[${i}][price_data][unit_amount]`, String(priceCents));
+    params.set(`line_items[${i}][price_data][product_data][name]`, productName);
+  });
+
+  params.set('metadata[race]', race);
+  for (const [key, value] of Object.entries(encodePrivateKeysToMetadata(privateKeys))) {
+    params.set(`metadata[${key}]`, value);
+  }
 
   const resp = await fetch('https://api.stripe.com/v1/checkout/sessions', {
     method: 'POST',
@@ -147,29 +165,93 @@ async function handleDownload(url, env) {
     return jsonResponse({ error: 'Payment not confirmed yet' }, 402);
   }
 
-  const privateKey = session.metadata && session.metadata.private_key;
-  if (!privateKey) {
-    return jsonResponse({ error: 'No photo on this order' }, 404);
+  const privateKeys = decodePrivateKeysFromMetadata(session.metadata || {});
+  if (privateKeys.length === 0) {
+    return jsonResponse({ error: 'No photos on this order' }, 404);
   }
 
-  const downloadUrl = await mintB2DownloadUrl(privateKey, env);
-  return jsonResponse({ url: downloadUrl });
+  const downloads = await mintDownloads(privateKeys, env);
+  return jsonResponse({ downloads });
 }
 
 // ---------------------------------------------------------------------------
 // Fulfillment (webhook path)
 
 async function fulfillOrder(session, env) {
-  const privateKey = session.metadata && session.metadata.private_key;
+  const privateKeys = decodePrivateKeysFromMetadata(session.metadata || {});
   const email = session.customer_details && session.customer_details.email;
 
-  if (!privateKey || !email) {
-    console.error('Session missing private_key or buyer email', session.id);
+  if (privateKeys.length === 0 || !email) {
+    console.error('Session missing private_keys or buyer email', session.id);
     return;
   }
 
-  const downloadUrl = await mintB2DownloadUrl(privateKey, env);
-  await sendDownloadEmail(email, downloadUrl, env);
+  const downloads = await mintDownloads(privateKeys, env);
+  await sendDownloadEmail(email, downloads, env);
+}
+
+async function mintDownloads(privateKeys, env) {
+  return Promise.all(
+    privateKeys.map(async (key) => ({
+      filename: key.split('/').pop(),
+      url: await mintB2DownloadUrl(key, env),
+    }))
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Stripe metadata encoding for a cart's worth of private keys
+//
+// Session metadata values are capped at 500 bytes each (and 50 keys total),
+// so a cart's private_key list is JSON-encoded in chunks small enough to
+// stay well under that per-value limit, spread across metadata fields
+// private_keys_0, private_keys_1, etc. That comfortably covers even a very
+// large cart. metadata.private_key (singular) is still read as a fallback
+// for any session created before this went in.
+
+function encodePrivateKeysToMetadata(privateKeys) {
+  const chunks = [];
+  let current = [];
+  let currentLength = 2; // "[]"
+
+  for (const key of privateKeys) {
+    const entryLength = JSON.stringify(key).length + 1; // +1 for the comma
+    if (current.length > 0 && currentLength + entryLength > 450) {
+      chunks.push(current);
+      current = [];
+      currentLength = 2;
+    }
+    current.push(key);
+    currentLength += entryLength;
+  }
+  if (current.length > 0) chunks.push(current);
+
+  const metadata = { private_keys_chunks: String(chunks.length) };
+  chunks.forEach((chunk, i) => {
+    metadata[`private_keys_${i}`] = JSON.stringify(chunk);
+  });
+  return metadata;
+}
+
+function decodePrivateKeysFromMetadata(metadata) {
+  const chunkCount = parseInt(metadata.private_keys_chunks || '0', 10);
+  let keys = [];
+
+  for (let i = 0; i < chunkCount; i++) {
+    const raw = metadata[`private_keys_${i}`];
+    if (!raw) continue;
+    try {
+      keys = keys.concat(JSON.parse(raw));
+    } catch (err) {
+      console.error(`Could not parse private_keys_${i} metadata chunk`, raw);
+    }
+  }
+
+  if (keys.length === 0 && metadata.private_key) {
+    keys = [metadata.private_key]; // backward compat with pre-cart sessions
+  }
+
+  return keys;
 }
 
 // ---------------------------------------------------------------------------
@@ -190,6 +272,13 @@ async function mintB2DownloadUrl(fileName, env) {
 
   const validSeconds = parseInt(env.B2_DOWNLOAD_VALID_SECONDS || '172800', 10);
 
+  // Ask B2 to serve this file with Content-Disposition: attachment, so the
+  // browser downloads it directly instead of navigating to/opening it --
+  // a plain HTML `download` attribute can't force that for a cross-origin
+  // URL like this one, so it has to come from B2 as a response header.
+  const downloadFilename = fileName.split('/').pop().replace(/"/g, '');
+  const contentDisposition = `attachment; filename="${downloadFilename}"`;
+
   const authResp = await fetch(`${auth.apiUrl}/b2api/v2/b2_get_download_authorization`, {
     method: 'POST',
     headers: {
@@ -200,6 +289,7 @@ async function mintB2DownloadUrl(fileName, env) {
       bucketId,
       fileNamePrefix: fileName,
       validDurationInSeconds: validSeconds,
+      b2ContentDisposition: contentDisposition,
     }),
   });
 
@@ -209,8 +299,12 @@ async function mintB2DownloadUrl(fileName, env) {
 
   const { authorizationToken } = await authResp.json();
   const encodedFileName = fileName.split('/').map(encodeURIComponent).join('/');
+  const params = new URLSearchParams({
+    Authorization: authorizationToken,
+    b2ContentDisposition: contentDisposition,
+  });
 
-  return `${auth.downloadUrl}/file/${env.B2_PRIVATE_BUCKET_NAME}/${encodedFileName}?Authorization=${authorizationToken}`;
+  return `${auth.downloadUrl}/file/${env.B2_PRIVATE_BUCKET_NAME}/${encodedFileName}?${params.toString()}`;
 }
 
 async function b2Authorize(env) {
@@ -227,7 +321,16 @@ async function b2Authorize(env) {
 // ---------------------------------------------------------------------------
 // Email (Resend)
 
-async function sendDownloadEmail(toEmail, downloadUrl, env) {
+async function sendDownloadEmail(toEmail, downloads, env) {
+  const plural = downloads.length > 1;
+  const subject = plural
+    ? `Your ${downloads.length} full-resolution photos from Adam Watson Photo`
+    : 'Your full-resolution photo from Adam Watson Photo';
+  const linksHtml = downloads
+    .map((d) => `<p><a href="${d.url}">${escapeHtml(d.filename)}</a></p>`)
+    .join('');
+  const expiresHours = Math.round(parseInt(env.B2_DOWNLOAD_VALID_SECONDS || '172800', 10) / 3600);
+
   const resp = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
@@ -237,13 +340,11 @@ async function sendDownloadEmail(toEmail, downloadUrl, env) {
     body: JSON.stringify({
       from: env.RESEND_FROM_EMAIL,
       to: toEmail,
-      subject: 'Your full-resolution photo from Adam Watson Photo',
+      subject,
       html: `
-        <p>Thanks for your purchase!</p>
-        <p><a href="${downloadUrl}">Click here to download your full-resolution photo</a></p>
-        <p>This link expires in about ${Math.round(
-          parseInt(env.B2_DOWNLOAD_VALID_SECONDS || '172800', 10) / 3600
-        )} hours.</p>
+        <p>Thanks for your purchase! Click below to download your full-resolution photo${plural ? 's' : ''}:</p>
+        ${linksHtml}
+        <p>These links expire in about ${expiresHours} hours.</p>
       `,
     }),
   });
@@ -251,6 +352,12 @@ async function sendDownloadEmail(toEmail, downloadUrl, env) {
   if (!resp.ok) {
     console.error('Resend send failed', await resp.text());
   }
+}
+
+function escapeHtml(text) {
+  return text.replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  })[c]);
 }
 
 // ---------------------------------------------------------------------------

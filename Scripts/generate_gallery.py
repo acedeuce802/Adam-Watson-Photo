@@ -306,16 +306,104 @@ _SHARED_STYLE = '''        * {
             border-radius: 8px;
             overflow: hidden;
             border: 1px solid #222;
-            transition: transform 0.3s;
+            transition: transform 0.3s, border-color 0.3s;
             display: block;
             text-decoration: none;
             color: inherit;
             cursor: pointer;
+            position: relative;
         }
 
         .photo-card:hover {
             transform: translateY(-5px);
             border-color: #444;
+        }
+
+        .photo-card.selected {
+            border-color: #d4a017;
+        }
+
+        .select-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.4);
+            color: #fff;
+            font-size: 1.1em;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 5;
+            transition: all 0.2s;
+        }
+
+        .select-toggle:hover {
+            border-color: #fff;
+            background: rgba(0,0,0,0.8);
+        }
+
+        .photo-card.selected .select-toggle {
+            background: #d4a017;
+            border-color: #d4a017;
+        }
+
+        .cart-bar {
+            position: fixed;
+            left: 30px;
+            bottom: 30px;
+            background: rgba(15,15,15,0.95);
+            border: 1px solid #d4a017;
+            border-radius: 25px;
+            padding: 10px 12px 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            z-index: 9000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .cart-bar-text {
+            color: #e0e0e0;
+            font-size: 0.95em;
+            white-space: nowrap;
+        }
+
+        .cart-bar button {
+            font-family: inherit;
+            font-size: 0.95em;
+            border-radius: 20px;
+            padding: 8px 18px;
+            cursor: pointer;
+            border: none;
+            white-space: nowrap;
+        }
+
+        .cart-bar .cart-checkout {
+            background: #d4a017;
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        .cart-bar .cart-checkout:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+
+        .cart-bar .cart-clear {
+            background: transparent;
+            color: #999;
+            border: 1px solid #444;
+        }
+
+        .cart-bar .cart-clear:hover {
+            color: #fff;
+            border-color: #999;
         }
 
         .photo-thumbnail {
@@ -577,10 +665,16 @@ _SHARED_STYLE = '''        * {
             border-color: #999;
         }
 
-        .lightbox-buy {
+        .lightbox-purchase-actions {
             position: fixed;
             bottom: 30px;
             right: 30px;
+            display: flex;
+            gap: 12px;
+            z-index: 10000;
+        }
+
+        .lightbox-buy {
             background: #b8860b;
             color: #fff;
             padding: 12px 24px;
@@ -595,8 +689,18 @@ _SHARED_STYLE = '''        * {
             align-items: center;
             box-sizing: border-box;
             transition: all 0.3s;
-            z-index: 10000;
             cursor: pointer;
+        }
+
+        .lightbox-add-cart {
+            background: rgba(0,0,0,0.7);
+            border: 1px solid #666;
+            font-weight: 500;
+        }
+
+        .lightbox-add-cart:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: #999;
         }
 
         .lightbox-buy:hover {
@@ -617,6 +721,22 @@ _SHARED_STYLE = '''        * {
             z-index: 10000;
             max-width: 260px;
             text-align: right;
+        }
+
+        @media (max-width: 640px) {
+            .lightbox-flickr {
+                display: none;
+            }
+
+            .lightbox-purchase-actions {
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 8px;
+            }
+
+            .watermark-note {
+                bottom: 150px;
+            }
         }
 '''
 
@@ -665,46 +785,125 @@ def _og_tags(race_name, location, race_date, output_file):
     <meta name="twitter:image" content="{og_image}">'''
 
 def _lightbox_buy_button_html():
-    """Buy button + watermark note shown in place of the download button on
-    --paywall galleries. buyPhoto() (injected separately) handles the click."""
-    return '''        <button id="lightbox-buy" class="lightbox-buy" onclick="buyPhoto()">Buy Full-Res</button>
+    """Buy/Add-to-Cart buttons + watermark note shown in place of the
+    download button on --paywall galleries. buyPhoto()/addToCart() (injected
+    separately, see _cart_script) handle the clicks."""
+    return '''        <div class="lightbox-purchase-actions">
+            <button id="lightbox-add-cart" class="lightbox-buy lightbox-add-cart" onclick="addToCart()">Add to Cart</button>
+            <button id="lightbox-buy" class="lightbox-buy" onclick="buyPhoto()">Buy Full-Res</button>
+        </div>
         <div class="watermark-note">Preview is watermarked &amp; reduced resolution</div>'''
 
-def _buy_photo_script(price_cents, race_slug, photos_var='currentPhotos'):
-    """JS for the --paywall purchase flow: POSTs the clicked photo's private
-    key to the Cloudflare Worker's /checkout endpoint, then redirects the
-    browser to the Stripe Checkout URL it returns. See worker/src/index.js.
+def _photo_card_template(paywall):
+    """JS template-literal for one photo-card in the grid, used inside a
+    `.map((photo, index) => ...)` callback where `actualIndex` is already
+    in scope. When paywall is True, adds a select-toggle checkbox wired to
+    the cart (see _cart_script) and highlights the card once selected."""
+    if not paywall:
+        return '''<div class="photo-card" onclick="openLightbox(${actualIndex})">
+                    <div class="photo-thumbnail">
+                        ${photo.thumbnail ? `<img src="${photo.thumbnail}" alt="Race photo">` : '\U0001f4f7'}
+                    </div>
+                </div>'''
+    return '''<div class="photo-card ${photo.private_key && cart.has(photo.private_key) ? 'selected' : ''}" onclick="openLightbox(${actualIndex})">
+                    ${photo.private_key ? `<button class="select-toggle" onclick="event.stopPropagation(); toggleCartItem('${photo.private_key}')">${cart.has(photo.private_key) ? '✓' : '+'}</button>` : ''}
+                    <div class="photo-thumbnail">
+                        ${photo.thumbnail ? `<img src="${photo.thumbnail}" alt="Race photo">` : '\U0001f4f7'}
+                    </div>
+                </div>'''
+
+def _cart_bar_html():
+    """Floating cart summary, hidden (via JS) until at least one photo is
+    selected. Lives outside the lightbox so it's visible while browsing the
+    grid."""
+    return '''    <div id="cart-bar" class="cart-bar" style="display: none;">
+        <span id="cart-bar-text" class="cart-bar-text"></span>
+        <button class="cart-clear" onclick="clearCart()">Clear</button>
+        <button id="cart-checkout-btn" class="cart-checkout" onclick="checkoutCart()">Checkout</button>
+    </div>'''
+
+def _cart_script(price_cents, race_slug, photos_var='currentPhotos'):
+    """JS for the --paywall purchase flow, single-photo and cart alike.
+    Both paths POST to the Cloudflare Worker's /checkout endpoint with a
+    private_keys array (one entry for an instant single-photo buy, many for
+    a cart checkout) and redirect to the Stripe Checkout URL it returns --
+    one Checkout Session, one payment, any number of photos. See
+    worker/src/index.js.
+
     photos_var is the in-scope array holding the currently displayed photos
     ('currentPhotos' in the searchable gallery, 'photos' in the browse
-    gallery -- see each template's own lightbox navigation code)."""
+    gallery -- see each template's own lightbox navigation code). Selection
+    state (cart) is a Set of private_key strings, backed by sessionStorage
+    per-race so it survives an accidental refresh but not a browser close."""
     price_display = f"${price_cents / 100:.2f}"
     return f'''
         const WORKER_BASE_URL = {json.dumps(_WORKER_BASE_URL)};
         const RACE_SLUG = {json.dumps(race_slug)};
         const PRICE_DISPLAY = {json.dumps(price_display)};
+        const PRICE_CENTS = {price_cents};
+        const CART_STORAGE_KEY = `cart_${{RACE_SLUG}}`;
+
+        let cart = new Set();
+        try {{
+            const saved = sessionStorage.getItem(CART_STORAGE_KEY);
+            if (saved) cart = new Set(JSON.parse(saved));
+        }} catch (e) {{ /* sessionStorage unavailable -- cart just won't persist across a refresh */ }}
+
+        function saveCart() {{
+            try {{ sessionStorage.setItem(CART_STORAGE_KEY, JSON.stringify([...cart])); }} catch (e) {{}}
+            updateCartBar();
+        }}
+
+        function updateCartBar() {{
+            const bar = document.getElementById('cart-bar');
+            const text = document.getElementById('cart-bar-text');
+            if (!bar || !text) return;
+
+            if (cart.size === 0) {{
+                bar.style.display = 'none';
+                return;
+            }}
+
+            const total = (cart.size * PRICE_CENTS / 100).toFixed(2);
+            text.textContent = `${{cart.size}} photo${{cart.size === 1 ? '' : 's'}} selected · $${{total}}`;
+            bar.style.display = 'flex';
+        }}
+
+        function toggleCartItem(privateKey) {{
+            if (cart.has(privateKey)) {{
+                cart.delete(privateKey);
+            }} else {{
+                cart.add(privateKey);
+            }}
+            saveCart();
+            renderPage();
+        }}
+
+        function clearCart() {{
+            cart.clear();
+            saveCart();
+            renderPage();
+        }}
 
         document.addEventListener('DOMContentLoaded', () => {{
             const buyButton = document.getElementById('lightbox-buy');
             if (buyButton) buyButton.textContent = `Buy Full-Res – ${{PRICE_DISPLAY}}`;
+            updateCartBar();
         }});
 
-        async function buyPhoto() {{
-            const photo = {photos_var}[currentLightboxIndex];
-            const buyButton = document.getElementById('lightbox-buy');
+        async function startCheckout(privateKeys, buttonEl, resetLabel) {{
+            if (!privateKeys.length) return;
 
-            if (!photo || !photo.private_key) {{
-                alert('This photo is not available for purchase yet.');
-                return;
+            if (buttonEl) {{
+                buttonEl.disabled = true;
+                buttonEl.textContent = 'Redirecting to checkout...';
             }}
-
-            buyButton.disabled = true;
-            buyButton.textContent = 'Redirecting to checkout...';
 
             try {{
                 const response = await fetch(`${{WORKER_BASE_URL}}/checkout`, {{
                     method: 'POST',
                     headers: {{ 'Content-Type': 'application/json' }},
-                    body: JSON.stringify({{ private_key: photo.private_key, race: RACE_SLUG }})
+                    body: JSON.stringify({{ private_keys: privateKeys, race: RACE_SLUG }})
                 }});
 
                 if (!response.ok) throw new Error(`Checkout request failed (${{response.status}})`);
@@ -712,18 +911,51 @@ def _buy_photo_script(price_cents, race_slug, photos_var='currentPhotos'):
                 const data = await response.json();
                 if (!data.url) throw new Error('No checkout URL returned');
 
+                try {{ sessionStorage.removeItem(CART_STORAGE_KEY); }} catch (e) {{}}
                 window.location.href = data.url;
             }} catch (error) {{
                 console.error('Checkout failed:', error);
                 alert('Sorry, checkout could not be started. Please try again in a moment.');
-                buyButton.disabled = false;
-                buyButton.textContent = `Buy Full-Res – ${{PRICE_DISPLAY}}`;
+                if (buttonEl) {{
+                    buttonEl.disabled = false;
+                    buttonEl.textContent = resetLabel;
+                }}
             }}
+        }}
+
+        async function buyPhoto() {{
+            const photo = {photos_var}[currentLightboxIndex];
+            if (!photo || !photo.private_key) {{
+                alert('This photo is not available for purchase yet.');
+                return;
+            }}
+            await startCheckout([photo.private_key], document.getElementById('lightbox-buy'), `Buy Full-Res – ${{PRICE_DISPLAY}}`);
+        }}
+
+        function addToCart() {{
+            const photo = {photos_var}[currentLightboxIndex];
+            if (!photo || !photo.private_key) {{
+                alert('This photo is not available for purchase yet.');
+                return;
+            }}
+            cart.add(photo.private_key);
+            saveCart();
+            renderPage();
+            const addButton = document.getElementById('lightbox-add-cart');
+            if (addButton) {{
+                const original = addButton.textContent;
+                addButton.textContent = 'Added ✓';
+                setTimeout(() => {{ addButton.textContent = original; }}, 1200);
+            }}
+        }}
+
+        async function checkoutCart() {{
+            await startCheckout([...cart], document.getElementById('cart-checkout-btn'), 'Checkout');
         }}
 '''
 
 def _generate_searchable_gallery(photos, race_name, race_date, location, output_file, discipline,
-                                  paywall=False, price_cents=800, race_slug=''):
+                                  paywall=False, price_cents=1000, race_slug=''):
     """Race gallery with search-by-bib-number. Used when the CSV has at
     least one tagged race number."""
 
@@ -791,6 +1023,8 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
         </div>
     </section>
 
+{_cart_bar_html() if paywall else ''}
+
     <!-- Lightbox -->
     <div id="lightbox" class="lightbox">
         <button class="lightbox-close" id="lightbox-close">&times;</button>
@@ -819,7 +1053,7 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
         const pageInfo = document.getElementById('pageInfo');
         const prevButton = document.getElementById('prevPage');
         const nextButton = document.getElementById('nextPage');
-
+{_cart_script(price_cents, race_slug) if paywall else ''}
         let currentPage = 1;
         let photosPerPage = 100;
         let currentPhotos = [];
@@ -856,11 +1090,7 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
             gallery.innerHTML = pagePhotos.map((photo, index) => {{
                 const actualIndex = startIndex + index;
                 return `
-                <div class="photo-card" onclick="openLightbox(${{actualIndex}})">
-                    <div class="photo-thumbnail">
-                        ${{photo.thumbnail ? `<img src="${{photo.thumbnail}}" alt="Race photo">` : '📷'}}
-                    </div>
-                </div>
+                {_photo_card_template(paywall)}
                 `;
             }}).join('');
 
@@ -977,7 +1207,6 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
         document.getElementById('lightbox').addEventListener('click', (e) => {{
             if (e.target.id === 'lightbox') closeLightbox();
         }});
-{_buy_photo_script(price_cents, race_slug) if paywall else ''}
     </script>
 </body>
 </html>'''
@@ -992,7 +1221,7 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
     print(f"  - Unique race numbers: {len(by_race_number)}")
 
 def _generate_browse_gallery(photos, race_name, race_date, location, output_file, discipline,
-                              paywall=False, price_cents=800, race_slug=''):
+                              paywall=False, price_cents=1000, race_slug=''):
     """Plain browse-all gallery, no search. Used when the CSV has zero
     tagged race numbers."""
 
@@ -1033,6 +1262,8 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
         </div>
     </section>
 
+{_cart_bar_html() if paywall else ''}
+
     <!-- Lightbox -->
     <div id="lightbox" class="lightbox">
         <button class="lightbox-close" id="lightbox-close">&times;</button>
@@ -1055,7 +1286,7 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
         const pageInfo = document.getElementById('pageInfo');
         const prevButton = document.getElementById('prevPage');
         const nextButton = document.getElementById('nextPage');
-
+{_cart_script(price_cents, race_slug, photos_var='photos') if paywall else ''}
         let currentPage = 1;
         let photosPerPage = 100;
         let currentLightboxIndex = 0;
@@ -1074,13 +1305,8 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
 
             gallery.innerHTML = pagePhotos.map((photo, index) => {{
                 const actualIndex = startIndex + index;
-                const thumbnail = photo.thumbnail || '';
                 return `
-                <div class="photo-card" onclick="openLightbox(${{actualIndex}})">
-                    <div class="photo-thumbnail">
-                        ${{thumbnail ? `<img src="${{thumbnail}}" alt="Race photo">` : '📷'}}
-                    </div>
-                </div>
+                {_photo_card_template(paywall)}
                 `;
             }}).join('');
 
@@ -1189,7 +1415,6 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
         document.getElementById('lightbox').addEventListener('click', (e) => {{
             if (e.target.id === 'lightbox') closeLightbox();
         }});
-{_buy_photo_script(price_cents, race_slug, photos_var='photos') if paywall else ''}
     </script>
 </body>
 </html>'''
@@ -1201,7 +1426,7 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
     print(f"\nGallery contains {len(photos)} photos")
 
 def generate_gallery(csv_file, race_name, race_date, location, output_file, discipline=None,
-                      paywall=False, price_cents=800):
+                      paywall=False, price_cents=1000):
     """
     Generate the HTML gallery for a race, auto-detecting whether to build
     the searchable (bib-number) gallery or the plain browse gallery based
@@ -1245,8 +1470,8 @@ if __name__ == '__main__':
     parser.add_argument('--output', required=True, help='Output HTML filename')
     parser.add_argument('--paywall', action='store_true',
                          help='Gate full-res downloads behind Stripe checkout (see worker/)')
-    parser.add_argument('--price', type=int, default=800,
-                         help='Per-photo price in cents for --paywall galleries (default: 800 = $8.00)')
+    parser.add_argument('--price', type=int, default=1000,
+                         help='Per-photo price in cents for --paywall galleries (default: 1000 = $10.00)')
 
     args = parser.parse_args()
 

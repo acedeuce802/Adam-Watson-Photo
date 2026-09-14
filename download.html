@@ -59,6 +59,14 @@
             text-align: center;
         }
 
+        .download-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
         h1 {
             font-size: 1.8em;
             font-weight: 300;
@@ -92,7 +100,6 @@
 
         .download-button {
             display: inline-block;
-            margin-top: 20px;
             background: #b8860b;
             color: #fff;
             padding: 14px 32px;
@@ -167,11 +174,16 @@
                 }
 
                 const data = await response.json();
-                if (!data.url) throw new Error('No download URL returned');
+                if (!data.downloads || !data.downloads.length) throw new Error('No downloads returned');
+
+                const plural = data.downloads.length > 1;
+                const linksHtml = data.downloads.map((d, i) => `
+                    <a class="download-button" href="${d.url}">Download${plural ? ` Photo ${i + 1}` : ''} Full-Res</a>
+                `).join('');
 
                 statusEl.innerHTML = `
-                    <p>Your full-resolution photo is ready.</p>
-                    <a class="download-button" href="${data.url}" target="_blank" rel="noopener">Download Full-Res Photo</a>
+                    <p>Your full-resolution photo${plural ? 's are' : ' is'} ready.</p>
+                    <div class="download-list">${linksHtml}</div>
                 `;
                 noteEl.style.display = 'block';
             } catch (error) {

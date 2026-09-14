@@ -92,7 +92,7 @@ wrangler secret put RESEND_API_KEY
 wrangler secret put PRICE_CENTS
 ```
 
-- `PRICE_CENTS` is the flat per-photo price, e.g. `800` for $8.00.
+- `PRICE_CENTS` is the flat per-photo price, e.g. `1000` for $10.00.
 - `STRIPE_WEBHOOK_SECRET` doesn't exist yet on your very first deploy --
   put in any placeholder value, deploy once to get your `*.workers.dev` URL,
   add the webhook in Stripe (below), then run
