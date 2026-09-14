@@ -707,7 +707,7 @@
             const imageUrl = photo.original || photo.url;
             lightboxImage.src = imageUrl;
             counter.textContent = `${index + 1} / ${photos.length}`;
-            download.href = photo.download || imageUrl;
+            if (download) download.href = photo.download || imageUrl;
             flickrLink.href = photo.url;
 
             lightbox.classList.add('active');
@@ -735,7 +735,7 @@
             const imageUrl = photo.original || photo.url;
             lightboxImage.src = imageUrl;
             counter.textContent = `${currentLightboxIndex + 1} / ${photos.length}`;
-            download.href = photo.download || imageUrl;
+            if (download) download.href = photo.download || imageUrl;
             flickrLink.href = photo.url;
         }
 

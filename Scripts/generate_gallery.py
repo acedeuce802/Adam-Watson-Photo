@@ -1120,7 +1120,7 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
             const imageUrl = photo.original || photo.url;
             lightboxImage.src = imageUrl;
             counter.textContent = `${{index + 1}} / ${{photos.length}}`;
-            download.href = photo.download || imageUrl;
+            if (download) download.href = photo.download || imageUrl;
             flickrLink.href = photo.url;
 
             lightbox.classList.add('active');
@@ -1148,7 +1148,7 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
             const imageUrl = photo.original || photo.url;
             lightboxImage.src = imageUrl;
             counter.textContent = `${{currentLightboxIndex + 1}} / ${{photos.length}}`;
-            download.href = photo.download || imageUrl;
+            if (download) download.href = photo.download || imageUrl;
             flickrLink.href = photo.url;
         }}
 
