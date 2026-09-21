@@ -1,30 +1,41 @@
 /**
  * Cloudflare Worker backing the --paywall race galleries.
  *
- * Three routes, no npm dependencies (talks to Stripe/B2/Resend over plain
+ * Four routes, no npm dependencies (talks to Stripe/B2/Resend over plain
  * fetch, verifies Stripe's webhook signature with Web Crypto):
  *
- *   POST /checkout            { private_keys: [...], race } -> { url }
+ *   POST /checkout   { items: [{private_key, album}, ...], return_url } -> { url }
  *     Creates ONE Stripe Checkout Session with one line item per photo
  *     (dynamic price, no pre-created Stripe product needed) and returns
- *     the Checkout URL for the browser to redirect to -- covers both an
- *     instant single-photo buy (array of one) and a cart checkout (array
- *     of many) the same way. `private_key` (singular) is still accepted
- *     for backward compatibility with any already-generated gallery page.
+ *     the Checkout URL for the browser to redirect to. Items can come from
+ *     several albums at once (the shared cart in cart.js); `album` is just
+ *     the human-readable name shown on the payment page and receipt.
+ *     `return_url` (same-site only) is where Stripe's Back link sends the
+ *     buyer. The older { private_keys, race } / { private_key, race }
+ *     shapes are still accepted for already-generated gallery pages.
  *
  *   POST /webhook              (called by Stripe, not the browser)
  *     On checkout.session.completed: mints a time-limited B2 download
  *     authorization for every purchased photo and emails the buyer the
  *     full list.
  *
- *   GET  /download?session_id= -> { downloads: [{filename, url}, ...] }
+ *   GET  /download?session_id= -> { downloads: [{filename, url, key}, ...] }
  *     Used by download.html right after Stripe redirects back. Verifies
  *     the session server-side (payment_status === 'paid') and mints the
  *     same kind of signed B2 URLs, independent of whether the webhook has
- *     already run.
+ *     already run. `key` lets the page remove exactly those photos from
+ *     the buyer's cart.
+ *
+ *   GET  /price                -> { price_cents }
+ *     The per-photo price, so cart.js and the gallery buttons always show
+ *     what will actually be charged (PRICE_CENTS is the only source).
  *
  * See ../README.md for the required secrets and deploy steps.
  */
+
+// Stripe Checkout allows at most 100 line items per session in payment mode.
+const MAX_ORDER_ITEMS = 100;
+const MAX_LABEL_LENGTH = 80;
 
 export default {
   async fetch(request, env, ctx) {
@@ -43,6 +54,9 @@ export default {
       }
       if (url.pathname === '/download' && request.method === 'GET') {
         return withCors(env, await handleDownload(url, env));
+      }
+      if (url.pathname === '/price' && request.method === 'GET') {
+        return withCors(env, handlePrice(env));
       }
       return withCors(env, jsonResponse({ error: 'Not found' }, 404));
     } catch (err) {
@@ -63,40 +77,46 @@ async function handleCheckout(request, env) {
     return jsonResponse({ error: 'Invalid JSON body' }, 400);
   }
 
-  let privateKeys = body && body.private_keys;
-  if (!Array.isArray(privateKeys) && body && typeof body.private_key === 'string') {
-    privateKeys = [body.private_key]; // backward compat: older gallery pages send one key
+  const items = normalizeCheckoutItems(body);
+  if (items.length === 0) {
+    return jsonResponse({ error: 'Missing items' }, 400);
   }
-  if (!Array.isArray(privateKeys)) privateKeys = [];
-  privateKeys = [...new Set(privateKeys.filter((k) => typeof k === 'string' && k))];
-
-  if (privateKeys.length === 0) {
-    return jsonResponse({ error: 'Missing private_keys' }, 400);
+  if (items.length > MAX_ORDER_ITEMS) {
+    return jsonResponse({ error: `An order can include up to ${MAX_ORDER_ITEMS} photos` }, 400);
   }
 
-  const priceCents = parseInt(env.PRICE_CENTS, 10);
-  if (!Number.isFinite(priceCents) || priceCents <= 0) {
+  const priceCents = getPriceCents(env);
+  if (!priceCents) {
     return jsonResponse({ error: 'Server misconfigured: bad PRICE_CENTS' }, 500);
   }
 
-  const race = body.race || '';
+  const privateKeys = items.map((item) => item.key);
+  const albums = [...new Set(items.map((item) => item.album).filter(Boolean))];
 
   const params = new URLSearchParams({
     mode: 'payment',
     success_url: `${env.SITE_BASE_URL}/download.html?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${env.SITE_BASE_URL}/`,
+    cancel_url: safeReturnUrl(body.return_url, env),
+    // Shown next to the Pay button, so the license terms are in front of the
+    // buyer at the moment they pay. Pricing for commercial use lives only on
+    // the terms page, so it can't drift out of sync here.
+    'custom_text[submit][message]':
+      `Includes a personal-use license. Commercial use requires a separate license – see the [Terms of Sale](${env.SITE_BASE_URL}/terms.html).`,
   });
 
-  privateKeys.forEach((key, i) => {
-    const filename = key.split('/').pop();
-    const productName = race ? `Full-resolution photo – ${filename} (${race})` : `Full-resolution photo – ${filename}`;
+  items.forEach((item, i) => {
+    const filename = item.key.split('/').pop();
+    const productName = (item.album
+      ? `Full-resolution photo – ${filename} (${item.album})`
+      : `Full-resolution photo – ${filename}`).slice(0, 240);
     params.set(`line_items[${i}][quantity]`, '1');
     params.set(`line_items[${i}][price_data][currency]`, 'usd');
     params.set(`line_items[${i}][price_data][unit_amount]`, String(priceCents));
     params.set(`line_items[${i}][price_data][product_data][name]`, productName);
+    params.set(`line_items[${i}][price_data][product_data][description]`, 'Digital download with personal-use license');
   });
 
-  params.set('metadata[race]', race);
+  params.set('metadata[race]', albums.join(', ').slice(0, 480));
   for (const [key, value] of Object.entries(encodePrivateKeysToMetadata(privateKeys))) {
     params.set(`metadata[${key}]`, value);
   }
@@ -117,6 +137,66 @@ async function handleCheckout(request, env) {
   }
 
   return jsonResponse({ url: data.url });
+}
+
+function handlePrice(env) {
+  const priceCents = getPriceCents(env);
+  if (!priceCents) return jsonResponse({ error: 'Price not configured' }, 500);
+  const response = jsonResponse({ price_cents: priceCents });
+  response.headers.set('Cache-Control', 'public, max-age=300');
+  return response;
+}
+
+function getPriceCents(env) {
+  const priceCents = parseInt(env.PRICE_CENTS, 10);
+  return Number.isFinite(priceCents) && priceCents > 0 ? priceCents : 0;
+}
+
+// Accepts the cart's { items: [{private_key, album}] } shape, or the older
+// { private_keys | private_key, race } shapes from already-generated pages.
+// Everything here comes from the browser, so it's validated and de-duplicated.
+function normalizeCheckoutItems(body) {
+  if (!body || typeof body !== 'object') return [];
+
+  let raw;
+  if (Array.isArray(body.items)) {
+    raw = body.items.map((item) => ({
+      key: item && item.private_key,
+      album: item && item.album,
+    }));
+  } else {
+    const keys = Array.isArray(body.private_keys)
+      ? body.private_keys
+      : typeof body.private_key === 'string' ? [body.private_key] : [];
+    raw = keys.map((key) => ({ key, album: body.race }));
+  }
+
+  const seen = new Set();
+  const items = [];
+  for (const { key, album } of raw) {
+    if (typeof key !== 'string' || !key || key.length > 300 || seen.has(key)) continue;
+    seen.add(key);
+    items.push({
+      key,
+      album: typeof album === 'string' ? album.trim().slice(0, MAX_LABEL_LENGTH) : '',
+    });
+  }
+  return items;
+}
+
+// Where Stripe's Back link sends the buyer. Only same-site URLs are honored,
+// so a crafted request can't turn checkout into an open redirect.
+function safeReturnUrl(returnUrl, env) {
+  const fallback = `${env.SITE_BASE_URL}/`;
+  if (typeof returnUrl !== 'string') return fallback;
+  try {
+    const target = new URL(returnUrl);
+    if (target.origin !== new URL(env.SITE_BASE_URL).origin) return fallback;
+    target.hash = '';
+    return target.toString();
+  } catch {
+    return fallback;
+  }
 }
 
 async function handleWebhook(request, env) {
@@ -196,6 +276,7 @@ async function mintDownloads(privateKeys, env) {
     privateKeys.map(async (key) => ({
       filename: key.split('/').pop(),
       url: await mintB2DownloadUrl(key, env),
+      key,
     }))
   );
 }
@@ -369,6 +450,8 @@ async function sendDownloadEmail(toEmail, downloads, downloadPageUrl, env) {
         <p>Thanks for your purchase!${plural ? '' : ' Click below to download your full-resolution photo:'}</p>
         ${downloadAllHtml}
         ${linksHtml}
+        <p>Your purchase includes a personal-use license. For commercial use, see the
+        <a href="${env.SITE_BASE_URL}/terms.html">Terms of Sale</a> or just reply to this email.</p>
         <p>These links expire in about ${expiresLabel}. If they expire before you get to them, just reply
         to this email as proof of purchase and I'll send the photos directly.</p>
         <p>Thank you!<br>Adam Watson</p>

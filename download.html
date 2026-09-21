@@ -169,7 +169,9 @@
         </div>
 
         <p class="note" id="note" style="display:none;">
-            A copy of this link was also emailed to you, in case you need it later.
+            A copy of this link was also emailed to you, in case you need it later.<br><br>
+            Your purchase includes a personal-use license. For commercial use, see the
+            <a href="terms.html" style="color: #d4a017; text-decoration: none;">Terms of Sale</a>.
         </p>
     </div>
 
@@ -223,6 +225,13 @@
                 if (!data.downloads || !data.downloads.length) throw new Error('No downloads returned');
 
                 purchasedDownloads = data.downloads;
+
+                // Payment is confirmed, so those photos leave the cart. Only what was
+                // actually bought: an instant "Buy" of one photo must not empty a
+                // cart that holds others (cart.js loads after this script, but this
+                // runs after an await, so it's ready by now).
+                if (window.AWPCart) AWPCart.removeMany(data.downloads.map((d) => d.key));
+
                 const plural = data.downloads.length > 1;
                 const linksHtml = data.downloads.map((d, i) => `
                     <a class="download-button" href="${d.url}">Download${plural ? ` Photo ${i + 1}` : ''} Full-Res</a>
@@ -248,5 +257,6 @@
 
         confirmDownload();
     </script>
+    <script src="cart.js"></script>
 </body>
 </html>

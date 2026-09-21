@@ -11,6 +11,7 @@ without a signed download authorization minted by worker/ after payment.
 
 import csv
 import json
+import os
 import sys
 
 def merge_b2_urls(csv_file, thumbnails_json, originals_json, output_csv=None,
@@ -51,8 +52,14 @@ def merge_b2_urls(csv_file, thumbnails_json, originals_json, output_csv=None,
     thumbnail_by_number = {str(p['photo_number']): p for p in thumbnail_photos}
     original_by_filename = {p['filename']: p for p in original_photos if p.get('filename')}
     original_by_number = {str(p['photo_number']): p for p in original_photos}
-    private_by_filename = {p['filename']: p for p in private_photos if p.get('filename')}
-    private_by_number = {str(p['photo_number']): p for p in private_photos}
+    # The private upload's 'filename' is the full path inside the bucket
+    # (including --subfolder), while the CSV holds the bare filename, so match
+    # on the basename. There is deliberately NO positional fallback here: a
+    # wrong private_key would sell a buyer a different photo than the one they
+    # clicked, so an unmatched photo is left blank (and reported) instead.
+    private_by_filename = {os.path.basename(p['filename']): p
+                            for p in private_photos if p.get('filename')}
+    unmatched_private = []
 
     # Read CSV
     rows = []
@@ -88,9 +95,9 @@ def merge_b2_urls(csv_file, thumbnails_json, originals_json, output_csv=None,
 
             if private_json:
                 priv_data = private_by_filename.get(filename) if filename else None
-                if priv_data is None:
-                    priv_data = private_by_number.get(photo_num)
                 row['private_key'] = priv_data.get('filename', '') if priv_data else ''
+                if not priv_data:
+                    unmatched_private.append(filename or f'photo #{photo_num}')
 
             rows.append(row)
 
@@ -104,6 +111,13 @@ def merge_b2_urls(csv_file, thumbnails_json, originals_json, output_csv=None,
     print(f"  Merged thumbnail + original URLs for {len(rows)} photos")
     if private_json:
         print(f"  Merged private_key for paywalled purchase lookup")
+        if unmatched_private:
+            print(f"\n  ⚠ {len(unmatched_private)} photo(s) have NO private_key and can't be purchased:")
+            for name in unmatched_private[:20]:
+                print(f"      {name}")
+            if len(unmatched_private) > 20:
+                print(f"      ... and {len(unmatched_private) - 20} more")
+            print("    Check that every original uploaded to the private bucket, then re-run.")
     print(f"\nNext step:")
     print(f"  python generate_gallery.py --csv {output_csv} ...")
 

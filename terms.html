@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact | Adam Watson Photo</title>
+    <title>Terms of Sale | Adam Watson Photo</title>
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://adamwatsonphoto.com/contact.html">
+    <meta property="og:url" content="https://adamwatsonphoto.com/terms.html">
     <meta property="og:site_name" content="Adam Watson Photo">
-    <meta property="og:title" content="Contact | Adam Watson Photo">
-    <meta property="og:description" content="Get in touch with Adam Watson Photo to book race photography.">
+    <meta property="og:title" content="Terms of Sale | Adam Watson Photo">
+    <meta property="og:description" content="Terms for downloading and purchasing photos from Adam Watson Photo.">
     <meta property="og:image" content="https://adamwatsonphoto.com/images/og-logo.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Contact | Adam Watson Photo">
-    <meta name="twitter:description" content="Get in touch with Adam Watson Photo to book race photography.">
+    <meta name="twitter:title" content="Terms of Sale | Adam Watson Photo">
+    <meta name="twitter:description" content="Terms for downloading and purchasing photos from Adam Watson Photo.">
     <meta name="twitter:image" content="https://adamwatsonphoto.com/images/og-logo.jpg">
     <style>
         * {
@@ -22,15 +22,14 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background: #1a1a1a;
             color: #e0e0e0;
             line-height: 1.6;
         }
-        
-        /* Navigation */
+
         nav {
             background: #0a0a0a;
             padding: 20px 0;
@@ -39,7 +38,7 @@
             top: 0;
             z-index: 1000;
         }
-        
+
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -48,14 +47,14 @@
             justify-content: center;
             align-items: center;
         }
-        
+
         .nav-links {
             display: flex;
             gap: 30px;
             list-style: none;
             align-items: center;
         }
-        
+
         .nav-links a {
             color: #e0e0e0;
             text-decoration: none;
@@ -63,11 +62,11 @@
             transition: color 0.3s;
             font-size: 1.1em;
         }
-        
+
         .nav-links a:hover {
             color: #ffffff;
         }
-        
+
         .instagram-link {
             color: #888;
             transition: color 0.3s, opacity 0.3s;
@@ -78,15 +77,11 @@
             border: none !important;
             outline: none !important;
         }
-        
+
         .instagram-link:hover {
             opacity: 0.7;
         }
-        
-        .instagram-link:focus {
-            outline: none !important;
-        }
-        
+
         .instagram-icon {
             width: 24px;
             height: 24px;
@@ -96,90 +91,78 @@
             border: none !important;
             outline: none !important;
         }
-        
-        .instagram-link img {
-            outline: none !important;
-            border: none !important;
-        }
-        
+
         .instagram-link:hover .instagram-icon {
             filter: brightness(1);
         }
-        
-        /* Hero Section */
+
         .hero {
             background: linear-gradient(to bottom, #0a0a0a, #1a1a1a);
-            padding: 80px 20px;
+            padding: 70px 20px 50px;
             text-align: center;
         }
-        
+
         .hero h1 {
-            font-size: 4em;
+            font-size: 3em;
             font-weight: 300;
             letter-spacing: 3px;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             color: #ffffff;
         }
-        
+
         .hero p {
-            font-size: 1.3em;
-            color: #999;
+            font-size: 1.05em;
+            color: #888;
             font-weight: 300;
         }
-        
-        /* Contact Section */
-        .contact-section {
-            padding: 100px 20px;
-            background: #1a1a1a;
-            min-height: 60vh;
-        }
-        
-        .contact-content {
-            max-width: 700px;
+
+        .legal {
+            max-width: 780px;
             margin: 0 auto;
-            text-align: center;
+            padding: 30px 20px 90px;
         }
-        
-        .contact-content h2 {
-            font-size: 2.5em;
-            font-weight: 300;
-            margin-bottom: 30px;
+
+        .legal h2 {
+            font-size: 1.35em;
+            font-weight: 400;
             color: #ffffff;
-            letter-spacing: 2px;
+            margin: 42px 0 12px;
+            letter-spacing: 0.5px;
         }
-        
-        .contact-content p {
-            font-size: 1.2em;
-            color: #999;
-            margin-bottom: 40px;
-            line-height: 1.8;
+
+        .legal p, .legal li {
+            color: #b5b5b5;
+            font-size: 1.02em;
+            line-height: 1.75;
         }
-        
-        .contact-email {
-            display: inline-block;
-            color: #ffffff;
+
+        .legal p {
+            margin-bottom: 14px;
+        }
+
+        .legal ul {
+            margin: 0 0 14px 22px;
+        }
+
+        .legal li {
+            margin-bottom: 6px;
+        }
+
+        .legal a {
+            color: #d4a017;
             text-decoration: none;
-            font-size: 1.5em;
-            padding: 15px 40px;
-            border: 2px solid #444;
-            border-radius: 5px;
-            transition: all 0.3s;
-            letter-spacing: 1px;
         }
-        
-        .contact-email:hover {
-            background: #2a2a2a;
-            border-color: #666;
-            transform: translateY(-2px);
+
+        .legal a:hover {
+            text-decoration: underline;
         }
-        
-        /* Footer */
+
         footer {
             background: #0a0a0a;
             padding: 40px 20px;
             border-top: 1px solid #222;
         }
-        
+
         .footer-nav {
             max-width: 1200px;
             margin: 0 auto;
@@ -189,17 +172,17 @@
             list-style: none;
             margin-bottom: 20px;
         }
-        
+
         .footer-nav a {
             color: #888;
             text-decoration: none;
             transition: color 0.3s;
         }
-        
+
         .footer-nav a:hover {
             color: #ffffff;
         }
-        
+
         .tip-line {
             display: flex;
             justify-content: center;
@@ -245,32 +228,21 @@
             color: #666;
             font-size: 0.9em;
         }
-        
-        /* Responsive */
+
         @media (max-width: 768px) {
             .nav-links {
                 flex-wrap: wrap;
                 gap: 15px;
                 justify-content: center;
             }
-            
+
             .hero h1 {
-                font-size: 2.5em;
-            }
-            
-            .contact-content h2 {
-                font-size: 2em;
-            }
-            
-            .contact-email {
-                font-size: 1.2em;
-                padding: 12px 30px;
+                font-size: 2.2em;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
     <nav>
         <div class="nav-container">
             <ul class="nav-links">
@@ -283,22 +255,57 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <section class="hero">
-        <h1>CONTACT</h1>
-        <p>Let's Work Together</p>
+        <h1>TERMS OF SALE</h1>
+        <p>Last updated September 21, 2026</p>
     </section>
 
-    <!-- Contact Section -->
-    <section class="contact-section">
-        <div class="contact-content">
-            <h2>Get In Touch</h2>
-            <p>Don't hesitate to drop me a message. Let's chat about your needs and how I can help capture your next event.</p>
-            <a href="mailto:email@adamwatsonphoto.com" class="contact-email">email@adamwatsonphoto.com</a>
-        </div>
+    <section class="legal">
+        <p>These terms apply to photos you download or buy from adamwatsonphoto.com. By completing a purchase you agree to them.</p>
+
+        <h2>What you're buying</h2>
+        <p>Each purchase is for a digital, full-resolution copy of the photo you selected, without the watermark. The previews shown on the site are lower resolution and watermarked, and they are not the file you receive. Prices are in US dollars and are shown before you pay. The price you see at checkout is the price you pay.</p>
+        <p>Payments are processed securely by Stripe.</p>
+
+        <h2>Delivery</h2>
+        <p>Delivery is digital only. Right after payment you'll see a page with your download links, and the same links are emailed to the address you gave at checkout, so please double-check it. Links stay active for seven days.</p>
+        <p>If a link expires, or you can't find the email, reply to your order email (or write to <a href="mailto:email@adamwatsonphoto.com">email@adamwatsonphoto.com</a>) with proof of purchase and I will send your photos directly.</p>
+
+        <h2>Your license</h2>
+        <p>When you buy or download a photo, you get a non-exclusive, non-transferable license to use it for personal, non-commercial purposes. That includes:</p>
+        <ul>
+            <li>keeping it, and printing it for yourself, your family and your friends;</li>
+            <li>sharing it on your personal social media and personal websites.</li>
+        </ul>
+        <p>Credit to Adam Watson Photo (@adamwatson.photo) is always appreciated when you share.</p>
+        <p>Without a commercial license (see below), you may not use a photo commercially (for example in advertising, sponsorship or promotional material, merchandise, or publications that pay), resell it, or redistribute it, including uploading it to stock or print-on-demand sites.</p>
+        <p>I keep the copyright to all photos. A license is not a transfer of copyright.</p>
+
+        <h2>Commercial use</h2>
+        <p>Commercial licenses are available for $100 per image. This applies to any photo on this site, whether it's from a free or a paid gallery. To get one, email <a href="mailto:email@adamwatsonphoto.com">email@adamwatsonphoto.com</a> with the photos you'd like to use and a short description of how you plan to use them, and I'll send you an invoice. Once it's paid, you have a non-exclusive license to use those specific images for the commercial purpose you described. A commercial license doesn't include reselling or redistributing the photos themselves.</p>
+
+        <h2>Free galleries</h2>
+        <p>Some galleries are free to download. Photos from free galleries are covered by the same personal-use license above.</p>
+
+        <h2>Refunds</h2>
+        <p>Because photos are digital and delivered immediately, all sales are final. The exception is a problem on my end: if you don't receive your photos, a file is damaged or won't open, or you receive the wrong photo, contact me within 30 days and I will fix it or refund you. Please contact me before disputing a charge with your bank, since I can usually sort things out faster.</p>
+
+        <h2>Photo removal</h2>
+        <p>If you would like a photo of you (or your child) removed from the site, email <a href="mailto:email@adamwatsonphoto.com">email@adamwatsonphoto.com</a> and I will take it down promptly.</p>
+
+        <h2>Disclaimer and liability</h2>
+        <p>Photos are provided "as is". To the extent the law allows, my liability for any claim relating to a purchase is limited to the amount you paid for it.</p>
+
+        <h2>Governing law</h2>
+        <p>These terms are governed by the laws of the State of Michigan, USA.</p>
+
+        <h2>Changes</h2>
+        <p>I may update these terms from time to time. The terms in effect when you make a purchase are the ones that apply to it.</p>
+
+        <h2>Contact</h2>
+        <p>Questions? Email <a href="mailto:email@adamwatsonphoto.com">email@adamwatsonphoto.com</a>. See also my <a href="privacy-policy.html">Privacy Policy</a>.</p>
     </section>
 
-    <!-- Footer -->
     <footer>
         <ul class="footer-nav">
             <li><a href="index.html">Home</a></li>

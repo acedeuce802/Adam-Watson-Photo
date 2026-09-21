@@ -353,59 +353,6 @@ _SHARED_STYLE = '''        * {
             border-color: #d4a017;
         }
 
-        .cart-bar {
-            position: fixed;
-            left: 30px;
-            bottom: 30px;
-            background: rgba(15,15,15,0.95);
-            border: 1px solid #d4a017;
-            border-radius: 25px;
-            padding: 10px 12px 10px 20px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            z-index: 9000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-        }
-
-        .cart-bar-text {
-            color: #e0e0e0;
-            font-size: 0.95em;
-            white-space: nowrap;
-        }
-
-        .cart-bar button {
-            font-family: inherit;
-            font-size: 0.95em;
-            border-radius: 20px;
-            padding: 8px 18px;
-            cursor: pointer;
-            border: none;
-            white-space: nowrap;
-        }
-
-        .cart-bar .cart-checkout {
-            background: #d4a017;
-            color: #1a1a1a;
-            font-weight: 600;
-        }
-
-        .cart-bar .cart-checkout:disabled {
-            opacity: 0.6;
-            cursor: wait;
-        }
-
-        .cart-bar .cart-clear {
-            background: transparent;
-            color: #999;
-            border: 1px solid #444;
-        }
-
-        .cart-bar .cart-clear:hover {
-            color: #fff;
-            border-color: #999;
-        }
-
         .photo-thumbnail {
             width: 100%;
             height: 250px;
@@ -716,11 +663,23 @@ _SHARED_STYLE = '''        * {
             position: fixed;
             bottom: 88px;
             right: 30px;
-            color: #999;
+            color: #bbb;
             font-size: 0.85em;
             z-index: 10000;
             max-width: 260px;
             text-align: right;
+            background: rgba(0,0,0,0.65);
+            padding: 6px 12px;
+            border-radius: 10px;
+        }
+
+        .watermark-note a {
+            color: #d4a017;
+            text-decoration: none;
+        }
+
+        .watermark-note a:hover {
+            text-decoration: underline;
         }
 
         @media (max-width: 640px) {
@@ -756,20 +715,6 @@ _SHARED_STYLE = '''        * {
             .watermark-note {
                 bottom: 150px;
             }
-
-            .cart-bar {
-                left: 20px;
-                right: 20px;
-                flex-wrap: wrap;
-                justify-content: center;
-                row-gap: 8px;
-            }
-
-            .cart-bar-text {
-                width: 100%;
-                text-align: center;
-                white-space: normal;
-            }
         }
 '''
 
@@ -794,6 +739,7 @@ _FOOTER_HTML = '''    <footer>
             <li><a href="https://www.instagram.com/adamwatson.photo/" target="_blank" class="instagram-link"><img src="images/instagram-icon.png" alt="Instagram" class="instagram-icon"></a></li>
         </ul>
         <p class="copyright">&copy; 2025 Adam Watson Photo. All rights reserved.</p>
+        <p class="copyright" style="margin-top: 8px;"><a href="privacy-policy.html" style="color: inherit; text-decoration: none;">Privacy Policy</a> &nbsp;&middot;&nbsp; <a href="terms.html" style="color: inherit; text-decoration: none;">Terms of Sale</a></p>
     </footer>'''
 
 def _og_tags(race_name, location, race_date, output_file):
@@ -825,144 +771,56 @@ def _lightbox_buy_button_html():
             <button id="lightbox-add-cart" class="lightbox-buy lightbox-add-cart" onclick="addToCart()">Add to Cart</button>
             <button id="lightbox-buy" class="lightbox-buy" onclick="buyPhoto()">Buy Full-Res</button>
         </div>
-        <div class="watermark-note">Preview is watermarked &amp; reduced resolution</div>'''
+        <div class="watermark-note">Preview is watermarked &amp; reduced resolution.<br>Personal-use license included &middot; <a href="terms.html" target="_blank" rel="noopener">Terms</a></div>'''
 
 def _photo_card_template(paywall):
     """JS template-literal for one photo-card in the grid, used inside a
     `.map((photo, index) => ...)` callback where `actualIndex` is already
     in scope. When paywall is True, adds a select-toggle checkbox wired to
-    the cart (see _cart_script) and highlights the card once selected."""
+    the shared cart (cart.js) and highlights the card once selected."""
     if not paywall:
         return '''<div class="photo-card" onclick="openLightbox(${actualIndex})">
                     <div class="photo-thumbnail">
-                        ${photo.thumbnail ? `<img src="${photo.thumbnail}" alt="Race photo">` : '\U0001f4f7'}
+                        ${photo.thumbnail ? `<img src="${photo.thumbnail}" alt="Race photo">` : '📷'}
                     </div>
                 </div>'''
-    return '''<div class="photo-card ${photo.private_key && cart.has(photo.private_key) ? 'selected' : ''}" onclick="openLightbox(${actualIndex})">
-                    ${photo.private_key ? `<button class="select-toggle" onclick="event.stopPropagation(); toggleCartItem('${photo.private_key}')">${cart.has(photo.private_key) ? '✓' : '+'}</button>` : ''}
+    return '''<div class="photo-card ${photo.private_key && AWPCart.has(photo.private_key) ? 'selected' : ''}" onclick="openLightbox(${actualIndex})">
+                    ${photo.private_key ? `<button class="select-toggle" onclick="event.stopPropagation(); toggleCartIndex(${actualIndex})">${AWPCart.has(photo.private_key) ? '✓' : '+'}</button>` : ''}
                     <div class="photo-thumbnail">
-                        ${photo.thumbnail ? `<img src="${photo.thumbnail}" alt="Race photo">` : '\U0001f4f7'}
+                        ${photo.thumbnail ? `<img src="${photo.thumbnail}" alt="Race photo">` : '📷'}
                     </div>
                 </div>'''
 
-def _cart_bar_html():
-    """Floating cart summary, hidden (via JS) until at least one photo is
-    selected. Lives outside the lightbox so it's visible while browsing the
-    grid."""
-    return '''    <div id="cart-bar" class="cart-bar" style="display: none;">
-        <span id="cart-bar-text" class="cart-bar-text"></span>
-        <button class="cart-clear" onclick="clearCart()">Clear</button>
-        <button id="cart-checkout-btn" class="cart-checkout" onclick="checkoutCart()">Checkout</button>
-    </div>'''
-
-def _cart_script(price_cents, race_slug, photos_var='currentPhotos'):
-    """JS for the --paywall purchase flow, single-photo and cart alike.
-    Both paths POST to the Cloudflare Worker's /checkout endpoint with a
-    private_keys array (one entry for an instant single-photo buy, many for
-    a cart checkout) and redirect to the Stripe Checkout URL it returns --
-    one Checkout Session, one payment, any number of photos. See
-    worker/src/index.js.
+def _cart_script(album_label, album_page, photos_var='currentPhotos'):
+    """Page-level glue between a paywalled gallery and the shared cart in
+    cart.js (which owns cart storage, the cart bar/panel, the price, and
+    checkout). Everything here is about *this* page: which photo the grid or
+    lightbox means, and what to call this album in the cart.
 
     photos_var is the in-scope array holding the currently displayed photos
     ('currentPhotos' in the searchable gallery, 'photos' in the browse
-    gallery -- see each template's own lightbox navigation code). Selection
-    state (cart) is a Set of private_key strings, backed by sessionStorage
-    per-race so it survives an accidental refresh but not a browser close."""
-    price_display = f"${price_cents / 100:.2f}"
+    gallery -- see each template's own lightbox navigation code)."""
     return f'''
-        const WORKER_BASE_URL = {json.dumps(_WORKER_BASE_URL)};
-        const RACE_SLUG = {json.dumps(race_slug)};
-        const PRICE_DISPLAY = {json.dumps(price_display)};
-        const PRICE_CENTS = {price_cents};
-        const CART_STORAGE_KEY = `cart_${{RACE_SLUG}}`;
+        const ALBUM_LABEL = {json.dumps(album_label)};
+        const ALBUM_PAGE = {json.dumps(album_page)};
 
-        let cart = new Set();
-        try {{
-            const saved = sessionStorage.getItem(CART_STORAGE_KEY);
-            if (saved) cart = new Set(JSON.parse(saved));
-        }} catch (e) {{ /* sessionStorage unavailable -- cart just won't persist across a refresh */ }}
-
-        function saveCart() {{
-            try {{ sessionStorage.setItem(CART_STORAGE_KEY, JSON.stringify([...cart])); }} catch (e) {{}}
-            updateCartBar();
+        function cartItemFor(photo) {{
+            return {{ key: photo.private_key, album: ALBUM_LABEL, page: ALBUM_PAGE, thumb: photo.thumbnail || '' }};
         }}
 
-        function updateCartBar() {{
-            const bar = document.getElementById('cart-bar');
-            const text = document.getElementById('cart-bar-text');
-            if (!bar || !text) return;
-
-            if (cart.size === 0) {{
-                bar.style.display = 'none';
-                return;
-            }}
-
-            const total = (cart.size * PRICE_CENTS / 100).toFixed(2);
-            text.textContent = `${{cart.size}} photo${{cart.size === 1 ? '' : 's'}} selected · $${{total}}`;
-            bar.style.display = 'flex';
+        function buyLabel() {{
+            return `Buy Full-Res – ${{AWPCart.formatPrice(AWPCart.price())}}`;
         }}
 
-        function toggleCartItem(privateKey) {{
-            if (cart.has(privateKey)) {{
-                cart.delete(privateKey);
-            }} else {{
-                cart.add(privateKey);
-            }}
-            saveCart();
-            renderPage();
-        }}
-
-        function clearCart() {{
-            cart.clear();
-            saveCart();
-            renderPage();
-        }}
-
-        document.addEventListener('DOMContentLoaded', () => {{
+        function updateBuyLabel() {{
             const buyButton = document.getElementById('lightbox-buy');
-            if (buyButton) buyButton.textContent = `Buy Full-Res – ${{PRICE_DISPLAY}}`;
-            updateCartBar();
-        }});
-
-        async function startCheckout(privateKeys, buttonEl, resetLabel) {{
-            if (!privateKeys.length) return;
-
-            if (buttonEl) {{
-                buttonEl.disabled = true;
-                buttonEl.textContent = 'Redirecting to checkout...';
-            }}
-
-            try {{
-                const response = await fetch(`${{WORKER_BASE_URL}}/checkout`, {{
-                    method: 'POST',
-                    headers: {{ 'Content-Type': 'application/json' }},
-                    body: JSON.stringify({{ private_keys: privateKeys, race: RACE_SLUG }})
-                }});
-
-                if (!response.ok) throw new Error(`Checkout request failed (${{response.status}})`);
-
-                const data = await response.json();
-                if (!data.url) throw new Error('No checkout URL returned');
-
-                try {{ sessionStorage.removeItem(CART_STORAGE_KEY); }} catch (e) {{}}
-                window.location.href = data.url;
-            }} catch (error) {{
-                console.error('Checkout failed:', error);
-                alert('Sorry, checkout could not be started. Please try again in a moment.');
-                if (buttonEl) {{
-                    buttonEl.disabled = false;
-                    buttonEl.textContent = resetLabel;
-                }}
-            }}
+            if (buyButton && !buyButton.disabled) buyButton.textContent = buyLabel();
         }}
 
-        async function buyPhoto() {{
-            const photo = {photos_var}[currentLightboxIndex];
-            if (!photo || !photo.private_key) {{
-                alert('This photo is not available for purchase yet.');
-                return;
-            }}
-            await startCheckout([photo.private_key], document.getElementById('lightbox-buy'), `Buy Full-Res – ${{PRICE_DISPLAY}}`);
+        // Grid checkbox: `index` is the photo's position in the list being shown.
+        function toggleCartIndex(index) {{
+            const photo = {photos_var}[index];
+            if (photo && photo.private_key) AWPCart.toggle(cartItemFor(photo));
         }}
 
         function addToCart() {{
@@ -971,9 +829,7 @@ def _cart_script(price_cents, race_slug, photos_var='currentPhotos'):
                 alert('This photo is not available for purchase yet.');
                 return;
             }}
-            cart.add(photo.private_key);
-            saveCart();
-            renderPage();
+            AWPCart.add(cartItemFor(photo));
             const addButton = document.getElementById('lightbox-add-cart');
             if (addButton) {{
                 const original = addButton.textContent;
@@ -982,13 +838,28 @@ def _cart_script(price_cents, race_slug, photos_var='currentPhotos'):
             }}
         }}
 
-        async function checkoutCart() {{
-            await startCheckout([...cart], document.getElementById('cart-checkout-btn'), 'Checkout');
+        // Instant single-photo purchase: just this photo, cart untouched.
+        async function buyPhoto() {{
+            const photo = {photos_var}[currentLightboxIndex];
+            if (!photo || !photo.private_key) {{
+                alert('This photo is not available for purchase yet.');
+                return;
+            }}
+            await AWPCart.checkout([cartItemFor(photo)], document.getElementById('lightbox-buy'), buyLabel());
         }}
+
+        // Cart changes (from the bar, the panel, another album or another tab)
+        // and price updates both need the grid + button to redraw.
+        AWPCart.onChange(() => {{
+            renderPage();
+            updateBuyLabel();
+        }});
+        updateBuyLabel();
+        AWPCart.refreshPrice();
 '''
 
 def _generate_searchable_gallery(photos, race_name, race_date, location, output_file, discipline,
-                                  paywall=False, price_cents=1000, race_slug=''):
+                                  paywall=False, album_label=''):
     """Race gallery with search-by-bib-number. Used when the CSV has at
     least one tagged race number."""
 
@@ -1056,8 +927,6 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
         </div>
     </section>
 
-{_cart_bar_html() if paywall else ''}
-
     <!-- Lightbox -->
     <div id="lightbox" class="lightbox">
         <button class="lightbox-close" id="lightbox-close">&times;</button>
@@ -1073,6 +942,7 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
 
 {_FOOTER_HTML}
 
+    <script src="cart.js"></script>
     <script>
         // Photo data
         const photosByRaceNumber = {json.dumps(by_race_number, indent=12)};
@@ -1087,7 +957,7 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
         const pageInfo = document.getElementById('pageInfo');
         const prevButton = document.getElementById('prevPage');
         const nextButton = document.getElementById('nextPage');
-{_cart_script(price_cents, race_slug) if paywall else ''}
+{_cart_script(album_label or race_name, os.path.basename(output_file)) if paywall else ''}
         let currentPage = 1;
         let photosPerPage = 100;
         let currentPhotos = [];
@@ -1260,7 +1130,7 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
     print(f"  - Unique race numbers: {len(by_race_number)}")
 
 def _generate_browse_gallery(photos, race_name, race_date, location, output_file, discipline,
-                              paywall=False, price_cents=1000, race_slug=''):
+                              paywall=False, album_label=''):
     """Plain browse-all gallery, no search. Used when the CSV has zero
     tagged race numbers."""
 
@@ -1301,8 +1171,6 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
         </div>
     </section>
 
-{_cart_bar_html() if paywall else ''}
-
     <!-- Lightbox -->
     <div id="lightbox" class="lightbox">
         <button class="lightbox-close" id="lightbox-close">&times;</button>
@@ -1318,6 +1186,7 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
 
 {_FOOTER_HTML}
 
+    <script src="cart.js"></script>
     <script>
         const photos = {json.dumps(photos, indent=8)};
         const gallery = document.getElementById('photoGallery');
@@ -1325,7 +1194,7 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
         const pageInfo = document.getElementById('pageInfo');
         const prevButton = document.getElementById('prevPage');
         const nextButton = document.getElementById('nextPage');
-{_cart_script(price_cents, race_slug, photos_var='photos') if paywall else ''}
+{_cart_script(album_label or race_name, os.path.basename(output_file), photos_var='photos') if paywall else ''}
         let currentPage = 1;
         let photosPerPage = 100;
         let currentLightboxIndex = 0;
@@ -1466,24 +1335,27 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
     print(f"\nGallery contains {len(photos)} photos")
 
 def generate_gallery(csv_file, race_name, race_date, location, output_file, discipline=None,
-                      paywall=False, price_cents=1000):
+                      paywall=False, subalbum=None):
     """
     Generate the HTML gallery for a race, auto-detecting whether to build
     the searchable (bib-number) gallery or the plain browse gallery based
     on whether the CSV has any tagged race numbers.
 
-    paywall: if True, the lightbox "Download" button is replaced with a
-    "Buy Full-Res" button wired to the Cloudflare Worker in worker/ (see
-    _WORKER_BASE_URL above). Requires the CSV to have a private_key column
-    (see merge_b2_thumbnails.py --private-json). Off by default so existing
-    free galleries (e.g. paid gigs) are unaffected.
-    price_cents: flat per-photo price in cents, used for the button label
-    and passed through to the Worker's Stripe Checkout session.
+    paywall: if True, the lightbox "Download" button is replaced with
+    "Add to Cart" / "Buy Full-Res" buttons wired to the shared cart (cart.js)
+    and the Cloudflare Worker in worker/. Requires the CSV to have a
+    private_key column (see merge_b2_thumbnails.py --private-json). Off by
+    default so existing free galleries (e.g. paid gigs) are unaffected. The
+    price is not set here: cart.js asks the Worker, whose PRICE_CENTS is the
+    only source of truth.
+    subalbum: optional sub-album name (e.g. "Morning"). The shared cart lists
+    photos by album, so this keeps sub-albums of one race distinguishable
+    (e.g. "Thunder Bay Thriller - Start Line").
     """
     photos, has_any_race_number = _load_photos(csv_file)
     print(f"Loaded {len(photos)} photo entries from CSV")
 
-    race_slug = os.path.splitext(os.path.basename(output_file))[0]
+    album_label = f"{race_name} – {subalbum}" if subalbum else race_name
 
     if paywall and not any(p.get('private_key') for p in photos):
         print("⚠ --paywall set but no photo has a private_key -- did you run")
@@ -1492,10 +1364,10 @@ def generate_gallery(csv_file, race_name, race_date, location, output_file, disc
 
     if has_any_race_number:
         _generate_searchable_gallery(photos, race_name, race_date, location, output_file, discipline,
-                                      paywall, price_cents, race_slug)
+                                      paywall, album_label)
     else:
         _generate_browse_gallery(photos, race_name, race_date, location, output_file, discipline,
-                                  paywall, price_cents, race_slug)
+                                  paywall, album_label)
 
     print(f"\nUpload to your website and test the gallery!")
 
@@ -1510,8 +1382,8 @@ if __name__ == '__main__':
     parser.add_argument('--output', required=True, help='Output HTML filename')
     parser.add_argument('--paywall', action='store_true',
                          help='Gate full-res downloads behind Stripe checkout (see worker/)')
-    parser.add_argument('--price', type=int, default=1000,
-                         help='Per-photo price in cents for --paywall galleries (default: 1000 = $10.00)')
+    parser.add_argument('--subalbum',
+                         help='Sub-album name for paywalled galleries, shown in the shared cart (e.g. "Morning")')
 
     args = parser.parse_args()
 
@@ -1523,5 +1395,5 @@ if __name__ == '__main__':
         args.output,
         args.discipline,
         args.paywall,
-        args.price
+        args.subalbum
     )
