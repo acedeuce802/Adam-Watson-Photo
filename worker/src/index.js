@@ -331,6 +331,9 @@ async function sendDownloadEmail(toEmail, downloads, downloadPageUrl, env) {
     .map((d) => `<p><a href="${d.url}">${escapeHtml(d.filename)}</a></p>`)
     .join('');
   const expiresHours = Math.round(parseInt(env.B2_DOWNLOAD_VALID_SECONDS || '172800', 10) / 3600);
+  const expiresLabel = expiresHours % 24 === 0
+    ? `${expiresHours / 24} day${expiresHours / 24 === 1 ? '' : 's'}`
+    : `${expiresHours} hours`;
   const supportEmail = env.SUPPORT_EMAIL;
 
   // Email clients can't run JS, so a real one-click "download all" isn't
@@ -366,7 +369,7 @@ async function sendDownloadEmail(toEmail, downloads, downloadPageUrl, env) {
         <p>Thanks for your purchase!${plural ? '' : ' Click below to download your full-resolution photo:'}</p>
         ${downloadAllHtml}
         ${linksHtml}
-        <p>These links expire in about ${expiresHours} hours. If they expire before you get to them, just reply
+        <p>These links expire in about ${expiresLabel}. If they expire before you get to them, just reply
         to this email as proof of purchase and I'll send the photos directly.</p>
         <p>Thank you!<br>Adam Watson</p>
       `,
