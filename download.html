@@ -115,6 +115,33 @@
             background: #d4a017;
         }
 
+        .download-all-button {
+            display: inline-block;
+            background: rgba(0,0,0,0.4);
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 25px;
+            border: 1px solid #666;
+            font-size: 1.1em;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .download-all-button:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: #999;
+        }
+
+        .download-divider {
+            width: 100%;
+            text-align: center;
+            color: #555;
+            font-size: 0.85em;
+            margin: 4px 0;
+        }
+
         .error {
             color: #d97575;
         }
@@ -152,8 +179,27 @@
         // worker/src/index.js). Update after `wrangler deploy`.
         const WORKER_BASE_URL = 'https://adam-watson-photo-paywall.adamwatsonphoto.workers.dev';
 
+        let purchasedDownloads = [];
+
         function getSessionId() {
             return new URLSearchParams(window.location.search).get('session_id');
+        }
+
+        function downloadAll() {
+            // Trigger each download via a synthetic <a download> click rather
+            // than window.open() -- browsers generally don't treat a handful
+            // of staggered download clicks as popups, so this doesn't get
+            // blocked the way opening several new tabs at once would.
+            purchasedDownloads.forEach((d, i) => {
+                setTimeout(() => {
+                    const a = document.createElement('a');
+                    a.href = d.url;
+                    a.download = d.filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                }, i * 500);
+            });
         }
 
         async function confirmDownload() {
@@ -176,14 +222,19 @@
                 const data = await response.json();
                 if (!data.downloads || !data.downloads.length) throw new Error('No downloads returned');
 
+                purchasedDownloads = data.downloads;
                 const plural = data.downloads.length > 1;
                 const linksHtml = data.downloads.map((d, i) => `
                     <a class="download-button" href="${d.url}">Download${plural ? ` Photo ${i + 1}` : ''} Full-Res</a>
                 `).join('');
+                const downloadAllHtml = plural
+                    ? `<button class="download-all-button" onclick="downloadAll()">Download All (${data.downloads.length})</button>
+                       <div class="download-divider">or download individually</div>`
+                    : '';
 
                 statusEl.innerHTML = `
                     <p>Your full-resolution photo${plural ? 's are' : ' is'} ready.</p>
-                    <div class="download-list">${linksHtml}</div>
+                    <div class="download-list">${downloadAllHtml}${linksHtml}</div>
                 `;
                 noteEl.style.display = 'block';
             } catch (error) {

@@ -756,6 +756,20 @@ _SHARED_STYLE = '''        * {
             .watermark-note {
                 bottom: 150px;
             }
+
+            .cart-bar {
+                left: 20px;
+                right: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+                row-gap: 8px;
+            }
+
+            .cart-bar-text {
+                width: 100%;
+                text-align: center;
+                white-space: normal;
+            }
         }
 '''
 
@@ -1053,6 +1067,7 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
         </div>
         <button class="lightbox-nav lightbox-next" id="lightbox-next">&#8250;</button>
         <div class="lightbox-counter" id="lightbox-counter"></div>
+{'' if paywall else '        <a id="lightbox-flickr" class="lightbox-flickr" href="" target="_blank">View Hi-Res</a>'}
 {_lightbox_buy_button_html() if paywall else '        <button id="lightbox-download" class="lightbox-download" onclick="downloadImage()">Download</button>'}
     </div>
 
@@ -1161,9 +1176,11 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
             const lightbox = document.getElementById('lightbox');
             const lightboxImage = document.getElementById('lightbox-image');
             const counter = document.getElementById('lightbox-counter');
+            const flickrLink = document.getElementById('lightbox-flickr');
 
             lightboxImage.src = photo.original || photo.url;
             counter.textContent = `${{index + 1}} / ${{currentPhotos.length}}`;
+            if (flickrLink) flickrLink.href = photo.original || photo.url;
 
             lightbox.classList.add('active');
         }}
@@ -1184,9 +1201,11 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
             const photo = currentPhotos[currentLightboxIndex];
             const lightboxImage = document.getElementById('lightbox-image');
             const counter = document.getElementById('lightbox-counter');
+            const flickrLink = document.getElementById('lightbox-flickr');
 
             lightboxImage.src = photo.original || photo.url;
             counter.textContent = `${{currentLightboxIndex + 1}} / ${{currentPhotos.length}}`;
+            if (flickrLink) flickrLink.href = photo.original || photo.url;
         }}
 
         document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
@@ -1293,7 +1312,7 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
         </div>
         <button class="lightbox-nav lightbox-next" id="lightbox-next">&#8250;</button>
         <div class="lightbox-counter" id="lightbox-counter"></div>
-{'' if paywall else '        <a id="lightbox-flickr" class="lightbox-flickr" href="" target="_blank">Link to Full Resolution</a>'}
+{'' if paywall else '        <a id="lightbox-flickr" class="lightbox-flickr" href="" target="_blank">View Hi-Res</a>'}
 {_lightbox_buy_button_html() if paywall else '        <button id="lightbox-download" class="lightbox-download" onclick="downloadImage()">Download</button>'}
     </div>
 

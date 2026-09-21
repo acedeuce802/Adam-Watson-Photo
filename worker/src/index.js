@@ -187,7 +187,8 @@ async function fulfillOrder(session, env) {
   }
 
   const downloads = await mintDownloads(privateKeys, env);
-  await sendDownloadEmail(email, downloads, env);
+  const downloadPageUrl = `${env.SITE_BASE_URL}/download.html?session_id=${encodeURIComponent(session.id)}`;
+  await sendDownloadEmail(email, downloads, downloadPageUrl, env);
 }
 
 async function mintDownloads(privateKeys, env) {
@@ -321,7 +322,7 @@ async function b2Authorize(env) {
 // ---------------------------------------------------------------------------
 // Email (Resend)
 
-async function sendDownloadEmail(toEmail, downloads, env) {
+async function sendDownloadEmail(toEmail, downloads, downloadPageUrl, env) {
   const plural = downloads.length > 1;
   const subject = plural
     ? `Your ${downloads.length} full-resolution photos from Adam Watson Photo`
@@ -331,6 +332,24 @@ async function sendDownloadEmail(toEmail, downloads, env) {
     .join('');
   const expiresHours = Math.round(parseInt(env.B2_DOWNLOAD_VALID_SECONDS || '172800', 10) / 3600);
   const supportEmail = env.SUPPORT_EMAIL;
+
+  // Email clients can't run JS, so a real one-click "download all" isn't
+  // possible in the message body itself -- instead, a prominent button
+  // links back to download.html (same page as right after checkout), which
+  // re-mints fresh signed URLs on every visit and has its own Download All
+  // button there. The individual links below still work directly from the
+  // inbox for anyone who just wants one photo.
+  const downloadAllHtml = plural
+    ? `
+      <p>
+        <a href="${downloadPageUrl}" style="display:inline-block;background:#b8860b;color:#ffffff;
+          padding:12px 28px;border-radius:25px;text-decoration:none;font-weight:600;">
+          Download All ${downloads.length} Photos
+        </a>
+      </p>
+      <p style="color:#888;font-size:0.9em;">Or download them individually:</p>
+    `
+    : '';
 
   const resp = await fetch('https://api.resend.com/emails', {
     method: 'POST',
@@ -344,7 +363,8 @@ async function sendDownloadEmail(toEmail, downloads, env) {
       reply_to: supportEmail,
       subject,
       html: `
-        <p>Thanks for your purchase! Click below to download your full-resolution photo${plural ? 's' : ''}:</p>
+        <p>Thanks for your purchase!${plural ? '' : ' Click below to download your full-resolution photo:'}</p>
+        ${downloadAllHtml}
         ${linksHtml}
         <p>These links expire in about ${expiresHours} hours. If they expire before you get to them, just reply
         to this email as proof of purchase and I'll send the photos directly.</p>
