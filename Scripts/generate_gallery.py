@@ -15,6 +15,7 @@ import re
 import sys
 import json
 import argparse
+from html import escape as _escape
 
 _DATE_SEQ_RE = re.compile(r'^(\d{4,})-(\d+)(?:-(\d+))?\.(\w+)$', re.I)
 
@@ -129,20 +130,24 @@ def _load_photos(csv_file):
     photos.sort(key=_natural_sort_key)
     return photos, has_any_race_number
 
-def _breadcrumb(race_name, discipline):
-    if discipline:
-        return f'''    <div class="breadcrumb">
-        <a href="albums.html">Albums</a>
-        <span>›</span>
-        <a href="{discipline.lower().replace(' ', '-')}-albums.html">{discipline}</a>
-        <span>›</span>
-        <span>{race_name}</span>
-    </div>'''
-    return f'''    <div class="breadcrumb">
-        <a href="albums.html">Albums</a>
-        <span>›</span>
-        <span>{race_name}</span>
-    </div>'''
+def _breadcrumb(race_name, discipline, crumbs=None, current_label=None):
+    """Breadcrumb trail: Albums > [trail] > this page.
+
+    The trail is normally one link to the discipline's album list (e.g.
+    "Mountain Bike" -> mountain-bike-albums.html). `crumbs` -- a list of
+    (label, href) pairs -- replaces that with any trail you like, which is
+    what a sub-album needs (Albums > Gravel > Thunder Bay Thriller > Start
+    Line). `current_label` names this page; it defaults to the race name."""
+    trail = list(crumbs or [])
+    if not trail and discipline:
+        trail = [(discipline, f"{discipline.lower().replace(' ', '-')}-albums.html")]
+
+    parts = ['<a href="albums.html">Albums</a>']
+    parts += [f'<a href="{_escape(href, quote=True)}">{_escape(label)}</a>' for label, href in trail]
+    parts.append(f'<span>{_escape(current_label or race_name)}</span>')
+
+    separator = '\n        <span>›</span>\n        '
+    return '    <div class="breadcrumb">\n        ' + separator.join(parts) + '\n    </div>'
 
 _SHARED_STYLE = '''        * {
             margin: 0;
@@ -858,7 +863,7 @@ def _cart_script(album_label, album_page, photos_var='currentPhotos'):
         AWPCart.refreshPrice();
 '''
 
-def _generate_searchable_gallery(photos, race_name, race_date, location, output_file, discipline,
+def _generate_searchable_gallery(photos, race_name, race_date, location, output_file, breadcrumb_html,
                                   paywall=False, album_label=''):
     """Race gallery with search-by-bib-number. Used when the CSV has at
     least one tagged race number."""
@@ -897,7 +902,7 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
 <body>
 {_NAV_HTML}
 
-{_breadcrumb(race_name, discipline)}
+{breadcrumb_html}
 
     <section class="gallery-section">
         <div class="gallery-header">
@@ -1129,7 +1134,7 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
     print(f"  - Unique photos (allPhotos view): {len(all_photos_unique)}")
     print(f"  - Unique race numbers: {len(by_race_number)}")
 
-def _generate_browse_gallery(photos, race_name, race_date, location, output_file, discipline,
+def _generate_browse_gallery(photos, race_name, race_date, location, output_file, breadcrumb_html,
                               paywall=False, album_label=''):
     """Plain browse-all gallery, no search. Used when the CSV has zero
     tagged race numbers."""
@@ -1149,7 +1154,7 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
 <body>
 {_NAV_HTML}
 
-{_breadcrumb(race_name, discipline)}
+{breadcrumb_html}
 
     <section class="gallery-section">
         <div class="gallery-header">
@@ -1335,7 +1340,7 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
     print(f"\nGallery contains {len(photos)} photos")
 
 def generate_gallery(csv_file, race_name, race_date, location, output_file, discipline=None,
-                      paywall=False, subalbum=None):
+                      paywall=False, subalbum=None, crumbs=None):
     """
     Generate the HTML gallery for a race, auto-detecting whether to build
     the searchable (bib-number) gallery or the plain browse gallery based
@@ -1348,6 +1353,9 @@ def generate_gallery(csv_file, race_name, race_date, location, output_file, disc
     default so existing free galleries (e.g. paid gigs) are unaffected. The
     price is not set here: cart.js asks the Worker, whose PRICE_CENTS is the
     only source of truth.
+    crumbs: optional list of (label, href) breadcrumb links that replace the
+    discipline link -- for sub-albums, the full trail down to the parent page.
+    With a subalbum, the breadcrumb's last item is the sub-album's name.
     subalbum: optional sub-album name (e.g. "Morning"). The shared cart lists
     photos by album, so this keeps sub-albums of one race distinguishable
     (e.g. "Thunder Bay Thriller - Start Line").
@@ -1356,6 +1364,7 @@ def generate_gallery(csv_file, race_name, race_date, location, output_file, disc
     print(f"Loaded {len(photos)} photo entries from CSV")
 
     album_label = f"{race_name} – {subalbum}" if subalbum else race_name
+    breadcrumb_html = _breadcrumb(race_name, discipline, crumbs, subalbum)
 
     if paywall and not any(p.get('private_key') for p in photos):
         print("⚠ --paywall set but no photo has a private_key -- did you run")
@@ -1363,10 +1372,10 @@ def generate_gallery(csv_file, race_name, race_date, location, output_file, disc
         print("  will show but purchases will fail until that's fixed.")
 
     if has_any_race_number:
-        _generate_searchable_gallery(photos, race_name, race_date, location, output_file, discipline,
+        _generate_searchable_gallery(photos, race_name, race_date, location, output_file, breadcrumb_html,
                                       paywall, album_label)
     else:
-        _generate_browse_gallery(photos, race_name, race_date, location, output_file, discipline,
+        _generate_browse_gallery(photos, race_name, race_date, location, output_file, breadcrumb_html,
                                   paywall, album_label)
 
     print(f"\nUpload to your website and test the gallery!")
@@ -1382,8 +1391,14 @@ if __name__ == '__main__':
     parser.add_argument('--output', required=True, help='Output HTML filename')
     parser.add_argument('--paywall', action='store_true',
                          help='Gate full-res downloads behind Stripe checkout (see worker/)')
+    parser.add_argument('--crumb', action='append', metavar='"LABEL|PAGE.html"',
+                         help='Breadcrumb link, repeatable, in order after "Albums"; replaces the link '
+                              'that --discipline would make. For a sub-album: '
+                              '--crumb "Gravel|gravel-albums.html" '
+                              '--crumb "Thunder Bay Thriller|thunderbaythriller-20260829.html"')
     parser.add_argument('--subalbum',
-                         help='Sub-album name for paywalled galleries, shown in the shared cart (e.g. "Morning")')
+                         help='Sub-album name: the last breadcrumb, and (for paywalled galleries) '
+                              'how the shared cart labels these photos, e.g. "Morning"')
 
     args = parser.parse_args()
 
@@ -1395,5 +1410,6 @@ if __name__ == '__main__':
         args.output,
         args.discipline,
         args.paywall,
-        args.subalbum
+        args.subalbum,
+        [tuple(c.rsplit('|', 1)) for c in (args.crumb or [])]
     )
