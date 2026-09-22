@@ -23,7 +23,10 @@
   var PRICE_KEY = 'awp_price_cents_v1';
   var PRICE_CHECKED_KEY = 'awp_price_checked_v1';
   var MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;      // carts older than this are dropped
-  var PRICE_REFRESH_MS = 60 * 60 * 1000;          // re-ask the Worker for the price at most hourly
+  var PRICE_REFRESH_MS = 5 * 60 * 1000;           // re-ask the Worker for the price at most every 5 min
+                                                   // (matches the Worker's own Cache-Control on /price,
+                                                   // so this never asks more often than that response
+                                                   // is actually fresh for anyway)
   var MAX_ITEMS = 100;                            // Stripe Checkout's limit per order
   // Only used until the Worker answers (or if it can't be reached); the real
   // price is whatever the Worker's PRICE_CENTS says.
@@ -147,7 +150,7 @@
     formatPrice: function (cents) { return '$' + (cents / 100).toFixed(2); },
     onChange: function (fn) { listeners.push(fn); },
 
-    // Ask the Worker for the current per-photo price (at most hourly).
+    // Ask the Worker for the current per-photo price (at most every PRICE_REFRESH_MS).
     refreshPrice: function () {
       var checked = parseInt(read(PRICE_CHECKED_KEY), 10) || 0;
       if (Date.now() - checked < PRICE_REFRESH_MS) return;
