@@ -1002,13 +1002,12 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
                 {_photo_card_template(paywall)}
                 `;
             }}).join('');
-
-            document.querySelector('.gallery-section').scrollIntoView({{ behavior: 'smooth', block: 'start' }});
         }}
 
         function changePage(direction) {{
             currentPage += direction;
             renderPage();
+            document.querySelector('.gallery-section').scrollIntoView({{ behavior: 'smooth', block: 'start' }});
         }}
 
         function goToPage() {{
@@ -1019,6 +1018,7 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
             if (pageNum && pageNum >= 1 && pageNum <= totalPages) {{
                 currentPage = pageNum;
                 renderPage();
+                document.querySelector('.gallery-section').scrollIntoView({{ behavior: 'smooth', block: 'start' }});
                 input.value = '';
             }} else {{
                 alert(`Please enter a page number between 1 and ${{totalPages}}`);
@@ -1222,13 +1222,12 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
                 {_photo_card_template(paywall)}
                 `;
             }}).join('');
-
-            document.querySelector('.gallery-section').scrollIntoView({{ behavior: 'smooth', block: 'start' }});
         }}
 
         function changePage(direction) {{
             currentPage += direction;
             renderPage();
+            document.querySelector('.gallery-section').scrollIntoView({{ behavior: 'smooth', block: 'start' }});
         }}
 
         function goToPage() {{
@@ -1239,6 +1238,7 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
             if (pageNum && pageNum >= 1 && pageNum <= totalPages) {{
                 currentPage = pageNum;
                 renderPage();
+                document.querySelector('.gallery-section').scrollIntoView({{ behavior: 'smooth', block: 'start' }});
                 input.value = '';
             }} else {{
                 alert(`Please enter a page number between 1 and ${{totalPages}}`);

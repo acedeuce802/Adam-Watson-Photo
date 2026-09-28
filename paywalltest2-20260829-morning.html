@@ -877,13 +877,12 @@
                 </div>
                 `;
             }).join('');
-
-            document.querySelector('.gallery-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         function changePage(direction) {
             currentPage += direction;
             renderPage();
+            document.querySelector('.gallery-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         function goToPage() {
@@ -894,6 +893,7 @@
             if (pageNum && pageNum >= 1 && pageNum <= totalPages) {
                 currentPage = pageNum;
                 renderPage();
+                document.querySelector('.gallery-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
                 input.value = '';
             } else {
                 alert(`Please enter a page number between 1 and ${totalPages}`);
