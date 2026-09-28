@@ -298,75 +298,6 @@ function fmtDate(iso) {
     };
 }
 
-function venmoSnippet() {
-    return `
-------------------------------------------------------------
-MANUAL EDIT: Venmo tip link (paste into the generated .html)
-------------------------------------------------------------
-Add this CSS inside the <style> block, right after the existing
-.lightbox-flickr / .lightbox-download rules:
-
-        .lightbox-tip {
-            position: fixed;
-            bottom: 90px;
-            right: 30px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            color: #999;
-            text-decoration: none;
-            font-size: 0.82em;
-            padding: 6px 10px;
-            border-radius: 20px;
-            background: rgba(0,0,0,0.5);
-            border: 1px solid transparent;
-            transition: color 0.2s, border-color 0.2s;
-            z-index: 10000;
-            white-space: nowrap;
-        }
-
-        .lightbox-tip:hover {
-            color: #cfe6fb;
-            border-color: #3a7bb0;
-        }
-
-        .lightbox-tip .venmo-mark {
-            width: 14px;
-            height: 14px;
-            border-radius: 4px;
-            background: #4c9fe0;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .lightbox-tip .venmo-mark svg {
-            width: 9px;
-            height: 9px;
-            display: block;
-        }
-
-And inside the existing @media (max-width: 640px) block:
-
-            .lightbox-tip {
-                left: 20px;
-                right: 20px;
-                bottom: 150px;
-                justify-content: center;
-                text-align: center;
-            }
-
-Then add this HTML right after the #lightbox-download button
-(inside <div id="lightbox">):
-
-        <a id="lightbox-tip" class="lightbox-tip" href="https://venmo.com/u/wats0252" target="_blank" rel="noopener">
-            <span class="venmo-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M17.5 3.5c1.2 2 1.4 4.7.6 7.7-1.4 5.3-6.2 10-11 12l-2.6-15.7 4.2-.4.9 8.6c2.3-2 4.4-6.4 3.2-9.4-.6-1.5-1.8-2.3-1.8-2.3l4.5-1.1c.6.3 1.4.9 2 1.6z" fill="white"/></svg></span>
-            Buy me a trail snack
-        </a>
-`;
-}
-
 function generate() {
     const raceName = document.getElementById('raceName').value.trim() || 'Race Name';
     const slug = document.getElementById('slug').value.trim() || slugify(raceName);
@@ -435,7 +366,7 @@ function generate() {
         out += `python merge_b2_thumbnails.py race_tagging.csv b2_thumbnails.json b2_watermarked.json --private-json b2_originals.json\n\n`;
 
         out += `# 8. Generate the gallery page\n`;
-        out += `python generate_gallery.py --csv race_tagging.csv --race "${raceName}" --date "${dateDisplay}" --location "${location}" ${crumbArgs.join(' ')}${subalbumArg} --output ${outputFile} --paywall\n`;
+        out += `python generate_gallery.py --csv race_tagging.csv --race "${raceName}" --date "${dateDisplay}" --location "${location}" ${crumbArgs.join(' ')}${subalbumArg} --output ${outputFile} --paywall${venmo ? ' --venmo-tip' : ''}\n`;
     } else {
         out += `# 3. Upload thumbnails (public bucket)\n`;
         out += `python upload_to_b2.py thumbnails race-photos-public YOUR_KEY_ID YOUR_APP_KEY --subfolder ${b2Folder}/thumbnails\n`;
@@ -449,7 +380,7 @@ function generate() {
         out += `python merge_b2_thumbnails.py race_tagging.csv b2_thumbnails.json b2_originals.json\n\n`;
 
         out += `# 6. Generate the gallery page\n`;
-        out += `python generate_gallery.py --csv race_tagging.csv --race "${raceName}" --date "${dateDisplay}" --location "${location}" ${crumbArgs.join(' ')}${subalbumArg} --output ${outputFile}\n`;
+        out += `python generate_gallery.py --csv race_tagging.csv --race "${raceName}" --date "${dateDisplay}" --location "${location}" ${crumbArgs.join(' ')}${subalbumArg} --output ${outputFile}${venmo ? ' --venmo-tip' : ''}\n`;
     }
 
     out += `\n\n------------------------------------------------------------\n`;
@@ -461,10 +392,6 @@ function generate() {
         out += `- Link ${outputFile} from ${hubPage} (create ${hubPage} first if this is the first sub-album)\n`;
     }
     out += `- git add / commit / push\n`;
-
-    if (venmo) {
-        out += venmoSnippet();
-    }
 
     document.getElementById('output').value = out;
     document.getElementById('outputCard').classList.add('visible');

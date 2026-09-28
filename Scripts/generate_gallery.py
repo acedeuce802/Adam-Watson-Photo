@@ -138,9 +138,16 @@ def _breadcrumb(race_name, discipline, crumbs=None, current_label=None):
     (label, href) pairs -- replaces that with any trail you like, which is
     what a sub-album needs (Albums > Gravel > Thunder Bay Thriller > Start
     Line). `current_label` names this page; it defaults to the race name."""
+    # Most disciplines' listing page is just their slugified name, but
+    # "Track Cycling" -> track-albums.html breaks that pattern, so it needs
+    # an explicit override instead of feeding the auto-slugify.
+    _DISCIPLINE_PAGE_OVERRIDES = {'Track Cycling': 'track-albums.html'}
+
     trail = list(crumbs or [])
     if not trail and discipline:
-        trail = [(discipline, f"{discipline.lower().replace(' ', '-')}-albums.html")]
+        page = _DISCIPLINE_PAGE_OVERRIDES.get(
+            discipline, f"{discipline.lower().replace(' ', '-')}-albums.html")
+        trail = [(discipline, page)]
 
     parts = ['<a href="albums.html">Albums</a>']
     parts += [f'<a href="{_escape(href, quote=True)}">{_escape(label)}</a>' for label, href in trail]
@@ -723,6 +730,73 @@ _SHARED_STYLE = '''        * {
         }
 '''
 
+def _venmo_tip_style():
+    """CSS for the optional lightbox Venmo tip link (see _venmo_tip_html).
+    Its own separate @media block, so it doesn't need to touch the shared
+    mobile media query above."""
+    return '''
+        .lightbox-tip {
+            position: fixed;
+            bottom: 90px;
+            right: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #999;
+            text-decoration: none;
+            font-size: 0.82em;
+            padding: 6px 10px;
+            border-radius: 20px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid transparent;
+            transition: color 0.2s, border-color 0.2s;
+            z-index: 10000;
+            white-space: nowrap;
+        }
+
+        .lightbox-tip:hover {
+            color: #cfe6fb;
+            border-color: #3a7bb0;
+        }
+
+        .lightbox-tip .venmo-mark {
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+            background: #4c9fe0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .lightbox-tip .venmo-mark svg {
+            width: 9px;
+            height: 9px;
+            display: block;
+        }
+
+        @media (max-width: 640px) {
+            .lightbox-tip {
+                left: 20px;
+                right: 20px;
+                bottom: 150px;
+                justify-content: center;
+                text-align: center;
+            }
+        }
+'''
+
+def _venmo_tip_html():
+    """The tip link itself, placed just above the Download button. Opt-in
+    per race via --venmo-tip -- see the reserved-follow-up note in project
+    memory (footer tip line is sitewide already; this one's for races shot
+    on spec rather than paid gigs)."""
+    return '''        <a id="lightbox-tip" class="lightbox-tip" href="https://venmo.com/u/wats0252" target="_blank" rel="noopener">
+            <span class="venmo-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M17.5 3.5c1.2 2 1.4 4.7.6 7.7-1.4 5.3-6.2 10-11 12l-2.6-15.7 4.2-.4.9 8.6c2.3-2 4.4-6.4 3.2-9.4-.6-1.5-1.8-2.3-1.8-2.3l4.5-1.1c.6.3 1.4.9 2 1.6z" fill="white"/></svg></span>
+            Buy me a trail snack
+        </a>'''
+
 _NAV_HTML = '''    <nav>
         <div class="nav-container">
             <ul class="nav-links">
@@ -864,7 +938,7 @@ def _cart_script(album_label, album_page, photos_var='currentPhotos'):
 '''
 
 def _generate_searchable_gallery(photos, race_name, race_date, location, output_file, breadcrumb_html,
-                                  paywall=False, album_label=''):
+                                  paywall=False, album_label='', venmo_tip=False):
     """Race gallery with search-by-bib-number. Used when the CSV has at
     least one tagged race number."""
 
@@ -897,7 +971,7 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
     <title>{race_name} Photos | Adam Watson Photo</title>
 {_og_tags(race_name, location, race_date, output_file)}
     <style>
-{_SHARED_STYLE}    </style>
+{_SHARED_STYLE}{_venmo_tip_style() if venmo_tip else ''}    </style>
 </head>
 <body>
 {_NAV_HTML}
@@ -943,6 +1017,7 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
         <div class="lightbox-counter" id="lightbox-counter"></div>
 {'' if paywall else '        <a id="lightbox-flickr" class="lightbox-flickr" href="" target="_blank">View Hi-Res</a>'}
 {_lightbox_buy_button_html() if paywall else '        <button id="lightbox-download" class="lightbox-download" onclick="downloadImage()">Download</button>'}
+{_venmo_tip_html() if venmo_tip else ''}
     </div>
 
 {_FOOTER_HTML}
@@ -1135,7 +1210,7 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
     print(f"  - Unique race numbers: {len(by_race_number)}")
 
 def _generate_browse_gallery(photos, race_name, race_date, location, output_file, breadcrumb_html,
-                              paywall=False, album_label=''):
+                              paywall=False, album_label='', venmo_tip=False):
     """Plain browse-all gallery, no search. Used when the CSV has zero
     tagged race numbers."""
 
@@ -1149,7 +1224,7 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
     <title>{race_name} Photos | Adam Watson Photo</title>
 {_og_tags(race_name, location, race_date, output_file)}
     <style>
-{_SHARED_STYLE}    </style>
+{_SHARED_STYLE}{_venmo_tip_style() if venmo_tip else ''}    </style>
 </head>
 <body>
 {_NAV_HTML}
@@ -1187,6 +1262,7 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
         <div class="lightbox-counter" id="lightbox-counter"></div>
 {'' if paywall else '        <a id="lightbox-flickr" class="lightbox-flickr" href="" target="_blank">View Hi-Res</a>'}
 {_lightbox_buy_button_html() if paywall else '        <button id="lightbox-download" class="lightbox-download" onclick="downloadImage()">Download</button>'}
+{_venmo_tip_html() if venmo_tip else ''}
     </div>
 
 {_FOOTER_HTML}
@@ -1340,7 +1416,7 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
     print(f"\nGallery contains {len(photos)} photos")
 
 def generate_gallery(csv_file, race_name, race_date, location, output_file, discipline=None,
-                      paywall=False, subalbum=None, crumbs=None):
+                      paywall=False, subalbum=None, crumbs=None, venmo_tip=False):
     """
     Generate the HTML gallery for a race, auto-detecting whether to build
     the searchable (bib-number) gallery or the plain browse gallery based
@@ -1359,6 +1435,10 @@ def generate_gallery(csv_file, race_name, race_date, location, output_file, disc
     subalbum: optional sub-album name (e.g. "Morning"). The shared cart lists
     photos by album, so this keeps sub-albums of one race distinguishable
     (e.g. "Thunder Bay Thriller - Start Line").
+    venmo_tip: if True, adds a "Buy me a trail snack" Venmo link to the
+    lightbox, just above the Download button. Opt-in per race -- meant for
+    races shot on spec rather than paid gigs (the footer tip line is
+    sitewide already and unaffected by this flag).
     """
     photos, has_any_race_number = _load_photos(csv_file)
     print(f"Loaded {len(photos)} photo entries from CSV")
@@ -1373,10 +1453,10 @@ def generate_gallery(csv_file, race_name, race_date, location, output_file, disc
 
     if has_any_race_number:
         _generate_searchable_gallery(photos, race_name, race_date, location, output_file, breadcrumb_html,
-                                      paywall, album_label)
+                                      paywall, album_label, venmo_tip)
     else:
         _generate_browse_gallery(photos, race_name, race_date, location, output_file, breadcrumb_html,
-                                  paywall, album_label)
+                                  paywall, album_label, venmo_tip)
 
     print(f"\nUpload to your website and test the gallery!")
 
@@ -1399,6 +1479,9 @@ if __name__ == '__main__':
     parser.add_argument('--subalbum',
                          help='Sub-album name: the last breadcrumb, and (for paywalled galleries) '
                               'how the shared cart labels these photos, e.g. "Morning"')
+    parser.add_argument('--venmo-tip', action='store_true',
+                         help='Add a "Buy me a trail snack" Venmo link to the lightbox, '
+                              'above the Download button. For races shot on spec, not paid gigs.')
 
     args = parser.parse_args()
 
@@ -1411,5 +1494,6 @@ if __name__ == '__main__':
         args.discipline,
         args.paywall,
         args.subalbum,
-        [tuple(c.rsplit('|', 1)) for c in (args.crumb or [])]
+        [tuple(c.rsplit('|', 1)) for c in (args.crumb or [])],
+        args.venmo_tip
     )

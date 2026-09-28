@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crank Cross Photos | Adam Watson Photo</title>
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://adamwatsonphoto.com/crank-cross-20260926-vibes.html">
+    <meta property="og:site_name" content="Adam Watson Photo">
+    <meta property="og:title" content="Crank Cross Photos | Adam Watson Photo">
+    <meta property="og:description" content="Crank Cross -- race photos from Madison Heights, MI • September 26th, 2026.">
+    <meta property="og:image" content="https://adamwatsonphoto.com/images/og-logo.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Crank Cross Photos | Adam Watson Photo">
+    <meta name="twitter:description" content="Crank Cross -- race photos from Madison Heights, MI • September 26th, 2026.">
+    <meta name="twitter:image" content="https://adamwatsonphoto.com/images/og-logo.jpg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        nav {
+            background: #0a0a0a;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1.1em;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        .instagram-link {
+            color: #888;
+            transition: opacity 0.3s;
+            display: inline-flex;
+            align-items: center;
+            outline: none;
+            border: none;
+        }
+
+        .instagram-link:focus {
+            outline: none;
+        }
+
+        .instagram-icon {
+            width: 24px;
+            height: 24px;
+            filter: brightness(0.6);
+            display: block;
+            outline: none;
+            border: none;
+        }
+
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 30px auto 0;
+            padding: 0 20px;
+        }
+
+        .breadcrumb a {
+            color: #888;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: #fff;
+        }
+
+        .breadcrumb span {
+            color: #555;
+            margin: 0 10px;
+        }
+
+        .gallery-section {
+            max-width: 1200px;
+            margin: 50px auto 80px;
+            padding: 0 20px;
+        }
+
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .gallery-header h1 {
+            font-size: 3em;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .gallery-header p {
+            font-size: 1.2em;
+            color: #999;
+            margin-bottom: 5px;
+        }
+
+        .photo-count {
+            font-size: 1em;
+            color: #666;
+        }
+
+        .search-box {
+            max-width: 500px;
+            margin: 0 auto 50px;
+            text-align: center;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1.2em;
+            background: #0f0f0f;
+            border: 2px solid #333;
+            border-radius: 8px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #555;
+        }
+
+        .search-box label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            color: #aaa;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .photo-card {
+            background: #0f0f0f;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #222;
+            transition: transform 0.3s, border-color 0.3s;
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-5px);
+            border-color: #444;
+        }
+
+        .photo-card.selected {
+            border-color: #d4a017;
+        }
+
+        .select-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.4);
+            color: #fff;
+            font-size: 1.1em;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 5;
+            transition: all 0.2s;
+        }
+
+        .select-toggle:hover {
+            border-color: #fff;
+            background: rgba(0,0,0,0.8);
+        }
+
+        .photo-card.selected .select-toggle {
+            background: #d4a017;
+            border-color: #d4a017;
+        }
+
+        .photo-thumbnail {
+            width: 100%;
+            height: 250px;
+            background: #2a2a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 3em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .photo-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+            font-size: 1.2em;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 40px 0;
+            padding: 20px;
+        }
+
+        .pagination button {
+            background: #2a2a2a;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .pagination button:hover:not(:disabled) {
+            background: #3a3a3a;
+            border-color: #666;
+        }
+
+        .pagination button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .pagination .page-info {
+            color: #999;
+            font-size: 1em;
+            margin: 0 15px;
+        }
+
+        .page-input {
+            background: #2a2a2a;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 10px 12px;
+            border-radius: 5px;
+            font-size: 1em;
+            width: 70px;
+            text-align: center;
+        }
+
+        .page-input:focus {
+            outline: none;
+            border-color: #666;
+        }
+
+        .page-input::-webkit-inner-spin-button,
+        .page-input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .page-input {
+            -moz-appearance: textfield;
+        }
+
+        footer {
+            background: #0a0a0a;
+            padding: 40px 20px;
+            border-top: 1px solid #222;
+        }
+
+        .footer-nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .footer-nav a {
+            color: #888;
+            text-decoration: none;
+        }
+
+        .copyright {
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+        }
+
+        .lightbox.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-content {
+            max-width: 95%;
+            max-height: 95%;
+            position: relative;
+        }
+
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 95vh;
+            object-fit: contain;
+            display: block;
+        }
+
+        .lightbox-close {
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            font-size: 50px;
+            color: #fff;
+            cursor: pointer;
+            background: rgba(0,0,0,0.7);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+            z-index: 10000;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .lightbox-nav {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 50px;
+            color: #fff;
+            cursor: pointer;
+            background: rgba(0,0,0,0.7);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+            z-index: 10000;
+        }
+
+        .lightbox-nav:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .lightbox-prev { left: 30px; }
+        .lightbox-next { right: 30px; }
+
+        .lightbox-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            z-index: 10000;
+        }
+
+        .lightbox-download {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 25px;
+            border: 1px solid #666;
+            font-size: 1em;
+            font-family: inherit;
+            line-height: 1.5;
+            height: 48px;
+            display: inline-flex;
+            align-items: center;
+            box-sizing: border-box;
+            transition: all 0.3s;
+            z-index: 10000;
+            cursor: pointer;
+        }
+
+        .lightbox-download:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: #999;
+        }
+
+        .lightbox-flickr {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 25px;
+            border: 1px solid #666;
+            text-decoration: none;
+            font-size: 1em;
+            line-height: 1.5;
+            height: 48px;
+            display: inline-flex;
+            align-items: center;
+            box-sizing: border-box;
+            white-space: nowrap;
+            transition: all 0.3s;
+            z-index: 10000;
+        }
+
+        .lightbox-flickr:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: #999;
+        }
+
+        .lightbox-tip {
+            position: fixed;
+            bottom: 90px;
+            right: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #999;
+            text-decoration: none;
+            font-size: 0.82em;
+            padding: 6px 10px;
+            border-radius: 20px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid transparent;
+            transition: color 0.2s, border-color 0.2s;
+            z-index: 10000;
+            white-space: nowrap;
+        }
+
+        .lightbox-tip:hover {
+            color: #cfe6fb;
+            border-color: #3a7bb0;
+        }
+
+        .lightbox-tip .venmo-mark {
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+            background: #4c9fe0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .lightbox-tip .venmo-mark svg {
+            width: 9px;
+            height: 9px;
+            display: block;
+        }
+
+        .lightbox-purchase-actions {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 12px;
+            z-index: 10000;
+        }
+
+        .lightbox-buy {
+            background: #b8860b;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 25px;
+            border: 1px solid #d4a017;
+            font-size: 1em;
+            font-family: inherit;
+            font-weight: 600;
+            line-height: 1.5;
+            height: 48px;
+            display: inline-flex;
+            align-items: center;
+            box-sizing: border-box;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .lightbox-add-cart {
+            background: rgba(0,0,0,0.7);
+            border: 1px solid #666;
+            font-weight: 500;
+        }
+
+        .lightbox-add-cart:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: #999;
+        }
+
+        .lightbox-buy:hover {
+            background: #d4a017;
+        }
+
+        .lightbox-buy:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+
+        .watermark-note {
+            position: fixed;
+            bottom: 88px;
+            right: 30px;
+            color: #bbb;
+            font-size: 0.85em;
+            z-index: 10000;
+            max-width: 260px;
+            text-align: right;
+            background: rgba(0,0,0,0.65);
+            padding: 6px 12px;
+            border-radius: 10px;
+        }
+
+        .watermark-note a {
+            color: #d4a017;
+            text-decoration: none;
+        }
+
+        .watermark-note a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 640px) {
+            .lightbox-counter {
+                top: 20px;
+                bottom: auto;
+                left: 50%;
+                right: auto;
+                transform: translateX(-50%);
+            }
+
+            .lightbox-flickr {
+                left: 20px;
+                right: 20px;
+                bottom: 90px;
+                justify-content: center;
+                text-align: center;
+            }
+
+            .lightbox-download {
+                left: 20px;
+                right: 20px;
+                bottom: 20px;
+                justify-content: center;
+            }
+
+            .lightbox-tip {
+                left: 20px;
+                right: 20px;
+                bottom: 150px;
+                justify-content: center;
+                text-align: center;
+            }
+
+            .lightbox-purchase-actions {
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 8px;
+            }
+
+            .watermark-note {
+                bottom: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="albums.html">Albums</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="https://www.instagram.com/adamwatson.photo/" target="_blank" class="instagram-link"><img src="images/instagram-icon.png" alt="Instagram" class="instagram-icon"></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="breadcrumb">
+        <a href="albums.html">Albums</a>
+        <span>›</span>
+        <a href="cyclocross-albums.html">Cyclocross</a>
+        <span>›</span>
+        <a href="crank-cross-20260926.html">Crank Cross</a>
+        <span>›</span>
+        <span>Vibes</span>
+    </div>
+
+    <section class="gallery-section">
+        <div class="gallery-header">
+            <h1>Crank Cross</h1>
+            <p>Madison Heights, MI • September 26th, 2026</p>
+            <p class="photo-count">76 photos</p>
+        </div>
+
+        <div id="photoGallery" class="photo-grid">
+            <!-- Photos will be inserted here by JavaScript -->
+        </div>
+
+        <div id="pagination" class="pagination" style="display: none;">
+            <button id="prevPage" onclick="changePage(-1)">← Previous</button>
+            <span class="page-info" id="pageInfo">Page 1 of 1</span>
+            <input type="number" id="pageInput" class="page-input" min="1" onkeypress="if(event.key === 'Enter') goToPage()">
+            <button onclick="goToPage()">Go</button>
+            <button id="nextPage" onclick="changePage(1)">Next →</button>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <button class="lightbox-close" id="lightbox-close">&times;</button>
+        <button class="lightbox-nav lightbox-prev" id="lightbox-prev">&#8249;</button>
+        <div class="lightbox-content">
+            <img id="lightbox-image" class="lightbox-image" src="" alt="Full resolution photo">
+        </div>
+        <button class="lightbox-nav lightbox-next" id="lightbox-next">&#8250;</button>
+        <div class="lightbox-counter" id="lightbox-counter"></div>
+        <a id="lightbox-flickr" class="lightbox-flickr" href="" target="_blank">View Hi-Res</a>
+        <button id="lightbox-download" class="lightbox-download" onclick="downloadImage()">Download</button>
+        <a id="lightbox-tip" class="lightbox-tip" href="https://venmo.com/u/wats0252" target="_blank" rel="noopener">
+            <span class="venmo-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M17.5 3.5c1.2 2 1.4 4.7.6 7.7-1.4 5.3-6.2 10-11 12l-2.6-15.7 4.2-.4.9 8.6c2.3-2 4.4-6.4 3.2-9.4-.6-1.5-1.8-2.3-1.8-2.3l4.5-1.1c.6.3 1.4.9 2 1.6z" fill="white"/></svg></span>
+            Buy me a trail snack
+        </a>
+    </div>
+
+    <footer>
+        <ul class="footer-nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="albums.html">Albums</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="https://www.instagram.com/adamwatson.photo/" target="_blank" class="instagram-link"><img src="images/instagram-icon.png" alt="Instagram" class="instagram-icon"></a></li>
+        </ul>
+        <p class="copyright">&copy; 2025 Adam Watson Photo. All rights reserved.</p>
+        <p class="copyright" style="margin-top: 8px;"><a href="privacy-policy.html" style="color: inherit; text-decoration: none;">Privacy Policy</a> &nbsp;&middot;&nbsp; <a href="terms.html" style="color: inherit; text-decoration: none;">Terms of Sale</a></p>
+    </footer>
+
+    <script src="cart.js"></script>
+    <script>
+        const photos = [
+        {
+                "number": "1",
+                "filename": "2026_CC_1959.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1959.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1959.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1959.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1959.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "2",
+                "filename": "2026_CC_1960.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1960.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1960.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1960.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1960.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "3",
+                "filename": "2026_CC_1961.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1961.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1961.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1961.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1961.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "4",
+                "filename": "2026_CC_1962.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1962.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1962.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1962.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1962.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "5",
+                "filename": "2026_CC_1963.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1963.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1963.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1963.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1963.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "6",
+                "filename": "2026_CC_1964.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1964.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1964.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1964.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1964.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "7",
+                "filename": "2026_CC_1965.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1965.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1965.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1965.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1965.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "8",
+                "filename": "2026_CC_1966.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1966.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1966.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1966.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1966.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "9",
+                "filename": "2026_CC_1967.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1967.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1967.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1967.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1967.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "10",
+                "filename": "2026_CC_1968.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1968.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1968.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1968.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1968.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "11",
+                "filename": "2026_CC_1969.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1969.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1969.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1969.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1969.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "12",
+                "filename": "2026_CC_1970.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1970.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1970.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1970.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1970.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "13",
+                "filename": "2026_CC_1971.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1971.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1971.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1971.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1971.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "14",
+                "filename": "2026_CC_1972.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1972.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1972.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1972.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1972.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "15",
+                "filename": "2026_CC_1973.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1973.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1973.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1973.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1973.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "16",
+                "filename": "2026_CC_1974.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1974.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1974.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1974.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1974.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "17",
+                "filename": "2026_CC_1975.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1975.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1975.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1975.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1975.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "18",
+                "filename": "2026_CC_1976.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1976.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1976.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1976.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1976.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "19",
+                "filename": "2026_CC_1977.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1977.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1977.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1977.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1977.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "20",
+                "filename": "2026_CC_1978.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1978.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1978.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1978.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1978.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "21",
+                "filename": "2026_CC_1979.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1979.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1979.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1979.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1979.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "22",
+                "filename": "2026_CC_1980.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1980.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1980.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1980.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1980.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "23",
+                "filename": "2026_CC_1981.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1981.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1981.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1981.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1981.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "24",
+                "filename": "2026_CC_1982.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1982.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1982.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1982.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1982.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "25",
+                "filename": "2026_CC_1983.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1983.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1983.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1983.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1983.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "26",
+                "filename": "2026_CC_1984.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1984.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1984.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1984.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1984.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "27",
+                "filename": "2026_CC_1985.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1985.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1985.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1985.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1985.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "28",
+                "filename": "2026_CC_1986.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1986.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1986.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1986.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1986.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "29",
+                "filename": "2026_CC_1987.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1987.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1987.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1987.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1987.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "30",
+                "filename": "2026_CC_1988.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1988.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1988.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1988.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1988.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "31",
+                "filename": "2026_CC_1989.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1989.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1989.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1989.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1989.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "32",
+                "filename": "2026_CC_1990.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1990.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1990.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1990.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1990.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "33",
+                "filename": "2026_CC_1991.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1991.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1991.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1991.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1991.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "34",
+                "filename": "2026_CC_1992.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1992.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1992.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1992.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1992.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "35",
+                "filename": "2026_CC_1993.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1993.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1993.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1993.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1993.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "36",
+                "filename": "2026_CC_1994.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1994.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1994.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1994.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1994.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "37",
+                "filename": "2026_CC_1995.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1995.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1995.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1995.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1995.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "38",
+                "filename": "2026_CC_1996.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1996.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1996.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1996.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1996.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "39",
+                "filename": "2026_CC_1997.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1997.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1997.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1997.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1997.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "40",
+                "filename": "2026_CC_1998.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1998.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1998.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1998.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1998.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "41",
+                "filename": "2026_CC_1999.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1999.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_1999.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1999.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_1999.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "42",
+                "filename": "2026_CC_2000.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2000.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2000.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2000.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2000.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "43",
+                "filename": "2026_CC_2001.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2001.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2001.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2001.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2001.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "44",
+                "filename": "2026_CC_2002.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2002.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2002.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2002.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2002.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "45",
+                "filename": "2026_CC_2003.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2003.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2003.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2003.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2003.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "46",
+                "filename": "2026_CC_2004.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2004.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2004.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2004.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2004.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "47",
+                "filename": "2026_CC_2005.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2005.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2005.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2005.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2005.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "48",
+                "filename": "2026_CC_2006.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2006.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2006.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2006.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2006.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "49",
+                "filename": "2026_CC_2007.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2007.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2007.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2007.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2007.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "50",
+                "filename": "2026_CC_2008.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2008.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2008.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2008.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2008.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "51",
+                "filename": "2026_CC_2009.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2009.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2009.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2009.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2009.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "52",
+                "filename": "2026_CC_2010.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2010.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2010.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2010.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2010.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "53",
+                "filename": "2026_CC_2011.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2011.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2011.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2011.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2011.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "54",
+                "filename": "2026_CC_2012.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2012.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2012.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2012.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2012.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "55",
+                "filename": "2026_CC_2013.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2013.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2013.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2013.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2013.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "56",
+                "filename": "2026_CC_2014.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2014.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2014.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2014.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2014.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "57",
+                "filename": "2026_CC_2015.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2015.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2015.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2015.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2015.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "58",
+                "filename": "2026_CC_2016.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2016.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2016.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2016.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2016.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "59",
+                "filename": "2026_CC_2017.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2017.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2017.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2017.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2017.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "60",
+                "filename": "2026_CC_2018.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2018.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2018.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2018.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2018.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "61",
+                "filename": "2026_CC_2019.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2019.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2019.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2019.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2019.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "62",
+                "filename": "2026_CC_2020.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2020.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2020.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2020.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2020.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "63",
+                "filename": "2026_CC_2021.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2021.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2021.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2021.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2021.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "64",
+                "filename": "2026_CC_2022.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2022.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2022.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2022.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2022.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "65",
+                "filename": "2026_CC_2023.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2023.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2023.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2023.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2023.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "66",
+                "filename": "2026_CC_2024.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2024.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2024.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2024.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2024.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "67",
+                "filename": "2026_CC_2025.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2025.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2025.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2025.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2025.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "68",
+                "filename": "2026_CC_2026.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2026.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2026.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2026.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2026.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "69",
+                "filename": "2026_CC_2027.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2027.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2027.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2027.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2027.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "70",
+                "filename": "2026_CC_2028.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2028.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2028.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2028.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2028.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "71",
+                "filename": "2026_CC_2029.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2029.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2029.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2029.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2029.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "72",
+                "filename": "2026_CC_2030.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2030.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2030.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2030.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2030.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "73",
+                "filename": "2026_CC_2031.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2031.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2031.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2031.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2031.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "74",
+                "filename": "2026_CC_2032.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2032.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2032.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2032.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2032.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "75",
+                "filename": "2026_CC_2033.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2033.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2033.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2033.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2033.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        },
+        {
+                "number": "76",
+                "filename": "2026_CC_2034.jpg",
+                "url": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2034.jpg",
+                "thumbnail": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/thumbnails/2026_CC_2034.jpg",
+                "original": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2034.jpg",
+                "download": "https://f005.backblazeb2.com/file/race-photos-public/2026/20260926_crank-cross/vibes/originals/2026_CC_2034.jpg",
+                "private_key": "",
+                "race_number": "",
+                "all_race_numbers": ""
+        }
+];
+        const gallery = document.getElementById('photoGallery');
+        const pagination = document.getElementById('pagination');
+        const pageInfo = document.getElementById('pageInfo');
+        const prevButton = document.getElementById('prevPage');
+        const nextButton = document.getElementById('nextPage');
+
+        let currentPage = 1;
+        let photosPerPage = 100;
+        let currentLightboxIndex = 0;
+
+        function renderPage() {
+            const totalPages = Math.ceil(photos.length / photosPerPage);
+            const startIndex = (currentPage - 1) * photosPerPage;
+            const endIndex = Math.min(startIndex + photosPerPage, photos.length);
+            const pagePhotos = photos.slice(startIndex, endIndex);
+
+            pageInfo.textContent = `Page ${currentPage} of ${totalPages} (${photos.length} photos)`;
+            prevButton.disabled = currentPage === 1;
+            nextButton.disabled = currentPage === totalPages;
+
+            pagination.style.display = totalPages > 1 ? 'flex' : 'none';
+
+            gallery.innerHTML = pagePhotos.map((photo, index) => {
+                const actualIndex = startIndex + index;
+                return `
+                <div class="photo-card" onclick="openLightbox(${actualIndex})">
+                    <div class="photo-thumbnail">
+                        ${photo.thumbnail ? `<img src="${photo.thumbnail}" alt="Race photo">` : '📷'}
+                    </div>
+                </div>
+                `;
+            }).join('');
+
+            document.querySelector('.gallery-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function changePage(direction) {
+            currentPage += direction;
+            renderPage();
+        }
+
+        function goToPage() {
+            const input = document.getElementById('pageInput');
+            const pageNum = parseInt(input.value);
+            const totalPages = Math.ceil(photos.length / photosPerPage);
+
+            if (pageNum && pageNum >= 1 && pageNum <= totalPages) {
+                currentPage = pageNum;
+                renderPage();
+                input.value = '';
+            } else {
+                alert(`Please enter a page number between 1 and ${totalPages}`);
+            }
+        }
+
+        renderPage();
+
+        function openLightbox(index) {
+            currentLightboxIndex = index;
+            const photo = photos[index];
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const counter = document.getElementById('lightbox-counter');
+            const download = document.getElementById('lightbox-download');
+            const flickrLink = document.getElementById('lightbox-flickr');
+
+            const imageUrl = photo.original || photo.url;
+            lightboxImage.src = imageUrl;
+            counter.textContent = `${index + 1} / ${photos.length}`;
+            if (download) download.href = photo.download || imageUrl;
+            if (flickrLink) flickrLink.href = photo.url;
+
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        function navigateLightbox(direction) {
+            currentLightboxIndex += direction;
+
+            if (currentLightboxIndex < 0) {
+                currentLightboxIndex = photos.length - 1;
+            } else if (currentLightboxIndex >= photos.length) {
+                currentLightboxIndex = 0;
+            }
+
+            const photo = photos[currentLightboxIndex];
+            const lightboxImage = document.getElementById('lightbox-image');
+            const counter = document.getElementById('lightbox-counter');
+            const download = document.getElementById('lightbox-download');
+            const flickrLink = document.getElementById('lightbox-flickr');
+
+            const imageUrl = photo.original || photo.url;
+            lightboxImage.src = imageUrl;
+            counter.textContent = `${currentLightboxIndex + 1} / ${photos.length}`;
+            if (download) download.href = photo.download || imageUrl;
+            if (flickrLink) flickrLink.href = photo.url;
+        }
+
+        document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+        document.getElementById('lightbox-prev').addEventListener('click', () => navigateLightbox(-1));
+        document.getElementById('lightbox-next').addEventListener('click', () => navigateLightbox(1));
+
+        function downloadImage() {
+            const photo = photos[currentLightboxIndex];
+            const imageUrl = photo.download || photo.original || photo.url;
+            const filename = photo.filename || decodeURIComponent(imageUrl.split('/').pop().split('?')[0]) || 'photo.jpg';
+
+            fetch(imageUrl)
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                })
+                .catch(error => {
+                    console.error('Download failed:', error);
+                    window.open(imageUrl, '_blank');
+                });
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('lightbox').classList.contains('active')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') navigateLightbox(-1);
+                if (e.key === 'ArrowRight') navigateLightbox(1);
+            }
+        });
+
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target.id === 'lightbox') closeLightbox();
+        });
+    </script>
+</body>
+</html>

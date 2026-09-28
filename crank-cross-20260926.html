@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyclocross Albums | Adam Watson Photo</title>
+    <title>Crank Cross | Adam Watson Photo</title>
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://adamwatsonphoto.com/cyclocross-albums.html">
+    <meta property="og:url" content="https://adamwatsonphoto.com/crank-cross-20260926.html">
     <meta property="og:site_name" content="Adam Watson Photo">
-    <meta property="og:title" content="Cyclocross Albums | Adam Watson Photo">
-    <meta property="og:description" content="Browse Cyclocross race photo albums by Adam Watson Photo.">
+    <meta property="og:title" content="Crank Cross | Adam Watson Photo">
+    <meta property="og:description" content="Crank Cross -- race photos from Madison Heights, MI · September 26, 2026.">
     <meta property="og:image" content="https://adamwatsonphoto.com/images/og-logo.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Cyclocross Albums | Adam Watson Photo">
-    <meta name="twitter:description" content="Browse Cyclocross race photo albums by Adam Watson Photo.">
+    <meta name="twitter:title" content="Crank Cross | Adam Watson Photo">
+    <meta name="twitter:description" content="Crank Cross -- race photos from Madison Heights, MI · September 26, 2026.">
     <meta name="twitter:image" content="https://adamwatsonphoto.com/images/og-logo.jpg">
 <style>
         * {
@@ -22,14 +22,14 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background: #1a1a1a;
             color: #e0e0e0;
             line-height: 1.6;
         }
-        
+
         nav {
             background: #0a0a0a;
             padding: 20px 0;
@@ -38,7 +38,7 @@
             top: 0;
             z-index: 1000;
         }
-        
+
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -47,14 +47,14 @@
             justify-content: center;
             align-items: center;
         }
-        
+
         .nav-links {
             display: flex;
             gap: 30px;
             list-style: none;
             align-items: center;
         }
-        
+
         .nav-links a {
             color: #e0e0e0;
             text-decoration: none;
@@ -62,11 +62,11 @@
             transition: color 0.3s;
             font-size: 1.1em;
         }
-        
+
         .nav-links a:hover {
             color: #ffffff;
         }
-        
+
         .instagram-link {
             color: #888;
             transition: color 0.3s, opacity 0.3s;
@@ -77,15 +77,15 @@
             border: none;
             outline: none;
         }
-        
+
         .instagram-link:hover {
             opacity: 0.7;
         }
-        
+
         .instagram-link:focus {
             outline: none;
         }
-        
+
         .instagram-icon {
             width: 24px;
             height: 24px;
@@ -94,43 +94,43 @@
             display: block;
             border: none;
         }
-        
+
         .instagram-link:hover .instagram-icon {
             filter: brightness(1);
         }
-        
+
         .breadcrumb {
             max-width: 1200px;
             margin: 30px auto 0;
             padding: 0 20px;
         }
-        
+
         .breadcrumb a {
             color: #888;
             text-decoration: none;
             transition: color 0.3s;
         }
-        
+
         .breadcrumb a:hover {
             color: #fff;
         }
-        
+
         .breadcrumb span {
             color: #555;
             margin: 0 10px;
         }
-        
+
         .races-section {
             max-width: 1200px;
             margin: 50px auto 80px;
             padding: 0 20px;
         }
-        
+
         .races-header {
             text-align: center;
             margin-bottom: 60px;
         }
-        
+
         .races-header h1 {
             font-size: 3em;
             font-weight: 300;
@@ -138,18 +138,20 @@
             color: #ffffff;
             margin-bottom: 10px;
         }
-        
+
         .races-header p {
             font-size: 1.2em;
             color: #999;
         }
-        
+
         .races-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 30px;
+            max-width: 700px;
+            margin: 0 auto;
         }
-        
+
         .race-card {
             background: #0f0f0f;
             border-radius: 8px;
@@ -162,38 +164,55 @@
             text-decoration: none;
             color: inherit;
         }
-        
+
         .race-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 15px rgba(0,0,0,0.5);
             border-color: #333;
         }
-        
+
         .race-thumbnail {
             width: 100%;
-            height: 200px;
+            height: 220px;
             background: #2a2a2a;
             object-fit: cover;
             display: block;
         }
-        
+
         .race-info {
             padding: 20px;
         }
-        
+
         .race-name {
             font-size: 1.3em;
             font-weight: 400;
             color: #ffffff;
             margin-bottom: 8px;
         }
-        
+
         .race-date {
             color: #888;
             font-size: 0.95em;
             margin-bottom: 5px;
         }
-        
+
+        .race-desc {
+            color: #888;
+            font-size: 0.85em;
+            line-height: 1.4;
+            margin-bottom: 5px;
+        }
+
+        .race-card-disabled {
+            cursor: default;
+        }
+
+        .race-card-disabled:hover {
+            transform: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            border-color: #222;
+        }
+
         .race-badge {
             display: inline-block;
             padding: 4px 12px;
@@ -203,13 +222,18 @@
             margin-top: 10px;
             color: #aaa;
         }
-        
+
+        .race-badge.coming-soon {
+            background: #332b12;
+            color: #d9b35c;
+        }
+
         footer {
             background: #0a0a0a;
             padding: 40px 20px;
             border-top: 1px solid #222;
         }
-        
+
         .footer-nav {
             max-width: 1200px;
             margin: 0 auto;
@@ -219,17 +243,17 @@
             list-style: none;
             margin-bottom: 20px;
         }
-        
+
         .footer-nav a {
             color: #888;
             text-decoration: none;
             transition: color 0.3s;
         }
-        
+
         .footer-nav a:hover {
             color: #fff;
         }
-        
+
         .tip-line {
             display: flex;
             justify-content: center;
@@ -275,18 +299,18 @@
             color: #666;
             font-size: 0.9em;
         }
-        
+
         @media (max-width: 768px) {
             .nav-links {
                 flex-wrap: wrap;
                 gap: 15px;
                 justify-content: center;
             }
-            
+
             .races-header h1 {
-                font-size: 2.5em;
+                font-size: 2.2em;
             }
-            
+
             .races-grid {
                 grid-template-columns: 1fr;
             }
@@ -300,7 +324,7 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="albums.html">Albums</a></li>
-				<li><a href="contact.html">Contact</a></li>
+                <li><a href="contact.html">Contact</a></li>
                 <li><a href="https://www.instagram.com/adamwatson.photo/" target="_blank" class="instagram-link"><img src="images/instagram-icon.png" alt="Instagram" class="instagram-icon"></a></li>
             </ul>
         </div>
@@ -309,42 +333,65 @@
     <div class="breadcrumb">
         <a href="albums.html">Albums</a>
         <span>›</span>
-        <span>Cyclocross</span>
+        <a href="cyclocross-albums.html">Cyclocross</a>
+        <span>›</span>
+        <span>Crank Cross</span>
     </div>
 
     <section class="races-section">
         <div class="races-header">
-            <h1>Cyclocross Albums</h1>
+            <h1>Crank Cross</h1>
+            <p>Madison Heights, MI &middot; September 26, 2026</p>
         </div>
-        
+
         <div class="races-grid">
-            <a href="crank-cross-20260926.html" class="race-card">
-                <img src="images/thumbnails/crank-cross-20260926-c-race.jpg" alt="Crank Cross" class="race-thumbnail">
+            <a href="crank-cross-20260926-a_race.html" class="race-card">
+                <img src="images/thumbnails/crank-cross-20260926-a-race.jpg" alt="A Race" class="race-thumbnail">
                 <div class="race-info">
-                    <div class="race-name">Crank Cross</div>
-                    <div class="race-date">September 26, 2026</div>
-
+                    <div class="race-name">A Race</div>
+                    <div class="race-desc">A Open &middot; A Open 50+ &middot; A Women &mdash; 10:00 AM block (50-min races)</div>
                 </div>
             </a>
 
-            <a href="dicxcyclocross-20251025.html" class="race-card">
-                <img src="images/thumbnails/dicxcyclocross-20251025.jpg" alt="DICX Cyclocross" class="race-thumbnail">
+            <a href="crank-cross-20260926-b_race.html" class="race-card">
+                <img src="images/thumbnails/crank-cross-20260926-b-race.jpg" alt="B Race" class="race-thumbnail">
                 <div class="race-info">
-                    <div class="race-name">DICX Cyclocross</div>
-                    <div class="race-date">October 25, 2025</div>
-
+                    <div class="race-name">B Race</div>
+                    <div class="race-desc">B Open &middot; B Open 50+ &middot; B Women &mdash; 11:20 AM block (40-min races)</div>
                 </div>
             </a>
 
-            <a href="crankcross-20250927.html" class="race-card">
-                <img src="images/thumbnails/crankcross-20250927.jpg" alt="Crank Cross" class="race-thumbnail">
+            <a href="crank-cross-20260926-ss_race.html" class="race-card">
+                <img src="images/thumbnails/crank-cross-20260926-ss-race.jpg" alt="Junior &amp; Single Speed" class="race-thumbnail">
                 <div class="race-info">
-                    <div class="race-name">Crank Cross</div>
-                    <div class="race-date">September 27, 2025</div>
-
+                    <div class="race-name">Junior &amp; Single Speed</div>
+                    <div class="race-desc">Junior Boys &amp; Girls 15-18 &middot; Single Speed Open &amp; Women &middot; Gender Expansive &mdash; 12:40 PM block (40-min races)</div>
                 </div>
             </a>
 
+            <a href="crank-cross-20260926-c_race.html" class="race-card">
+                <img src="images/thumbnails/crank-cross-20260926-c-race.jpg" alt="C Race" class="race-thumbnail">
+                <div class="race-info">
+                    <div class="race-name">C Race</div>
+                    <div class="race-desc">C Open &middot; Junior Boys 9-14 &mdash; 1:50 PM block (30-min races)</div>
+                </div>
+            </a>
+
+            <a href="crank-cross-20260926-kids_race.html" class="race-card">
+                <img src="images/thumbnails/crank-cross-20260926-kids-race.jpg" alt="Kids Race" class="race-thumbnail">
+                <div class="race-info">
+                    <div class="race-name">Kids Race</div>
+                    <div class="race-desc">Ages 3-8 &middot; free 2-lap race &mdash; 2:40 PM</div>
+                </div>
+            </a>
+
+            <a href="crank-cross-20260926-vibes.html" class="race-card">
+                <img src="images/thumbnails/crank-cross-20260926-vibes.jpg" alt="Vibes" class="race-thumbnail">
+                <div class="race-info">
+                    <div class="race-name">Vibes</div>
+                    <div class="race-desc">Dogs, friends, and the pre-race scene &mdash; everything but the racing itself</div>
+                </div>
+            </a>
         </div>
     </section>
 
@@ -353,7 +400,7 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About</a></li>
             <li><a href="albums.html">Albums</a></li>
-			<li><a href="contact.html">Contact</a></li>
+            <li><a href="contact.html">Contact</a></li>
             <li><a href="https://www.instagram.com/adamwatson.photo/" target="_blank" class="instagram-link"><img src="images/instagram-icon.png" alt="Instagram" class="instagram-icon"></a></li>
         </ul>
         <div class="tip-line">
@@ -362,7 +409,7 @@
                 Buy me a trail snack &mdash; Venmo
             </a>
         </div>
-        <p class="copyright">&copy; 2025 Adam Watson Photo. All rights reserved.</p>
+        <p class="copyright">&copy; 2026 Adam Watson Photo. All rights reserved.</p>
         <p class="copyright" style="margin-top: 8px;"><a href="privacy-policy.html" style="color: inherit; text-decoration: none;">Privacy Policy</a> &nbsp;&middot;&nbsp; <a href="terms.html" style="color: inherit; text-decoration: none;">Terms of Sale</a></p>
     </footer>
     <script src="cart.js"></script>
