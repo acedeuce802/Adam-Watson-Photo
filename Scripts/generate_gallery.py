@@ -78,6 +78,7 @@ def _load_photos(csv_file):
                     'thumbnail': row.get('thumbnail_url', ''),
                     'original': row.get('large_url', ''),
                     'download': row.get('original_url', ''),
+                    'medium': row.get('medium_url', ''),
                     'private_key': row.get('private_key', ''),
                 }
 
@@ -1162,7 +1163,7 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
             const counter = document.getElementById('lightbox-counter');
             const flickrLink = document.getElementById('lightbox-flickr');
 
-            setLightboxImage(photo.original || photo.url, photo.thumbnail);
+            setLightboxImage(photo.medium || photo.original || photo.url, photo.thumbnail);
             counter.textContent = `${{index + 1}} / ${{currentPhotos.length}}`;
             if (flickrLink) flickrLink.href = photo.original || photo.url;
 
@@ -1186,7 +1187,7 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
             const counter = document.getElementById('lightbox-counter');
             const flickrLink = document.getElementById('lightbox-flickr');
 
-            setLightboxImage(photo.original || photo.url, photo.thumbnail);
+            setLightboxImage(photo.medium || photo.original || photo.url, photo.thumbnail);
             counter.textContent = `${{currentLightboxIndex + 1}} / ${{currentPhotos.length}}`;
             if (flickrLink) flickrLink.href = photo.original || photo.url;
         }}
@@ -1390,7 +1391,7 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
             const flickrLink = document.getElementById('lightbox-flickr');
 
             const imageUrl = photo.original || photo.url;
-            setLightboxImage(imageUrl, photo.thumbnail);
+            setLightboxImage(photo.medium || imageUrl, photo.thumbnail);
             counter.textContent = `${{index + 1}} / ${{photos.length}}`;
             if (download) download.href = photo.download || imageUrl;
             if (flickrLink) flickrLink.href = photo.url;
@@ -1417,7 +1418,7 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
             const flickrLink = document.getElementById('lightbox-flickr');
 
             const imageUrl = photo.original || photo.url;
-            setLightboxImage(imageUrl, photo.thumbnail);
+            setLightboxImage(photo.medium || imageUrl, photo.thumbnail);
             counter.textContent = `${{currentLightboxIndex + 1}} / ${{photos.length}}`;
             if (download) download.href = photo.download || imageUrl;
             if (flickrLink) flickrLink.href = photo.url;
