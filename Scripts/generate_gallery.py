@@ -1120,6 +1120,7 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
         }});
 
         displayPhotos(allPhotos);
+        preloadFirstPhotos(allPhotos, 5);
 
         let currentLightboxIndex = 0;
 
@@ -1163,6 +1164,32 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
             preload.src = imageUrl;
         }}
 
+        function preloadAdjacent(arr, index) {{
+            if (!arr.length) return;
+            const nextIdx = (index + 1) % arr.length;
+            const prevIdx = (index - 1 + arr.length) % arr.length;
+            [arr[nextIdx], arr[prevIdx]].forEach(p => {{
+                if (!p) return;
+                const url = p.medium || p.original || p.url;
+                if (url) new Image().src = url;
+            }});
+        }}
+
+        function preloadFirstPhotos(arr, count) {{
+            if (navigator.connection && navigator.connection.saveData) return;
+            const run = () => {{
+                arr.slice(0, count).forEach(p => {{
+                    const url = p.medium || p.original || p.url;
+                    if (url) new Image().src = url;
+                }});
+            }};
+            if ('requestIdleCallback' in window) {{
+                requestIdleCallback(run, {{ timeout: 3000 }});
+            }} else {{
+                setTimeout(run, 1000);
+            }}
+        }}
+
         function openLightbox(index) {{
             currentLightboxIndex = index;
             currentPhotos = searchInput.value.trim() ?
@@ -1179,6 +1206,7 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
             if (flickrLink) flickrLink.href = photo.original || photo.url;
 
             lightbox.classList.add('active');
+            preloadAdjacent(currentPhotos, index);
         }}
 
         function closeLightbox() {{
@@ -1201,6 +1229,7 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
             setLightboxImage(photo.medium || photo.original || photo.url, photo.thumbnail);
             counter.textContent = `${{currentLightboxIndex + 1}} / ${{currentPhotos.length}}`;
             if (flickrLink) flickrLink.href = photo.original || photo.url;
+            preloadAdjacent(currentPhotos, currentLightboxIndex);
         }}
 
         document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
@@ -1367,6 +1396,7 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
         }}
 
         renderPage();
+        preloadFirstPhotos(photos, 5);
 
 
         let lightboxLoadToken = 0;
@@ -1408,6 +1438,32 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
             preload.src = imageUrl;
         }}
 
+        function preloadAdjacent(arr, index) {{
+            if (!arr.length) return;
+            const nextIdx = (index + 1) % arr.length;
+            const prevIdx = (index - 1 + arr.length) % arr.length;
+            [arr[nextIdx], arr[prevIdx]].forEach(p => {{
+                if (!p) return;
+                const url = p.medium || p.original || p.url;
+                if (url) new Image().src = url;
+            }});
+        }}
+
+        function preloadFirstPhotos(arr, count) {{
+            if (navigator.connection && navigator.connection.saveData) return;
+            const run = () => {{
+                arr.slice(0, count).forEach(p => {{
+                    const url = p.medium || p.original || p.url;
+                    if (url) new Image().src = url;
+                }});
+            }};
+            if ('requestIdleCallback' in window) {{
+                requestIdleCallback(run, {{ timeout: 3000 }});
+            }} else {{
+                setTimeout(run, 1000);
+            }}
+        }}
+
         function openLightbox(index) {{
             currentLightboxIndex = index;
             const photo = photos[index];
@@ -1423,6 +1479,7 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
             if (flickrLink) flickrLink.href = photo.url;
 
             lightbox.classList.add('active');
+            preloadAdjacent(photos, index);
         }}
 
         function closeLightbox() {{
@@ -1448,6 +1505,7 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
             counter.textContent = `${{currentLightboxIndex + 1}} / ${{photos.length}}`;
             if (download) download.href = photo.download || imageUrl;
             if (flickrLink) flickrLink.href = photo.url;
+            preloadAdjacent(photos, currentLightboxIndex);
         }}
 
         document.getElementById('lightbox-close').addEventListener('click', closeLightbox);

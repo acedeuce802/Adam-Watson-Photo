@@ -1975,6 +1975,7 @@
         
         // Initialize gallery
         renderPage();
+        preloadFirstPhotos(photos, 5);
         
         // Verify photos loaded
         console.log('Total photos loaded:', photos.length);
@@ -2017,6 +2018,33 @@
             preload.src = imageUrl;
         }
 
+
+        function preloadAdjacent(arr, index) {
+            if (!arr.length) return;
+            const nextIdx = (index + 1) % arr.length;
+            const prevIdx = (index - 1 + arr.length) % arr.length;
+            [arr[nextIdx], arr[prevIdx]].forEach(p => {
+                if (!p) return;
+                const url = p.medium || p.original || p.url;
+                if (url) new Image().src = url;
+            });
+        }
+
+        function preloadFirstPhotos(arr, count) {
+            if (navigator.connection && navigator.connection.saveData) return;
+            const run = () => {
+                arr.slice(0, count).forEach(p => {
+                    const url = p.medium || p.original || p.url;
+                    if (url) new Image().src = url;
+                });
+            };
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(run, { timeout: 3000 });
+            } else {
+                setTimeout(run, 1000);
+            }
+        }
+
         function openLightbox(index) {
             console.log('Opening lightbox for photo', index);
             currentLightboxIndex = index;
@@ -2036,6 +2064,7 @@
             flickrLink.href = photo.url;
             
             lightbox.classList.add('active');
+            preloadAdjacent(photos, index);
         }
         
         function closeLightbox() {
@@ -2061,6 +2090,7 @@
             counter.textContent = `${currentLightboxIndex + 1} / ${photos.length}`;
             download.href = photo.download || imageUrl;
             flickrLink.href = photo.url;
+            preloadAdjacent(photos, currentLightboxIndex);
         }
         
         // Event listeners

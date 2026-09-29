@@ -12997,6 +12997,7 @@
         
         // Show all photos initially
         displayPhotos(allPhotos);
+        preloadFirstPhotos(allPhotos, 5);
         
         // Lightbox functionality
         let currentLightboxIndex = 0;
@@ -13037,6 +13038,33 @@
             preload.src = imageUrl;
         }
 
+
+        function preloadAdjacent(arr, index) {
+            if (!arr.length) return;
+            const nextIdx = (index + 1) % arr.length;
+            const prevIdx = (index - 1 + arr.length) % arr.length;
+            [arr[nextIdx], arr[prevIdx]].forEach(p => {
+                if (!p) return;
+                const url = p.medium || p.original || p.url;
+                if (url) new Image().src = url;
+            });
+        }
+
+        function preloadFirstPhotos(arr, count) {
+            if (navigator.connection && navigator.connection.saveData) return;
+            const run = () => {
+                arr.slice(0, count).forEach(p => {
+                    const url = p.medium || p.original || p.url;
+                    if (url) new Image().src = url;
+                });
+            };
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(run, { timeout: 3000 });
+            } else {
+                setTimeout(run, 1000);
+            }
+        }
+
         function openLightbox(index) {
             currentLightboxIndex = index;
             currentPhotos = searchInput.value.trim() ? 
@@ -13053,6 +13081,7 @@
             counter.textContent = `${index + 1} / ${currentPhotos.length}`;
             
             lightbox.classList.add('active');
+            preloadAdjacent(currentPhotos, index);
         }
         
         function closeLightbox() {
@@ -13075,6 +13104,7 @@
             setLightboxImage(photo.original || photo.url, photo.thumbnail);
             if (flickrLink) flickrLink.href = photo.original || photo.url;
             counter.textContent = `${currentLightboxIndex + 1} / ${currentPhotos.length}`;
+            preloadAdjacent(currentPhotos, currentLightboxIndex);
         }
         
         // Event listeners
