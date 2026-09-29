@@ -384,19 +384,27 @@ function generate() {
         out += `# 8. Generate the gallery page\n`;
         out += pyStep(`python generate_gallery.py --csv race_tagging.csv --race "${raceName}" --date "${dateDisplay}" --location "${location}" ${crumbArgs.join(' ')}${subalbumArg} --output ${outputFile} --paywall${venmo ? ' --venmo-tip' : ''}`, 'generate_gallery.py');
     } else {
-        out += `# 3. Upload thumbnails (public bucket)\n`;
+        out += `# 3. Generate medium-res previews (faster-loading lightbox display)\n`;
+        out += pyStep(`python generate_medium.py ./ medium`, 'generate_medium.py');
+        out += `\n`;
+
+        out += `# 4. Upload thumbnails (public bucket)\n`;
         out += pyStep(`python upload_to_b2.py thumbnails race-photos-public YOUR_KEY_ID YOUR_APP_KEY --subfolder ${b2Folder}/thumbnails`, 'thumbnail upload');
         out += `Rename-Item b2_photos.json b2_thumbnails.json\n\n`;
 
-        out += `# 4. Upload full-res originals (public bucket -- free gallery)\n`;
+        out += `# 5. Upload medium-res previews (public bucket)\n`;
+        out += pyStep(`python upload_to_b2.py medium race-photos-public YOUR_KEY_ID YOUR_APP_KEY --subfolder ${b2Folder}/medium`, 'medium upload');
+        out += `Rename-Item b2_photos.json b2_medium.json\n\n`;
+
+        out += `# 6. Upload full-res originals (public bucket -- free gallery)\n`;
         out += pyStep(`python upload_to_b2.py ./ race-photos-public YOUR_KEY_ID YOUR_APP_KEY --subfolder ${b2Folder}/originals`, 'originals upload');
         out += `Rename-Item b2_photos.json b2_originals.json\n\n`;
 
-        out += `# 5. Merge URLs into the CSV\n`;
-        out += pyStep(`python merge_b2_thumbnails.py race_tagging.csv b2_thumbnails.json b2_originals.json`, 'merge_b2_thumbnails.py');
+        out += `# 7. Merge URLs into the CSV (adds medium_url column)\n`;
+        out += pyStep(`python merge_b2_thumbnails.py race_tagging.csv b2_thumbnails.json b2_originals.json --medium-json b2_medium.json`, 'merge_b2_thumbnails.py');
         out += `if (-not (Import-Csv race_tagging.csv | Where-Object { $_.large_url })) { throw "merge produced no large_url values -- check the JSON filenames match this CSV's photos" }\n\n`;
 
-        out += `# 6. Generate the gallery page\n`;
+        out += `# 8. Generate the gallery page\n`;
         out += pyStep(`python generate_gallery.py --csv race_tagging.csv --race "${raceName}" --date "${dateDisplay}" --location "${location}" ${crumbArgs.join(' ')}${subalbumArg} --output ${outputFile}${venmo ? ' --venmo-tip' : ''}`, 'generate_gallery.py');
     }
 

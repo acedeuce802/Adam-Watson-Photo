@@ -513,10 +513,6 @@ _SHARED_STYLE = '''        * {
         }
 
         .lightbox-image.loading {
-            width: 90vw;
-            height: 85vh;
-            max-width: 90vw;
-            max-height: 85vh;
             object-fit: cover;
             filter: blur(20px);
         }
@@ -1134,6 +1130,17 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
             const lightboxImage = document.getElementById('lightbox-image');
             const myToken = ++lightboxLoadToken;
 
+            // Freeze the box at whatever size it's currently rendered at
+            // before swapping to the blurred thumbnail, so the placeholder
+            // never jumps to a generic size -- it just holds the previous
+            // photo's footprint until the real one loads and re-establishes
+            // its own size naturally.
+            const rect = lightboxImage.getBoundingClientRect();
+            if (rect.width > 0 && rect.height > 0) {{
+                lightboxImage.style.width = rect.width + 'px';
+                lightboxImage.style.height = rect.height + 'px';
+            }}
+
             if (thumbnailUrl) {{
                 lightboxImage.src = thumbnailUrl;
             }}
@@ -1143,10 +1150,14 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
             preload.onload = () => {{
                 if (myToken !== lightboxLoadToken) return;
                 lightboxImage.src = imageUrl;
+                lightboxImage.style.width = '';
+                lightboxImage.style.height = '';
                 lightboxImage.classList.remove('loading');
             }};
             preload.onerror = () => {{
                 if (myToken !== lightboxLoadToken) return;
+                lightboxImage.style.width = '';
+                lightboxImage.style.height = '';
                 lightboxImage.classList.remove('loading');
             }};
             preload.src = imageUrl;
@@ -1364,6 +1375,17 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
             const lightboxImage = document.getElementById('lightbox-image');
             const myToken = ++lightboxLoadToken;
 
+            // Freeze the box at whatever size it's currently rendered at
+            // before swapping to the blurred thumbnail, so the placeholder
+            // never jumps to a generic size -- it just holds the previous
+            // photo's footprint until the real one loads and re-establishes
+            // its own size naturally.
+            const rect = lightboxImage.getBoundingClientRect();
+            if (rect.width > 0 && rect.height > 0) {{
+                lightboxImage.style.width = rect.width + 'px';
+                lightboxImage.style.height = rect.height + 'px';
+            }}
+
             if (thumbnailUrl) {{
                 lightboxImage.src = thumbnailUrl;
             }}
@@ -1373,10 +1395,14 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
             preload.onload = () => {{
                 if (myToken !== lightboxLoadToken) return;
                 lightboxImage.src = imageUrl;
+                lightboxImage.style.width = '';
+                lightboxImage.style.height = '';
                 lightboxImage.classList.remove('loading');
             }};
             preload.onerror = () => {{
                 if (myToken !== lightboxLoadToken) return;
+                lightboxImage.style.width = '';
+                lightboxImage.style.height = '';
                 lightboxImage.classList.remove('loading');
             }};
             preload.src = imageUrl;
