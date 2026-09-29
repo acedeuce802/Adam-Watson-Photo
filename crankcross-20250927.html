@@ -340,6 +340,16 @@
             max-height: 95vh;
             object-fit: contain;
             display: block;
+            transition: filter 0.25s ease;
+        }
+
+        .lightbox-image.loading {
+            width: 90vw;
+            height: 85vh;
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: cover;
+            filter: blur(20px);
         }
         
         .lightbox-close {
@@ -12274,13 +12284,37 @@
             console.log('First photo:', photos[0]);
         }
         
+
+        let lightboxLoadToken = 0;
+
+        function setLightboxImage(imageUrl, thumbnailUrl) {
+            const lightboxImage = document.getElementById('lightbox-image');
+            const myToken = ++lightboxLoadToken;
+
+            if (thumbnailUrl) {
+                lightboxImage.src = thumbnailUrl;
+            }
+            lightboxImage.classList.add('loading');
+
+            const preload = new Image();
+            preload.onload = () => {
+                if (myToken !== lightboxLoadToken) return;
+                lightboxImage.src = imageUrl;
+                lightboxImage.classList.remove('loading');
+            };
+            preload.onerror = () => {
+                if (myToken !== lightboxLoadToken) return;
+                lightboxImage.classList.remove('loading');
+            };
+            preload.src = imageUrl;
+        }
+
         function openLightbox(index) {
             console.log('Opening lightbox for photo', index);
             currentLightboxIndex = index;
             const photo = photos[index];
             console.log('Photo data:', photo);
             const lightbox = document.getElementById('lightbox');
-            const lightboxImage = document.getElementById('lightbox-image');
             const counter = document.getElementById('lightbox-counter');
             const download = document.getElementById('lightbox-download');
             const flickrLink = document.getElementById('lightbox-flickr');
@@ -12288,7 +12322,7 @@
             // Use original image URL if available
             const imageUrl = photo.original || photo.url;
             console.log('Image URL:', imageUrl);
-            lightboxImage.src = imageUrl;
+            setLightboxImage(imageUrl, photo.thumbnail);
             counter.textContent = `${index + 1} / ${photos.length}`;
             download.href = photo.download || imageUrl;
             flickrLink.href = photo.url;
@@ -12310,13 +12344,12 @@
             }
             
             const photo = photos[currentLightboxIndex];
-            const lightboxImage = document.getElementById('lightbox-image');
             const counter = document.getElementById('lightbox-counter');
             const download = document.getElementById('lightbox-download');
             const flickrLink = document.getElementById('lightbox-flickr');
             
             const imageUrl = photo.original || photo.url;
-            lightboxImage.src = imageUrl;
+            setLightboxImage(imageUrl, photo.thumbnail);
             counter.textContent = `${currentLightboxIndex + 1} / ${photos.length}`;
             download.href = photo.download || imageUrl;
             flickrLink.href = photo.url;

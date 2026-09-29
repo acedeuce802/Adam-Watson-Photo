@@ -369,6 +369,16 @@
             max-height: 95vh;
             object-fit: contain;
             display: block;
+            transition: filter 0.25s ease;
+        }
+
+        .lightbox-image.loading {
+            width: 90vw;
+            height: 85vh;
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: cover;
+            filter: blur(20px);
         }
 
         .lightbox-close {
@@ -19221,6 +19231,31 @@
 
         let currentLightboxIndex = 0;
 
+
+        let lightboxLoadToken = 0;
+
+        function setLightboxImage(imageUrl, thumbnailUrl) {
+            const lightboxImage = document.getElementById('lightbox-image');
+            const myToken = ++lightboxLoadToken;
+
+            if (thumbnailUrl) {
+                lightboxImage.src = thumbnailUrl;
+            }
+            lightboxImage.classList.add('loading');
+
+            const preload = new Image();
+            preload.onload = () => {
+                if (myToken !== lightboxLoadToken) return;
+                lightboxImage.src = imageUrl;
+                lightboxImage.classList.remove('loading');
+            };
+            preload.onerror = () => {
+                if (myToken !== lightboxLoadToken) return;
+                lightboxImage.classList.remove('loading');
+            };
+            preload.src = imageUrl;
+        }
+
         function openLightbox(index) {
             currentLightboxIndex = index;
             currentPhotos = searchInput.value.trim() ?
@@ -19229,11 +19264,10 @@
 
             const photo = currentPhotos[index];
             const lightbox = document.getElementById('lightbox');
-            const lightboxImage = document.getElementById('lightbox-image');
             const counter = document.getElementById('lightbox-counter');
             const flickrLink = document.getElementById('lightbox-flickr');
 
-            lightboxImage.src = photo.original || photo.url;
+            setLightboxImage(photo.original || photo.url, photo.thumbnail);
             counter.textContent = `${index + 1} / ${currentPhotos.length}`;
             if (flickrLink) flickrLink.href = photo.original || photo.url;
 
@@ -19254,11 +19288,10 @@
             }
 
             const photo = currentPhotos[currentLightboxIndex];
-            const lightboxImage = document.getElementById('lightbox-image');
             const counter = document.getElementById('lightbox-counter');
             const flickrLink = document.getElementById('lightbox-flickr');
 
-            lightboxImage.src = photo.original || photo.url;
+            setLightboxImage(photo.original || photo.url, photo.thumbnail);
             counter.textContent = `${currentLightboxIndex + 1} / ${currentPhotos.length}`;
             if (flickrLink) flickrLink.href = photo.original || photo.url;
         }

@@ -336,62 +336,79 @@ function generate() {
 
     const b2Folder = `${year}/${yyyymmdd}_${slug}`;
 
+    // Every python call is followed by an $LASTEXITCODE check so a failed
+    // step (bad B2 creds, network blip, etc.) halts the whole pasted block
+    // instead of letting later steps run against incomplete data -- e.g.
+    // merge_b2_thumbnails.py silently producing blank photo URLs because an
+    // upload step it depended on never finished.
+    function pyStep(cmd, label) {
+        return `${cmd}\nif ($LASTEXITCODE -ne 0) { throw "${label} failed" }\n`;
+    }
+
     let out = '';
     out += `# ${raceName} -- ${dateDisplay} -- ${location}\n`;
-    out += `# Run these from inside the folder that holds this race's raw photos.\n\n`;
+    out += `# Run these from inside the folder that holds this race's raw photos.\n`;
+    out += `# Paste this whole block in one go -- PowerShell runs each line in order\n`;
+    out += `# and waits for it to finish before starting the next, uploads included.\n`;
+    out += `$ErrorActionPreference = 'Stop'\n\n`;
 
     out += `# 1. Tag photos with race numbers\n`;
-    out += `python generate_csv_from_images.py ./ race_tagging.csv\n\n`;
+    out += pyStep(`python generate_csv_from_images.py ./ race_tagging.csv`, 'generate_csv_from_images.py');
+    out += `\n`;
 
     out += `# 2. Generate thumbnails\n`;
-    out += `python generate_thumbnails.py ./ thumbnails\n\n`;
+    out += pyStep(`python generate_thumbnails.py ./ thumbnails`, 'generate_thumbnails.py');
+    out += `\n`;
 
     if (paywall) {
         out += `# 3. Generate watermarked mid-res previews (shown pre-purchase)\n`;
-        out += `python generate_watermarked.py ./ watermarked\n\n`;
+        out += pyStep(`python generate_watermarked.py ./ watermarked`, 'generate_watermarked.py');
+        out += `\n`;
 
         out += `# 4. Upload thumbnails (public bucket)\n`;
-        out += `python upload_to_b2.py thumbnails race-photos-public YOUR_KEY_ID YOUR_APP_KEY --subfolder ${b2Folder}/thumbnails\n`;
-        out += `ren b2_photos.json b2_thumbnails.json\n\n`;
+        out += pyStep(`python upload_to_b2.py thumbnails race-photos-public YOUR_KEY_ID YOUR_APP_KEY --subfolder ${b2Folder}/thumbnails`, 'thumbnail upload');
+        out += `Rename-Item b2_photos.json b2_thumbnails.json\n\n`;
 
         out += `# 5. Upload watermarked previews (public bucket)\n`;
-        out += `python upload_to_b2.py watermarked race-photos-public YOUR_KEY_ID YOUR_APP_KEY --subfolder ${b2Folder}/watermarked\n`;
-        out += `ren b2_photos.json b2_watermarked.json\n\n`;
+        out += pyStep(`python upload_to_b2.py watermarked race-photos-public YOUR_KEY_ID YOUR_APP_KEY --subfolder ${b2Folder}/watermarked`, 'watermarked upload');
+        out += `Rename-Item b2_photos.json b2_watermarked.json\n\n`;
 
         out += `# 6. Upload TRUE full-res originals (PRIVATE bucket -- never public)\n`;
-        out += `python upload_to_b2.py ./ race-photos-private YOUR_KEY_ID YOUR_APP_KEY --private --subfolder ${b2Folder}/originals\n`;
-        out += `ren b2_photos.json b2_originals.json\n\n`;
+        out += pyStep(`python upload_to_b2.py ./ race-photos-private YOUR_KEY_ID YOUR_APP_KEY --private --subfolder ${b2Folder}/originals`, 'private originals upload');
+        out += `Rename-Item b2_photos.json b2_originals.json\n\n`;
 
         out += `# 7. Merge URLs into the CSV (adds private_key column)\n`;
-        out += `python merge_b2_thumbnails.py race_tagging.csv b2_thumbnails.json b2_watermarked.json --private-json b2_originals.json\n\n`;
+        out += pyStep(`python merge_b2_thumbnails.py race_tagging.csv b2_thumbnails.json b2_watermarked.json --private-json b2_originals.json`, 'merge_b2_thumbnails.py');
+        out += `if (-not (Import-Csv race_tagging.csv | Where-Object { $_.large_url })) { throw "merge produced no large_url values -- check the JSON filenames match this CSV's photos" }\n\n`;
 
         out += `# 8. Generate the gallery page\n`;
-        out += `python generate_gallery.py --csv race_tagging.csv --race "${raceName}" --date "${dateDisplay}" --location "${location}" ${crumbArgs.join(' ')}${subalbumArg} --output ${outputFile} --paywall${venmo ? ' --venmo-tip' : ''}\n`;
+        out += pyStep(`python generate_gallery.py --csv race_tagging.csv --race "${raceName}" --date "${dateDisplay}" --location "${location}" ${crumbArgs.join(' ')}${subalbumArg} --output ${outputFile} --paywall${venmo ? ' --venmo-tip' : ''}`, 'generate_gallery.py');
     } else {
         out += `# 3. Upload thumbnails (public bucket)\n`;
-        out += `python upload_to_b2.py thumbnails race-photos-public YOUR_KEY_ID YOUR_APP_KEY --subfolder ${b2Folder}/thumbnails\n`;
-        out += `ren b2_photos.json b2_thumbnails.json\n\n`;
+        out += pyStep(`python upload_to_b2.py thumbnails race-photos-public YOUR_KEY_ID YOUR_APP_KEY --subfolder ${b2Folder}/thumbnails`, 'thumbnail upload');
+        out += `Rename-Item b2_photos.json b2_thumbnails.json\n\n`;
 
         out += `# 4. Upload full-res originals (public bucket -- free gallery)\n`;
-        out += `python upload_to_b2.py ./ race-photos-public YOUR_KEY_ID YOUR_APP_KEY --subfolder ${b2Folder}/originals\n`;
-        out += `ren b2_photos.json b2_originals.json\n\n`;
+        out += pyStep(`python upload_to_b2.py ./ race-photos-public YOUR_KEY_ID YOUR_APP_KEY --subfolder ${b2Folder}/originals`, 'originals upload');
+        out += `Rename-Item b2_photos.json b2_originals.json\n\n`;
 
         out += `# 5. Merge URLs into the CSV\n`;
-        out += `python merge_b2_thumbnails.py race_tagging.csv b2_thumbnails.json b2_originals.json\n\n`;
+        out += pyStep(`python merge_b2_thumbnails.py race_tagging.csv b2_thumbnails.json b2_originals.json`, 'merge_b2_thumbnails.py');
+        out += `if (-not (Import-Csv race_tagging.csv | Where-Object { $_.large_url })) { throw "merge produced no large_url values -- check the JSON filenames match this CSV's photos" }\n\n`;
 
         out += `# 6. Generate the gallery page\n`;
-        out += `python generate_gallery.py --csv race_tagging.csv --race "${raceName}" --date "${dateDisplay}" --location "${location}" ${crumbArgs.join(' ')}${subalbumArg} --output ${outputFile}${venmo ? ' --venmo-tip' : ''}\n`;
+        out += pyStep(`python generate_gallery.py --csv race_tagging.csv --race "${raceName}" --date "${dateDisplay}" --location "${location}" ${crumbArgs.join(' ')}${subalbumArg} --output ${outputFile}${venmo ? ' --venmo-tip' : ''}`, 'generate_gallery.py');
     }
 
-    out += `\n\n------------------------------------------------------------\n`;
-    out += `MANUAL STEPS (not scripted)\n`;
-    out += `------------------------------------------------------------\n`;
-    out += `- Pick a thumbnail photo, add a card for ${outputFile} to ${disciplinePage}\n`;
-    out += `- Bump the race count for "${disciplineLabel}" on albums.html\n`;
+    out += `\n# ------------------------------------------------------------\n`;
+    out += `# MANUAL STEPS (not scripted -- just notes, safe to leave in when you paste)\n`;
+    out += `# ------------------------------------------------------------\n`;
+    out += `# - Pick a thumbnail photo, add a card for ${outputFile} to ${disciplinePage}\n`;
+    out += `# - Bump the race count for "${disciplineLabel}" on albums.html\n`;
     if (subalbum && hubPage) {
-        out += `- Link ${outputFile} from ${hubPage} (create ${hubPage} first if this is the first sub-album)\n`;
+        out += `# - Link ${outputFile} from ${hubPage} (create ${hubPage} first if this is the first sub-album)\n`;
     }
-    out += `- git add / commit / push\n`;
+    out += `# - git add / commit / push\n`;
 
     document.getElementById('output').value = out;
     document.getElementById('outputCard').classList.add('visible');

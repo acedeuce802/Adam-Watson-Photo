@@ -508,6 +508,16 @@ _SHARED_STYLE = '''        * {
             max-height: 95vh;
             object-fit: contain;
             display: block;
+            transition: filter 0.25s ease;
+        }
+
+        .lightbox-image.loading {
+            width: 90vw;
+            height: 85vh;
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: cover;
+            filter: blur(20px);
         }
 
         .lightbox-close {
@@ -1116,6 +1126,31 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
 
         let currentLightboxIndex = 0;
 
+
+        let lightboxLoadToken = 0;
+
+        function setLightboxImage(imageUrl, thumbnailUrl) {{
+            const lightboxImage = document.getElementById('lightbox-image');
+            const myToken = ++lightboxLoadToken;
+
+            if (thumbnailUrl) {{
+                lightboxImage.src = thumbnailUrl;
+            }}
+            lightboxImage.classList.add('loading');
+
+            const preload = new Image();
+            preload.onload = () => {{
+                if (myToken !== lightboxLoadToken) return;
+                lightboxImage.src = imageUrl;
+                lightboxImage.classList.remove('loading');
+            }};
+            preload.onerror = () => {{
+                if (myToken !== lightboxLoadToken) return;
+                lightboxImage.classList.remove('loading');
+            }};
+            preload.src = imageUrl;
+        }}
+
         function openLightbox(index) {{
             currentLightboxIndex = index;
             currentPhotos = searchInput.value.trim() ?
@@ -1124,11 +1159,10 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
 
             const photo = currentPhotos[index];
             const lightbox = document.getElementById('lightbox');
-            const lightboxImage = document.getElementById('lightbox-image');
             const counter = document.getElementById('lightbox-counter');
             const flickrLink = document.getElementById('lightbox-flickr');
 
-            lightboxImage.src = photo.original || photo.url;
+            setLightboxImage(photo.original || photo.url, photo.thumbnail);
             counter.textContent = `${{index + 1}} / ${{currentPhotos.length}}`;
             if (flickrLink) flickrLink.href = photo.original || photo.url;
 
@@ -1149,11 +1183,10 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
             }}
 
             const photo = currentPhotos[currentLightboxIndex];
-            const lightboxImage = document.getElementById('lightbox-image');
             const counter = document.getElementById('lightbox-counter');
             const flickrLink = document.getElementById('lightbox-flickr');
 
-            lightboxImage.src = photo.original || photo.url;
+            setLightboxImage(photo.original || photo.url, photo.thumbnail);
             counter.textContent = `${{currentLightboxIndex + 1}} / ${{currentPhotos.length}}`;
             if (flickrLink) flickrLink.href = photo.original || photo.url;
         }}
@@ -1323,17 +1356,41 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
 
         renderPage();
 
+
+        let lightboxLoadToken = 0;
+
+        function setLightboxImage(imageUrl, thumbnailUrl) {{
+            const lightboxImage = document.getElementById('lightbox-image');
+            const myToken = ++lightboxLoadToken;
+
+            if (thumbnailUrl) {{
+                lightboxImage.src = thumbnailUrl;
+            }}
+            lightboxImage.classList.add('loading');
+
+            const preload = new Image();
+            preload.onload = () => {{
+                if (myToken !== lightboxLoadToken) return;
+                lightboxImage.src = imageUrl;
+                lightboxImage.classList.remove('loading');
+            }};
+            preload.onerror = () => {{
+                if (myToken !== lightboxLoadToken) return;
+                lightboxImage.classList.remove('loading');
+            }};
+            preload.src = imageUrl;
+        }}
+
         function openLightbox(index) {{
             currentLightboxIndex = index;
             const photo = photos[index];
             const lightbox = document.getElementById('lightbox');
-            const lightboxImage = document.getElementById('lightbox-image');
             const counter = document.getElementById('lightbox-counter');
             const download = document.getElementById('lightbox-download');
             const flickrLink = document.getElementById('lightbox-flickr');
 
             const imageUrl = photo.original || photo.url;
-            lightboxImage.src = imageUrl;
+            setLightboxImage(imageUrl, photo.thumbnail);
             counter.textContent = `${{index + 1}} / ${{photos.length}}`;
             if (download) download.href = photo.download || imageUrl;
             if (flickrLink) flickrLink.href = photo.url;
@@ -1355,13 +1412,12 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
             }}
 
             const photo = photos[currentLightboxIndex];
-            const lightboxImage = document.getElementById('lightbox-image');
             const counter = document.getElementById('lightbox-counter');
             const download = document.getElementById('lightbox-download');
             const flickrLink = document.getElementById('lightbox-flickr');
 
             const imageUrl = photo.original || photo.url;
-            lightboxImage.src = imageUrl;
+            setLightboxImage(imageUrl, photo.thumbnail);
             counter.textContent = `${{currentLightboxIndex + 1}} / ${{photos.length}}`;
             if (download) download.href = photo.download || imageUrl;
             if (flickrLink) flickrLink.href = photo.url;
