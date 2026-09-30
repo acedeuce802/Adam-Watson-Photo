@@ -1140,6 +1140,29 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
             if (rect.width > 0 && rect.height > 0) {{
                 lightboxImage.style.width = rect.width + 'px';
                 lightboxImage.style.height = rect.height + 'px';
+            }} else if (thumbnailUrl) {{
+                // First photo opened this session -- there's no previous
+                // photo's size to hold onto, so the thumbnail would
+                // otherwise show at its own tiny native pixel size and then
+                // jump to the real photo's much larger size once it loads.
+                // Estimate that eventual size from the thumbnail's own
+                // aspect ratio (same photo, just smaller) scaled to fill
+                // the lightbox the way the real photo will.
+                const applySizeFromRatio = (ratio) => {{
+                    if (myToken !== lightboxLoadToken || !ratio) return;
+                    const maxW = window.innerWidth * 0.9;
+                    const maxH = window.innerHeight * 0.9;
+                    let w = maxW, h = maxW / ratio;
+                    if (h > maxH) {{ h = maxH; w = maxH * ratio; }}
+                    lightboxImage.style.width = w + 'px';
+                    lightboxImage.style.height = h + 'px';
+                }};
+                const probe = new Image();
+                probe.onload = () => applySizeFromRatio(probe.naturalWidth / probe.naturalHeight);
+                probe.src = thumbnailUrl;
+                if (probe.complete && probe.naturalWidth) {{
+                    applySizeFromRatio(probe.naturalWidth / probe.naturalHeight);
+                }}
             }}
 
             if (thumbnailUrl) {{
@@ -1177,17 +1200,17 @@ def _generate_searchable_gallery(photos, race_name, race_date, location, output_
 
         function preloadFirstPhotos(arr, count) {{
             if (navigator.connection && navigator.connection.saveData) return;
-            const run = () => {{
+            // A short flat delay rather than requestIdleCallback: idle time
+            // isn't guaranteed to show up quickly on a page whose own photo
+            // grid is still loading/decoding, and a visitor who already
+            // knows which race they're looking for can click the first
+            // photo within a second or two -- faster than "idle" arrives.
+            setTimeout(() => {{
                 arr.slice(0, count).forEach(p => {{
                     const url = p.medium || p.original || p.url;
                     if (url) new Image().src = url;
                 }});
-            }};
-            if ('requestIdleCallback' in window) {{
-                requestIdleCallback(run, {{ timeout: 3000 }});
-            }} else {{
-                setTimeout(run, 1000);
-            }}
+            }}, 100);
         }}
 
         function openLightbox(index) {{
@@ -1414,6 +1437,29 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
             if (rect.width > 0 && rect.height > 0) {{
                 lightboxImage.style.width = rect.width + 'px';
                 lightboxImage.style.height = rect.height + 'px';
+            }} else if (thumbnailUrl) {{
+                // First photo opened this session -- there's no previous
+                // photo's size to hold onto, so the thumbnail would
+                // otherwise show at its own tiny native pixel size and then
+                // jump to the real photo's much larger size once it loads.
+                // Estimate that eventual size from the thumbnail's own
+                // aspect ratio (same photo, just smaller) scaled to fill
+                // the lightbox the way the real photo will.
+                const applySizeFromRatio = (ratio) => {{
+                    if (myToken !== lightboxLoadToken || !ratio) return;
+                    const maxW = window.innerWidth * 0.9;
+                    const maxH = window.innerHeight * 0.9;
+                    let w = maxW, h = maxW / ratio;
+                    if (h > maxH) {{ h = maxH; w = maxH * ratio; }}
+                    lightboxImage.style.width = w + 'px';
+                    lightboxImage.style.height = h + 'px';
+                }};
+                const probe = new Image();
+                probe.onload = () => applySizeFromRatio(probe.naturalWidth / probe.naturalHeight);
+                probe.src = thumbnailUrl;
+                if (probe.complete && probe.naturalWidth) {{
+                    applySizeFromRatio(probe.naturalWidth / probe.naturalHeight);
+                }}
             }}
 
             if (thumbnailUrl) {{
@@ -1451,17 +1497,17 @@ def _generate_browse_gallery(photos, race_name, race_date, location, output_file
 
         function preloadFirstPhotos(arr, count) {{
             if (navigator.connection && navigator.connection.saveData) return;
-            const run = () => {{
+            // A short flat delay rather than requestIdleCallback: idle time
+            // isn't guaranteed to show up quickly on a page whose own photo
+            // grid is still loading/decoding, and a visitor who already
+            // knows which race they're looking for can click the first
+            // photo within a second or two -- faster than "idle" arrives.
+            setTimeout(() => {{
                 arr.slice(0, count).forEach(p => {{
                     const url = p.medium || p.original || p.url;
                     if (url) new Image().src = url;
                 }});
-            }};
-            if ('requestIdleCallback' in window) {{
-                requestIdleCallback(run, {{ timeout: 3000 }});
-            }} else {{
-                setTimeout(run, 1000);
-            }}
+            }}, 100);
         }}
 
         function openLightbox(index) {{
