@@ -156,7 +156,7 @@
             </div>
             <div class="field">
                 <label>Date</label>
-                <input type="date" id="raceDate">
+                <input type="date" id="raceDate" oninput="onDateChange()">
             </div>
         </div>
         <div class="row">
@@ -209,10 +209,12 @@
                 <div class="field">
                     <label>Parent event name</label>
                     <input type="text" id="hubName" placeholder="Crank Cross">
+                    <div class="hint">Prefilled from Race name above. Edit if the parent event is actually different.</div>
                 </div>
                 <div class="field">
                     <label>Parent event's hub page filename</label>
                     <input type="text" id="hubPage" placeholder="crank-cross-20260926.html">
+                    <div class="hint">Prefilled from the slug/date above. Edit if the parent event is actually different.</div>
                 </div>
             </div>
             <div class="row">
@@ -264,8 +266,38 @@ function onNameChange() {
     if (!slugField.dataset.touched) {
         slugField.value = slugify(name);
     }
+    prefillHubFields();
 }
 document.getElementById('slug').addEventListener('input', (e) => { e.target.dataset.touched = '1'; });
+document.getElementById('hubName').addEventListener('input', (e) => { e.target.dataset.touched = '1'; });
+document.getElementById('hubPage').addEventListener('input', (e) => { e.target.dataset.touched = '1'; });
+
+function onDateChange() {
+    prefillHubFields();
+}
+
+// Sub-album defaults to being part of the SAME event currently being filled
+// in above (e.g. every Crank Cross sub-album block uses "Crank Cross" as
+// both the race name and the parent event name) -- prefill from that,
+// but never clobber a value the user already typed, in case the parent
+// really is a different event.
+function prefillHubFields() {
+    if (!subalbum) return;
+    const raceName = document.getElementById('raceName').value.trim();
+    const slug = document.getElementById('slug').value.trim();
+    const dateIso = document.getElementById('raceDate').value;
+
+    const hubNameField = document.getElementById('hubName');
+    if (!hubNameField.dataset.touched && raceName) {
+        hubNameField.value = raceName;
+    }
+
+    const hubPageField = document.getElementById('hubPage');
+    if (!hubPageField.dataset.touched && slug && dateIso) {
+        const { yyyymmdd } = fmtDate(dateIso);
+        hubPageField.value = `${slug}-${yyyymmdd}.html`;
+    }
+}
 
 function setPaywall(val) {
     paywall = val;
@@ -284,6 +316,7 @@ function setSubalbum(val) {
     document.getElementById('subalbumYes').classList.toggle('active', val);
     document.getElementById('subalbumNo').classList.toggle('active', !val);
     document.getElementById('subalbumFields').classList.toggle('visible', val);
+    if (val) prefillHubFields();
 }
 
 function fmtDate(iso) {
